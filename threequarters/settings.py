@@ -5,7 +5,6 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('Rod Begbie', 'rod@arsecandle.org'),
-    # ('Your Name', 'your_email@domain.com'),
 )
 
 MANAGERS = ADMINS
@@ -71,4 +70,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
+    'threequarters.blog'
 )
+
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates".
+    # Always use forward slashes, even on Windows.
+    "/var/www/threequarters/python/threequarters/templates",
+)
+
