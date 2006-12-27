@@ -2,6 +2,7 @@
 
 from threequarters.blog.models import *
 
+BlogItem.objects.all().delete()
 Legacy.objects.all().delete()
 Post.objects.all().delete()
 Link.objects.all().delete()
