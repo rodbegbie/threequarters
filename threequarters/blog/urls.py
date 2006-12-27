@@ -4,10 +4,10 @@ urlpatterns = patterns('',
 #    (r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'index.html'})#'threequarters.blog.views.homepage'),
 )
 
-from threequarters.blog.models import Post
+from threequarters.blog.models import BlogItem
 
 info_dict = {
-    'queryset': Post.objects.all().filter(draft=False),
+    'queryset': BlogItem.objects.all(),
     'date_field': 'created_on',
 }
 

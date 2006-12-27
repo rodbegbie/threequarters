@@ -1,0 +1,10 @@
+{% block content %}
+
+<h1>Latest entries</h1>
+
+{% for object in object_list %}
+    {% include "blog/blogitem.html" %}
+{% endfor %}
+
+{% endblock %}
+

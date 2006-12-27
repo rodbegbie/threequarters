@@ -5,10 +5,7 @@ class TaggedItem(models.Model):
     """A tag on an item."""
     tag = models.SlugField()
     display = models.CharField(maxlength=100)
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    
-    content_object = models.GenericForeignKey()
+    last_used = models.DateTimeField(default=models.LazyDate())
     
     class Meta:
         ordering = ["tag"]
@@ -17,29 +14,39 @@ class TaggedItem(models.Model):
         return self.display
 
 class Legacy(models.Model):
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    content_object = models.GenericForeignKey()
     mt_id = models.IntegerField(db_index=True, unique=True)
     basename = models.CharField(maxlength=50)
     
     class Admin:
         pass
 
+class BlogItem(models.Model):
+    legacy = models.ForeignKey(Legacy, null=True)
+    tags = models.ManyToManyField(TaggedItem)
+
+    created_on = models.DateTimeField(default=models.LazyDate())
+    slug = models.SlugField()
+
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = models.GenericForeignKey()
+
+    class Meta:
+        ordering = ["-created_on"]
+
 class Post(models.Model):
+    blogitem = models.GenericRelation(BlogItem)
     title = models.CharField(maxlength=255)
     slug = models.SlugField(maxlength=30, prepopulate_from=("title",))
-    body_textile = models.TextField()
-    body_xhtml = models.TextField()
     created_on = models.DateTimeField(default=models.LazyDate())
     modified_on = models.DateTimeField(default=models.LazyDate())
-    legacy = models.GenericRelation(Legacy)
+    body_textile = models.TextField()
+    body_xhtml = models.TextField()
     draft = models.BooleanField(default=False)
-    tags = models.GenericRelation(TaggedItem)
 
     class Admin:
         list_display = ('title', 'slug', 'created_on', 'draft')
-    list_filter = ['created_on', 'draft']
+        list_filter = ['created_on', 'draft']
 
     class Meta:
         ordering = ["-created_on"]
@@ -49,20 +56,28 @@ class Post(models.Model):
         self.body_xhtml = textile.textile(self.body_textile)
         super(Post, self).save() # Call the "real" save() method.
 
+        if not self.blogitem.all():
+            self.blogitem.create(created_on=self.created_on,
+                                 slug=self.slug)
+        else:
+            blogitem = self.blogitem.get()
+            blogitem.created_on = self.created_on
+            blogitem.slug = self.slug
+            blogitem.save()
+
     def get_absolute_url(self):
-        return "/weblog/%s/%s/" % (self.created_on.strftime("%Y/%b/%d").lower(), self.slug)
+        return "/%s/%s/" % (self.created_on.strftime("%Y/%b/%d").lower(), self.slug)
 
     
 class Link(models.Model):
+    blogitem = models.GenericRelation(BlogItem)
     title = models.CharField(maxlength=255)
     slug = models.SlugField(maxlength=30, prepopulate_from=("title",))
+    created_on = models.DateTimeField(default=models.LazyDate())
+    modified_on = models.DateTimeField(default=models.LazyDate())
     description = models.TextField()
     url = models.URLField()
     via = models.URLField(blank=True)
-    created_on = models.DateTimeField(default=models.LazyDate())
-    modified_on = models.DateTimeField(default=models.LazyDate())
-    legacy = models.GenericRelation(Legacy)
-    tags = models.GenericRelation(TaggedItem)
 
     class Admin:
         list_display = ('title', 'url', 'created_on')
@@ -72,5 +87,17 @@ class Link(models.Model):
         ordering = ["-created_on"]
     
     def get_absolute_url(self):
-        return "/weblog/%s/%s/" % (self.created_on.strftime("%Y/%b/%d").lower(), self.slug)
+        return "/links/%s/#%s" % (self.created_on.strftime("%Y/%b/%d").lower(), self.slug)
+
+    def save(self):
+        super(Link, self).save() # Call the "real" save() method.
+
+        if not self.blogitem.all():
+            self.blogitem.create(created_on=self.created_on,
+                                 slug=self.slug)
+        else:
+            blogitem = self.blogitem.get()
+            blogitem.created_on = self.created_on
+            blogitem.slug = self.slug
+            blogitem.save()
 

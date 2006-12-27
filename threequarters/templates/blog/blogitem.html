@@ -1,0 +1,15 @@
+{% ifequal object.content_type.model "link" %}
+    <p><a href="{{object.content_object.url}}">{{object.content_object.title}}</a><br/>
+        {{object.content_object.description}}<br/>
+        <span class="date small">Posted by <strong>Rod Begbie</strong> on {{ object.created_on|date:"F j, Y" }}</span>
+    </p>
+{% else %} 
+    {% ifequal object.content_type.model "post" %}
+        <h2>{{object.content_object.title}}</h2>
+        <p>{{object.content_object.body_xhtml}}</p>
+        <p class="date small">Posted by <strong>Rod Begbie</strong> on {{ object.created_on|date:"F j, Y" }}</p>
+    {% else %}
+        <h1>UNKNOWN CONTENT TYPE {{object.content_type}}</h1>
+    {% endifequal %}
+{% endifequal %}
+
