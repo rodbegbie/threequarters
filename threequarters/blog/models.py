@@ -13,6 +13,9 @@ class TaggedItem(models.Model):
     def __str__(self):
         return self.display
 
+    def get_absolute_url(self):
+        return "/links/tag/%s/" % (self.tag)
+
 class Legacy(models.Model):
     mt_id = models.IntegerField(db_index=True, unique=True)
     basename = models.CharField(maxlength=50)

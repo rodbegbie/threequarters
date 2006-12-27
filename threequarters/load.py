@@ -24,7 +24,8 @@ cursor.execute("""SELECT entry_id,
                     entry_modified_on,
                     entry_basename
                   FROM mt_entry
-                  WHERE entry_blog_id = 1""")
+                  WHERE entry_blog_id = 10
+                  ORDER BY entry_id """)
 # get the resultset as a tuple
 result = cursor.fetchall()
 # iterate through resultset
@@ -58,7 +59,8 @@ cursor.execute("""SELECT entry_id,
                     entry_modified_on,
                     entry_basename
                   FROM mt_entry
-                  WHERE entry_blog_id = 6""")
+                  WHERE entry_blog_id = 6
+                  ORDER BY entry_id """)
 # get the resultset as a tuple
 result = cursor.fetchall()
 # iterate through resultset
@@ -84,3 +86,22 @@ for record in result:
     blogitem = post.blogitem.get()
     blogitem.legacy = legacy
     blogitem.save()
+
+    cursor2 = db.cursor()
+    cursor2.execute("""SELECT tagmap_tag,
+                        tagmap_input
+                      FROM mt_tagmap
+                      WHERE tagmap_object_id = %d
+                      """ % record[0])
+    # get the resultset as a tuple
+    result2 = cursor2.fetchall()
+    # iterate through resultset
+    for record2 in result2:
+        print "tagging %s / %s" % (record2[0], record2[1])
+        tag = TaggedItem.objects.get_or_create(tag=record2[0])
+        print "TAG!", tag
+        tag[0].display = record2[1]
+        tag[0].save()
+        blogitem.tags.add(tag[0])
+
+

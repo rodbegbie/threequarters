@@ -1,7 +1,11 @@
 {% ifequal object.content_type.model "link" %}
     <p><a href="{{object.content_object.url}}">{{object.content_object.title}}</a><br/>
         {{object.content_object.description}}<br/>
-        <span class="date small">Posted by <strong>Rod Begbie</strong> on {{ object.created_on|date:"F j, Y" }}</span>
+        <span class="date small">Posted by <strong>Rod Begbie</strong> on {{ object.created_on|date:"F j, Y" }}
+        {% for tag in object.tags.all %}
+            :: <a href="{{tag.get_absolute_url}}">{{tag.display}}</a>
+        {% endfor %}
+        </span>
     </p>
 {% else %} 
     {% ifequal object.content_type.model "post" %}
