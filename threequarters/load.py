@@ -33,6 +33,7 @@ for record in result:
     print record[0] , "-->", record[2]
     post = Post()
     post.title = record[2]
+    post.slug = record[7]
     body = record[3]
     if record[4]:
         body = body + record[4]
@@ -70,6 +71,7 @@ for record in result:
     post.title = record[2]
     post.description = record[3]
     post.url = record[4]
+    post.slug = record[7]
 
     via = ""
     if record[1]:
@@ -78,6 +80,22 @@ for record in result:
 
     post.created_on = record[5]
     post.modified_on = record[6]
+
+
+    cursor2 = db.cursor()
+    cursor2.execute("""SELECT tagmap_input
+                      FROM mt_tagmap
+                      WHERE tagmap_object_id = %d
+                      """ % record[0])
+    # get the resultset as a tuple
+    result2 = cursor2.fetchall()
+    # iterate through resultset
+    tags = []
+    for record2 in result2:
+        tags.append(record2[0])
+
+    post.tags = ", ".join(tags)
+    print "TAGS!", post.tags
     post.save()
 
     legacy = Legacy(mt_id=record[0], basename=record[7])
@@ -86,22 +104,4 @@ for record in result:
     blogitem = post.blogitem.get()
     blogitem.legacy = legacy
     blogitem.save()
-
-    cursor2 = db.cursor()
-    cursor2.execute("""SELECT tagmap_tag,
-                        tagmap_input
-                      FROM mt_tagmap
-                      WHERE tagmap_object_id = %d
-                      """ % record[0])
-    # get the resultset as a tuple
-    result2 = cursor2.fetchall()
-    # iterate through resultset
-    for record2 in result2:
-        print "tagging %s / %s" % (record2[0], record2[1])
-        tag = TaggedItem.objects.get_or_create(tag=record2[0])
-        print "TAG!", tag
-        tag[0].display = record2[1]
-        tag[0].save()
-        blogitem.tags.add(tag[0])
-
 

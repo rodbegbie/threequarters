@@ -1,19 +1,48 @@
+{% ifchanged %}
+<h3 class="date">{{ object.created_on|date:"F j, Y" }}</h3>
+{% endifchanged %}
 {% ifequal object.content_type.model "link" %}
-    <p><a href="{{object.content_object.url}}">{{object.content_object.title}}</a><br/>
-        {{object.content_object.description}}<br/>
-        <span class="date small">Posted by <strong>Rod Begbie</strong> on {{ object.created_on|date:"F j, Y" }}
-        {% for tag in object.tags.all %}
-            :: <a href="{{tag.get_absolute_url}}">{{tag.display}}</a>
-        {% endfor %}
-        </span>
-    </p>
-{% else %} 
-    {% ifequal object.content_type.model "post" %}
-        <h2>{{object.content_object.title}}</h2>
-        <p>{{object.content_object.body_xhtml}}</p>
-        <p class="date small">Posted by <strong>Rod Begbie</strong> on {{ object.created_on|date:"F j, Y" }}</p>
-    {% else %}
-        <h1>UNKNOWN CONTENT TYPE {{object.content_type}}</h1>
-    {% endifequal %}
+    <div class="linkentry entry">
+        <a name="{{object.content_object.slug}}" />
+        {% if object.legacy %}
+        <a name="{{object.legacy.mt_id|stringformat:"06d"}}" />
+        {% endif %}
+        <h4><a class="linklink" href="{{ object.content_object.url|fix_ampersands }}">{{object.content_object.title}}</a></h4>
+        <div class="linkdescription">
+            {{object.content_object.description}}
+            {% if object.content_object.via %}
+                [&nbsp;<a href="{{ object.content_object.via|fix_ampersands }}" title="I found this link at...">via</a>&nbsp;]
+            {% endif %}
+        </div>
+        <div class="postinfo">
+            Filed under 
+            {% for tag in object.tags.all %}
+                : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
+            {% endfor %}
+            <a class="linkpermalink" href="{{object.content_object.get_absolute_url}}" title="permalink">0 comments &raquo;</a>
+        </div>
+    </div>
+{% else %}{% ifequal object.content_type.model "post" %}
+    <h2>{{object.content_object.title}}</h2>
+    <p>{{object.content_object.body_xhtml}}</p>
+    <p class="postinfo">Posted by <strong>Rod Begbie</strong> on {{ object.created_on|date:"F j, Y" }}</p>
+{% else %}{% ifequal object.content_type.model "flickrphoto" %}
+    <div class="flickrentry entry">
+        <h4>{{object.content_object.title|escape}}</h4>
+        <div class="postbody">
+            <img class="flickrphoto" alt="{{object.content_object.title|escape}}" src="{{object.content_object.image_url}}" height="{{object.content_object.image_height}}" width="{{object.content_object.image_width}}" />
+            {{object.content_object.description_original|escape|linebreaks}}
+        </div>
+        <div class="postinfo">
+            Filed under 
+            {% for tag in object.tags.all %}
+                : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
+            {% endfor %}
+            <a class="linkpermalink" href="{{object.content_object.get_absolute_url}}" title="permalink">0 comments &raquo;</a>
+        </div>
+    </div>
+{% else %}
+    <h1>UNKNOWN CONTENT TYPE {{object.content_type}}</h1>
 {% endifequal %}
-
+{% endifequal %}
+{% endifequal %}

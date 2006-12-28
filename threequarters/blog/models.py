@@ -81,6 +81,7 @@ class Link(models.Model):
     description = models.TextField()
     url = models.URLField()
     via = models.URLField(blank=True)
+    tags = models.CharField(maxlength=255)
 
     class Admin:
         list_display = ('title', 'url', 'created_on')
@@ -90,17 +91,78 @@ class Link(models.Model):
         ordering = ["-created_on"]
     
     def get_absolute_url(self):
-        return "/links/%s/#%s" % (self.created_on.strftime("%Y/%b/%d").lower(), self.slug)
+        return "/%s/#%s" % (self.created_on.strftime("%Y/%b/%d").lower(), self.slug)
 
     def save(self):
         super(Link, self).save() # Call the "real" save() method.
 
         if not self.blogitem.all():
-            self.blogitem.create(created_on=self.created_on,
-                                 slug=self.slug)
+            blogitem = self.blogitem.create(created_on=self.created_on,
+                                            slug=self.slug)
         else:
             blogitem = self.blogitem.get()
             blogitem.created_on = self.created_on
             blogitem.slug = self.slug
             blogitem.save()
+
+        blogitem.tags.clear()
+        import string
+        from threequarters.utils import Translator
+        trans = Translator(keep=string.digits+string.lowercase)
+        for display in self.tags.split(","):
+            display = display.strip()
+            tag = trans(display.lower())
+            tagitem = TaggedItem.objects.get_or_create(tag=tag)[0]
+            tagitem.display = display
+            tagitem.save()
+            blogitem.tags.add(tagitem)
+
+class FlickrPhoto(models.Model):
+    blogitem = models.GenericRelation(BlogItem)
+    flickr_id = models.IntegerField(db_index=True)
+    title = models.CharField(maxlength=255)
+    description_original = models.TextField()
+    description_xhtml = models.TextField()
+    flickr_url = models.URLField()
+    image_url = models.URLField()
+    image_width = models.IntegerField(default=0)
+    image_height = models.IntegerField(default=0)
+    tags = models.CharField(maxlength=255)
+    created_on = models.DateTimeField(default=models.LazyDate())
+
+    class Admin:
+        list_display = ('title', 'created_on')
+        list_filter = ['created_on']
+
+    class Meta:
+        ordering = ["-created_on"]
+    
+    def get_absolute_url(self):
+        return self.flickr_url
+
+    def save(self):
+        import textile 
+        self.description_xhtml = textile.textile(self.description_original)
+        super(FlickrPhoto, self).save() # Call the "real" save() method.
+
+        if not self.blogitem.all():
+            blogitem = self.blogitem.create(created_on=self.created_on,
+                                            slug="")
+        else:
+            blogitem = self.blogitem.get()
+            blogitem.created_on = self.created_on
+            blogitem.slug = ""
+            blogitem.save()
+
+        blogitem.tags.clear()
+        import string
+        from threequarters.utils import Translator
+        trans = Translator(keep=string.digits+string.lowercase)
+        for display in self.tags.split(","):
+            display = display.strip()
+            tag = trans(display.lower())
+            tagitem = TaggedItem.objects.get_or_create(tag=tag)[0]
+            tagitem.display = display
+            tagitem.save()
+            blogitem.tags.add(tagitem)
 
