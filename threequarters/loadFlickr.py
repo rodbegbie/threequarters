@@ -10,7 +10,7 @@ for photo in photos:
     print photo.title, photo.dateposted
     (flickrphoto, new) = FlickrPhoto.objects.get_or_create(flickr_id = photo.id)
     flickrphoto.title = photo.title.encode('utf-8')
-    flickrphoto.description_original = photo.description.encode('utf-8')
+    flickrphoto.description = photo.description.encode('utf-8')
     flickrphoto.created_on = datetime.datetime.fromtimestamp(float(photo.dateposted))
     
     sizes = photo.getSizes()

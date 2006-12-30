@@ -2,11 +2,9 @@
 
 from threequarters.blog.models import *
 
-BlogItem.objects.all().delete()
 Legacy.objects.all().delete()
 Post.objects.all().delete()
 Link.objects.all().delete()
-TaggedItem.objects.all().delete()
 
 # import MySQL module
 import MySQLdb
@@ -24,7 +22,7 @@ cursor.execute("""SELECT entry_id,
                     entry_modified_on,
                     entry_basename
                   FROM mt_entry
-                  WHERE entry_blog_id = 10
+                  WHERE entry_blog_id = 1
                   ORDER BY entry_id """)
 # get the resultset as a tuple
 result = cursor.fetchall()

@@ -22,9 +22,13 @@ urlpatterns = patterns('django.views.generic.date_based',
    (r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/$',               'archive_day',   blogitems_dict),
    (r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/$',                                'archive_month', blogitems_dict),
    (r'^(?P<year>\d{4})/$',                                                    'archive_year',  blogitems_dict),
-   (r'^/?$',                                                                  'archive_index', blogitems_dict),
+   (r'^/?$',                                                                  'archive_index', dict(blogitems_dict, num_latest=25)),
 )
 
 urlpatterns += patterns('threequarters.blog.urls',
-    (r'^links/tag/(?P<tag>[-\w]+)/$', 'generic_wrapper', dict(queryset=TaggedItem.objects.all(), paginate_by=10)),
+    (r'^tag/(?P<tag>[-\w]+)/$', 'generic_wrapper', dict(queryset=TaggedItem.objects.all(), paginate_by=10)),
+)
+
+urlpatterns += patterns('',
+    (r'^index.atom$', 'threequarters.blog.feeds.feed'),
 )

@@ -14,7 +14,7 @@ class TaggedItem(models.Model):
         return self.display
 
     def get_absolute_url(self):
-        return "/links/tag/%s/" % (self.tag)
+        return "/tag/%s/" % (self.tag)
 
 class Legacy(models.Model):
     mt_id = models.IntegerField(db_index=True, unique=True)
@@ -121,8 +121,7 @@ class FlickrPhoto(models.Model):
     blogitem = models.GenericRelation(BlogItem)
     flickr_id = models.IntegerField(db_index=True)
     title = models.CharField(maxlength=255)
-    description_original = models.TextField()
-    description_xhtml = models.TextField()
+    description = models.TextField()
     flickr_url = models.URLField()
     image_url = models.URLField()
     image_width = models.IntegerField(default=0)
@@ -141,8 +140,6 @@ class FlickrPhoto(models.Model):
         return self.flickr_url
 
     def save(self):
-        import textile 
-        self.description_xhtml = textile.textile(self.description_original)
         super(FlickrPhoto, self).save() # Call the "real" save() method.
 
         if not self.blogitem.all():
@@ -166,3 +163,87 @@ class FlickrPhoto(models.Model):
             tagitem.save()
             blogitem.tags.add(tagitem)
 
+class Twitter(models.Model):
+    blogitem = models.GenericRelation(BlogItem)
+    twitter_id = models.IntegerField(db_index=True)
+    description = models.TextField()
+    created_on = models.DateTimeField(default=models.LazyDate())
+
+    class Admin:
+        list_display = ('description', 'created_on')
+        list_filter = ['created_on']
+
+    class Meta:
+        ordering = ["-created_on"]
+    
+    def get_absolute_url(self):
+        return "http://twitter.com/rodbegbie/statuses/%d" % self.twitter_id
+
+    def save(self):
+        super(Twitter, self).save() # Call the "real" save() method.
+
+        if not self.blogitem.all():
+            blogitem = self.blogitem.create(created_on=self.created_on,
+                                            slug="")
+        else:
+            blogitem = self.blogitem.get()
+            blogitem.created_on = self.created_on
+            blogitem.slug = ""
+            blogitem.save()
+
+(AMAZON_COM,
+ AMAZON_CO_UK) = range(2)
+AMAZON_COUNTRIES = ("us", "uk")
+AMAZON_CHOICES=[(n, AMAZON_COUNTRIES[n]) for n in range(2)]
+AMAZON_URLS=("http://amazon.com/o/ASIN/%s/groovymother-20/ref=nosim/",
+             "http://amazon.co.uk/o/ASIN/%s/groovymother-21/ref=nosim/",
+             )
+
+class AmazonCD(models.Model):
+    blogitem = models.GenericRelation(BlogItem)
+    asin = models.CharField(db_index=True, maxlength=15)
+    store = models.IntegerField(choices=AMAZON_CHOICES, default=AMAZON_COM)
+    title = models.CharField(maxlength=255, blank=True)
+    artist = models.CharField(maxlength=255, blank=True)
+    image_url = models.URLField(blank=True)
+    comments = models.TextField(blank=True)
+    created_on = models.DateTimeField(default=models.LazyDate())
+
+    class Admin:
+        list_display = ('asin', 'store', 'title', 'created_on')
+        list_filter = ['store', 'created_on']
+
+    class Meta:
+        ordering = ["-created_on"]
+    
+    def get_absolute_url(self):
+        return AMAZON_URLS[self.store] % self.asin
+
+    def save(self):
+        if not self.title:
+            from threequarters import amazon
+            amazon.setLicense("1AGTVVHBTYPBQKT7G482")
+            res = amazon.searchByASIN(self.asin, locale=AMAZON_COUNTRIES[self.store])[0]
+            print res.ProductName.encode('UTF-8')
+            self.title = res.ProductName
+            try:
+                artist = res.Artists.Artist
+                if isinstance(artist, list):
+                    artist = artist[0]
+                self.artist = artist
+            except:
+                # artist name failed for some reason
+                # Audiobook?
+                pass
+            self.image_url = res.ImageUrlSmall
+
+        super(AmazonCD, self).save() # Call the "real" save() method.
+
+        if not self.blogitem.all():
+            blogitem = self.blogitem.create(created_on=self.created_on,
+                                            slug=self.asin)
+        else:
+            blogitem = self.blogitem.get()
+            blogitem.created_on = self.created_on
+            blogitem.slug = self.asin
+            blogitem.save()
