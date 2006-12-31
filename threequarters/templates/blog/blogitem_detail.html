@@ -1,8 +1,9 @@
+{% extends "blog/base.html" %}
+
+{% block title %}{{object.content_object.title}}{% endblock %}A
+{% block title2 %}{{object.content_object.title}}{% endblock %}A
+
 {% block content %}
-
-<h1>Latest entries</h1>
-
 {% include "blog/blogitem.html" %}
-
 {% endblock %}
 

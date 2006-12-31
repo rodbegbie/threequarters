@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 
-class TaggedItem(models.Model):
+class Tag(models.Model):
     """A tag on an item."""
     tag = models.SlugField()
     display = models.CharField(maxlength=100)
@@ -25,7 +25,7 @@ class Legacy(models.Model):
 
 class BlogItem(models.Model):
     legacy = models.ForeignKey(Legacy, null=True)
-    tags = models.ManyToManyField(TaggedItem)
+    tags = models.ManyToManyField(Tag)
 
     created_on = models.DateTimeField(default=models.LazyDate())
     slug = models.SlugField()
@@ -41,11 +41,12 @@ class Post(models.Model):
     blogitem = models.GenericRelation(BlogItem)
     title = models.CharField(maxlength=255)
     slug = models.SlugField(maxlength=30, prepopulate_from=("title",))
+    body_textile = models.TextField()
+    body_xhtml = models.TextField(blank=True)
+    tags = models.CharField(maxlength=255)
+    draft = models.BooleanField(default=False)
     created_on = models.DateTimeField(default=models.LazyDate())
     modified_on = models.DateTimeField(default=models.LazyDate())
-    body_textile = models.TextField()
-    body_xhtml = models.TextField()
-    draft = models.BooleanField(default=False)
 
     class Admin:
         list_display = ('title', 'slug', 'created_on', 'draft')
@@ -60,13 +61,25 @@ class Post(models.Model):
         super(Post, self).save() # Call the "real" save() method.
 
         if not self.blogitem.all():
-            self.blogitem.create(created_on=self.created_on,
-                                 slug=self.slug)
+            blogitem = self.blogitem.create(created_on=self.created_on,
+                                            slug=self.slug)
         else:
             blogitem = self.blogitem.get()
             blogitem.created_on = self.created_on
             blogitem.slug = self.slug
             blogitem.save()
+
+        blogitem.tags.clear()
+        import string
+        from threequarters.utils import Translator
+        trans = Translator(keep=string.digits+string.lowercase)
+        for display in self.tags.split(","):
+            display = display.strip()
+            tag = trans(display.lower())
+            tagitem = Tag.objects.get_or_create(tag=tag)[0]
+            tagitem.display = display
+            tagitem.save()
+            blogitem.tags.add(tagitem)
 
     def get_absolute_url(self):
         return "/%s/%s/" % (self.created_on.strftime("%Y/%b/%d").lower(), self.slug)
@@ -76,12 +89,12 @@ class Link(models.Model):
     blogitem = models.GenericRelation(BlogItem)
     title = models.CharField(maxlength=255)
     slug = models.SlugField(maxlength=30, prepopulate_from=("title",))
-    created_on = models.DateTimeField(default=models.LazyDate())
-    modified_on = models.DateTimeField(default=models.LazyDate())
     description = models.TextField()
     url = models.URLField()
     via = models.URLField(blank=True)
     tags = models.CharField(maxlength=255)
+    created_on = models.DateTimeField(default=models.LazyDate())
+    modified_on = models.DateTimeField(default=models.LazyDate())
 
     class Admin:
         list_display = ('title', 'url', 'created_on')
@@ -112,7 +125,7 @@ class Link(models.Model):
         for display in self.tags.split(","):
             display = display.strip()
             tag = trans(display.lower())
-            tagitem = TaggedItem.objects.get_or_create(tag=tag)[0]
+            tagitem = Tag.objects.get_or_create(tag=tag)[0]
             tagitem.display = display
             tagitem.save()
             blogitem.tags.add(tagitem)
@@ -158,38 +171,10 @@ class FlickrPhoto(models.Model):
         for display in self.tags.split(","):
             display = display.strip()
             tag = trans(display.lower())
-            tagitem = TaggedItem.objects.get_or_create(tag=tag)[0]
+            tagitem = Tag.objects.get_or_create(tag=tag)[0]
             tagitem.display = display
             tagitem.save()
             blogitem.tags.add(tagitem)
-
-class Twitter(models.Model):
-    blogitem = models.GenericRelation(BlogItem)
-    twitter_id = models.IntegerField(db_index=True)
-    description = models.TextField()
-    created_on = models.DateTimeField(default=models.LazyDate())
-
-    class Admin:
-        list_display = ('description', 'created_on')
-        list_filter = ['created_on']
-
-    class Meta:
-        ordering = ["-created_on"]
-    
-    def get_absolute_url(self):
-        return "http://twitter.com/rodbegbie/statuses/%d" % self.twitter_id
-
-    def save(self):
-        super(Twitter, self).save() # Call the "real" save() method.
-
-        if not self.blogitem.all():
-            blogitem = self.blogitem.create(created_on=self.created_on,
-                                            slug="")
-        else:
-            blogitem = self.blogitem.get()
-            blogitem.created_on = self.created_on
-            blogitem.slug = ""
-            blogitem.save()
 
 (AMAZON_COM,
  AMAZON_CO_UK) = range(2)
@@ -247,3 +232,22 @@ class AmazonCD(models.Model):
             blogitem.created_on = self.created_on
             blogitem.slug = self.asin
             blogitem.save()
+
+
+
+class Twitter(models.Model):
+    twitter_id = models.IntegerField(db_index=True)
+    description = models.TextField()
+    created_on = models.DateTimeField(default=models.LazyDate())
+
+    class Admin:
+        list_display = ('description', 'created_on')
+        list_filter = ['created_on']
+
+    class Meta:
+        ordering = ["-created_on"]
+    
+    def get_absolute_url(self):
+        return "http://twitter.com/rodbegbie/statuses/%d" % self.twitter_id
+
+

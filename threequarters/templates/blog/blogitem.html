@@ -26,11 +26,17 @@
 
 
 {% else %}{% ifequal object.content_type.model "post" %}
-    <a class="linkpermalink" href="{{object.content_object.get_absolute_url}}" title="permalink">&raquo;</a>
-    <h2>{{object.content_object.title|escape}}</h2>
-    <p>{{object.content_object.body_xhtml}}</p>
-    <p class="postinfo">Posted by <strong>Rod Begbie</strong> on {{ object.created_on|date:"F j, Y" }}</p>
-
+    <div class="flickrentry entry">
+        <a class="linkpermalink" href="{{object.content_object.get_absolute_url}}" title="permalink">&raquo;</a>
+        <h4>{{object.content_object.title|escape}}</h2>
+        <p>{{object.content_object.body_xhtml}}</p>
+        <div class="postinfo">
+            Filed under 
+            {% for tag in object.tags.all %}
+                : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
+            {% endfor %}
+        </div>
+    </div>
 
 {% else %}{% ifequal object.content_type.model "flickrphoto" %}
     <div class="flickrentry entry">

@@ -1,0 +1,12 @@
+{% extends "blog/base.html" %}
+
+
+{% block title %}Entries for week beginning {{ week|date:"F j, Y" }}{% endblock %}
+{% block title2 %}Entries for week beginning {{ week|date:"F j, Y" }}{% endblock %}
+
+{% block content %}
+{% for object in object_list %}
+    {% include "blog/blogitem.html" %}
+{% endfor %}
+{% endblock %}
+

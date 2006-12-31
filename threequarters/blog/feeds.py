@@ -35,7 +35,27 @@ def feed(request):
     handler.addQuickElement(u"updated", rfc3339_date(blogitems[0].created_on).decode("ascii"))
    
     for item in blogitems:
-        if item.content_type.model == "link":
+        if item.content_type.model == "post":
+            post = item.content_object
+            handler.startElement(u"entry", {})
+            handler.addQuickElement(u"title", post.title)
+            handler.addQuickElement(u"id", "tag:groovymother.com,%s:%s"%(post.created_on.strftime('%Y-%m-%d'), post.id))
+            
+            handler.addQuickElement(u"content", post.body_xhtml, {u"type": u"html"})
+
+            handler.addQuickElement(u"link", None,
+                                    { u"rel": "alternate",
+                                      u"type": u"text/html",
+                                      u"href": post.get_absolute_url()
+                                    })
+
+            handler.addQuickElement(u"published", rfc3339_date(post.created_on).decode("ascii"))
+            handler.addQuickElement(u"updated", rfc3339_date(post.modified_on).decode("ascii"))
+
+            #TODO: tags
+            handler.endElement(u"entry")
+
+        elif item.content_type.model == "link":
             link = item.content_object
             handler.startElement(u"entry", {})
             handler.addQuickElement(u"title", link.title)
@@ -101,5 +121,6 @@ def feed(request):
             handler.addQuickElement(u"published", rfc3339_date(cd.created_on).decode("ascii"))
             handler.addQuickElement(u"updated", rfc3339_date(cd.created_on).decode("ascii"))
             handler.endElement(u"entry")
+
     handler.endElement(u"feed")
     return HttpResponse(response.getvalue(), mimetype="application/atom+xml")

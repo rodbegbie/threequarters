@@ -1,0 +1,28 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Filed under '{{tag}}'{% endblock %}
+{% block title2 %}Filed under '{{tag}}'{% endblock %}
+
+{% block content %}
+{% for object in object_list %}
+    {% include "blog/blogitem.html" %}
+{% endfor %}
+{% endblock %}
+
+{% block sidebar %}
+{% if is_paginated %}
+<div class="sidebartitle">Navigation</div>
+<div class="sidebarcontent">
+    <p>Page {{page}} of {{pages}}</p>
+    <p>
+    {% if has_previous %}<a href="./?page={{previous}}">Previous page</a>{% endif %}
+    {% if has_next %}{% if has_previous %}|{% endif %}{% endif %}
+    {% if has_next %}<a href="./?page={{next}}">Next page</a>{% endif %}
+</div>
+{% endif %}
+
+<div class="sidebartitle">TODO</div>
+<div class="sidebarcontent">
+<p>one day, this'll be a tag cloud or something</p>
+</div>
+{% endblock %}
