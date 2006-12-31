@@ -3,7 +3,7 @@ from urllib import urlopen
 import time, datetime
 from threequarters.blog.models import Twitter
 
-url = 'http://twitter.com/t/status/user_timeline/761?count=200'
+url = 'http://twitter.com/t/status/user_timeline/761?count=5'
 json = urlopen(url).read()
 
 for entry in simplejson.loads(json):

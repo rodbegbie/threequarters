@@ -7,8 +7,10 @@ from django.utils.html import linebreaks
 def feed(request, linksonly=False):
     if linksonly:
         blogitems = BlogItem.objects.filter(content_type__model="link").order_by('-created_on')[:30]
+        selfurl = "http://groovymother.com/links/index.atom"
     else:
         blogitems = BlogItem.objects.all().order_by('-created_on')[:30]
+        selfurl = "http://groovymother.com/index.atom"
 
     from StringIO import StringIO
     response = StringIO()
@@ -32,7 +34,7 @@ def feed(request, linksonly=False):
     handler.addQuickElement(u"generator", u"ThreeQuarters 0.5")
     handler.addQuickElement(u"rights", u"Copyright (c) 2006, Rod Begbie")
     handler.addQuickElement(u"link", None, {u"rel": u"self",
-                                            u"href": u"http://groovymother.com/index.atom",
+                                            u"href": selfurl,
                                             u"type": u"application/atom+xml"})
 
     handler.addQuickElement(u"updated", rfc3339_date(blogitems[0].created_on).decode("ascii"))

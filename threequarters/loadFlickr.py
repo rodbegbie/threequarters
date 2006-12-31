@@ -4,10 +4,10 @@ import datetime
 
 flickr.API_KEY='1866fbe3d625142f11c545d7b881d511'
 
-photos = flickr.people_getPublicPhotos(user_id="35034351963@N01", per_page=600)
+photos = flickr.people_getPublicPhotos(user_id="35034351963@N01", per_page=10)
 
 for photo in photos:
-    print photo.title, photo.dateposted
+    print photo.title.encode('utf-8'), photo.dateposted
     (flickrphoto, new) = FlickrPhoto.objects.get_or_create(flickr_id = photo.id)
     flickrphoto.title = photo.title.encode('utf-8')
     flickrphoto.description = photo.description.encode('utf-8')
@@ -22,10 +22,11 @@ for photo in photos:
 
     flickrphoto.flickr_url = "http://flickr.com/photos/groovymother/%s/" % photo.id
 
-    tags = []
-    for tag in photo.tags:
-        tags.append(tag.raw.encode('utf-8'))
-
-    flickrphoto.tags = ", ".join(tags)
+    if photo.tags:
+        tags = []
+        for tag in photo.tags:
+            tags.append(tag.raw.encode('utf-8'))
+    
+        flickrphoto.tags = ", ".join(tags)
 
     flickrphoto.save()

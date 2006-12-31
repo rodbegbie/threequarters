@@ -43,4 +43,13 @@ urlpatterns += patterns('threequarters.blog.feeds',
 urlpatterns += patterns('threequarters.blog.mtredirects',
     (r'^archives/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[-\w]+).html', 'entry'),
     (r'^links/archives/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})-week/', 'linkarchive'),
+    (r'^links/tag/(?P<tag>[-\w]+)/', 'linktag'),
 )
+
+# Static redirects
+urlpatterns += patterns('django.views.generic.simple',
+    (r'^images/(?P<image>.*)$', 'redirect_to', {'url': 'http://static.groovymother.com/images/%(image)s'}),
+    (r'^atom.xml$', 'redirect_to', {'url': '/index.atom'}),
+    (r'^rss.xml$', 'redirect_to', {'url': '/index.atom'}),
+)
+
