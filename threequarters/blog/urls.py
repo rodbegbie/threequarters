@@ -6,7 +6,12 @@ urlpatterns = patterns('',
 
 from django.views.generic.list_detail import object_list
 def tag_wrapper(request, queryset, tag=None, *args, **kwargs):
-    queryset = queryset.get(tag=tag).blogitem_set.all()
+    try:
+        queryset = queryset.get(tag=tag).blogitem_set.all()
+    except:
+        # Tag not found
+        from django.http import Http404
+        raise Http404
     kwargs["extra_context"] = {'tag': tag}
     return object_list(request, queryset, *args, **kwargs) 
 
@@ -49,6 +54,8 @@ urlpatterns += patterns('threequarters.blog.mtredirects',
 # Static redirects
 urlpatterns += patterns('django.views.generic.simple',
     (r'^images/(?P<image>.*)$', 'redirect_to', {'url': 'http://static.groovymother.com/images/%(image)s'}),
+    (r'^photos/(?P<image>.*)$', 'redirect_to', {'url': 'http://static.groovymother.com/photos/%(image)s'}),
+    (r'^mirror/(?P<image>.*)$', 'redirect_to', {'url': 'http://static.groovymother.com/mirror/%(image)s'}),
     (r'^atom.xml$', 'redirect_to', {'url': '/index.atom'}),
     (r'^rss.xml$', 'redirect_to', {'url': '/index.atom'}),
 )

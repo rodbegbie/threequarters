@@ -106,9 +106,15 @@ class Link(models.Model):
         ordering = ["-created_on"]
     
     def get_absolute_url(self):
-        from datetime import timedelta
-        dayafter = self.created_on + timedelta(days=1) # Django weeks being on Monday, datetime on Sunday
-        return "/%s/#%s" % (dayafter.strftime("%Y/week/%W"), self.slug)
+        year = int(self.created_on.strftime("%Y"))
+        week = int(self.created_on.strftime("%W"))
+        
+        # Django's weekly view starts on Sunday, while strftime starts on Monday
+        # So add one week for Sundays.
+        if self.created_on.strftime("%a") == "Sun":
+            week = week + 1
+        
+        return "/%d/week/%d/#%s" % (year, week, self.slug)
 
     def save(self):
         self.modified_on = datetime.now()

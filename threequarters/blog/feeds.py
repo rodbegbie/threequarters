@@ -51,7 +51,7 @@ def feed(request, linksonly=False):
             handler.addQuickElement(u"link", None,
                                     { u"rel": "alternate",
                                       u"type": u"text/html",
-                                      u"href": post.get_absolute_url()
+                                      u"href": 'http://groovymother.com' + post.get_absolute_url()
                                     })
 
             handler.addQuickElement(u"published", rfc3339_date(post.created_on).decode("ascii"))
@@ -70,7 +70,7 @@ def feed(request, linksonly=False):
             handler.addQuickElement(u"link", None,
                                     { u"rel": "alternate",
                                       u"type": u"text/html",
-                                      u"href": link.get_absolute_url()
+                                      u"href": 'http://groovymother.com' + link.get_absolute_url()
                                     })
             handler.addQuickElement(u"link", None,
                                     { u"rel": "related",
