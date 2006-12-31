@@ -4,8 +4,11 @@ from django.utils.xmlutils import SimplerXMLGenerator
 from django.utils.feedgenerator import rfc3339_date
 from django.utils.html import linebreaks
 
-def feed(request):
-    blogitems = BlogItem.objects.exclude(content_type__model="twitter").order_by('-created_on')[:30]
+def feed(request, linksonly=False):
+    if linksonly:
+        blogitems = BlogItem.objects.filter(content_type__model="link").order_by('-created_on')[:30]
+    else:
+        blogitems = BlogItem.objects.all().order_by('-created_on')[:30]
 
     from StringIO import StringIO
     response = StringIO()

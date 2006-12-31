@@ -4,7 +4,7 @@ import datetime
 
 flickr.API_KEY='1866fbe3d625142f11c545d7b881d511'
 
-photos = flickr.people_getPublicPhotos(user_id="35034351963@N01")
+photos = flickr.people_getPublicPhotos(user_id="35034351963@N01", per_page=600)
 
 for photo in photos:
     print photo.title, photo.dateposted

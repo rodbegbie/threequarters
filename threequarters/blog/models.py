@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
+from datetime import datetime
 
 class Tag(models.Model):
     """A tag on an item."""
@@ -56,6 +57,7 @@ class Post(models.Model):
         ordering = ["-created_on"]
 
     def save(self):
+        self.modified_on = datetime.now()
         import textile 
         self.body_xhtml = textile.textile(self.body_textile)
         super(Post, self).save() # Call the "real" save() method.
@@ -104,9 +106,12 @@ class Link(models.Model):
         ordering = ["-created_on"]
     
     def get_absolute_url(self):
-        return "/%s/#%s" % (self.created_on.strftime("%Y/%b/%d").lower(), self.slug)
+        from datetime import timedelta
+        dayafter = self.created_on + timedelta(days=1) # Django weeks being on Monday, datetime on Sunday
+        return "/%s/#%s" % (dayafter.strftime("%Y/week/%W"), self.slug)
 
     def save(self):
+        self.modified_on = datetime.now()
         super(Link, self).save() # Call the "real" save() method.
 
         if not self.blogitem.all():
