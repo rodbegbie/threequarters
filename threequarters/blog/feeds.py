@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.utils.xmlutils import SimplerXMLGenerator
 from django.utils.feedgenerator import rfc3339_date
 from django.utils.html import linebreaks
+from datetime import timedelta
 
 def feed(request, linksonly=False):
     if linksonly:
@@ -37,7 +38,7 @@ def feed(request, linksonly=False):
                                             u"href": selfurl,
                                             u"type": u"application/atom+xml"})
 
-    handler.addQuickElement(u"updated", rfc3339_date(blogitems[0].created_on).decode("ascii"))
+    handler.addQuickElement(u"updated", rfc3339_date(blogitems[0].created_on+timedelta(hours=5)).decode("ascii"))
    
     for item in blogitems:
         if item.content_type.model == "post":
@@ -54,10 +55,15 @@ def feed(request, linksonly=False):
                                       u"href": 'http://groovymother.com' + post.get_absolute_url()
                                     })
 
-            handler.addQuickElement(u"published", rfc3339_date(post.created_on).decode("ascii"))
-            handler.addQuickElement(u"updated", rfc3339_date(post.modified_on).decode("ascii"))
+            handler.addQuickElement(u"published", rfc3339_date(post.created_on+timedelta(hours=5)).decode("ascii"))
+            handler.addQuickElement(u"updated", rfc3339_date(post.modified_on+timedelta(hours=5)).decode("ascii"))
 
-            #TODO: tags
+            for tag in item.tags.all():
+                handler.addQuickElement(u"category", None,
+                                        { u"scheme": u"http://groovymother.com/tag/",
+                                          u"term": tag.tag,
+                                          u"label": tag.display
+                                        })
             handler.endElement(u"entry")
 
         elif item.content_type.model == "link":
@@ -85,10 +91,15 @@ def feed(request, linksonly=False):
                                           u"href": link.via
                                         })
 
-            handler.addQuickElement(u"published", rfc3339_date(link.created_on).decode("ascii"))
-            handler.addQuickElement(u"updated", rfc3339_date(link.modified_on).decode("ascii"))
+            handler.addQuickElement(u"published", rfc3339_date(link.created_on+timedelta(hours=5)).decode("ascii"))
+            handler.addQuickElement(u"updated", rfc3339_date(link.modified_on+timedelta(hours=5)).decode("ascii"))
 
-            #TODO: tags
+            for tag in item.tags.all():
+                handler.addQuickElement(u"category", None,
+                                        { u"scheme": u"http://groovymother.com/tag/",
+                                          u"term": tag.tag,
+                                          u"label": tag.display
+                                        })
             handler.endElement(u"entry")
 
 
@@ -105,9 +116,14 @@ def feed(request, linksonly=False):
                                       u"type": u"text/html",
                                       u"href": photo.get_absolute_url()
                                     })
-            handler.addQuickElement(u"published", rfc3339_date(photo.created_on).decode("ascii"))
-            handler.addQuickElement(u"updated", rfc3339_date(photo.created_on).decode("ascii"))
-            #TODO: tags
+            handler.addQuickElement(u"published", rfc3339_date(photo.created_on+timedelta(hours=5)).decode("ascii"))
+            handler.addQuickElement(u"updated", rfc3339_date(photo.created_on+timedelta(hours=5)).decode("ascii"))
+            for tag in item.tags.all():
+                handler.addQuickElement(u"category", None,
+                                        { u"scheme": u"http://groovymother.com/tag/",
+                                          u"term": tag.tag,
+                                          u"label": tag.display
+                                        })
             handler.endElement(u"entry")
 
         elif item.content_type.model == "amazoncd":
@@ -123,8 +139,8 @@ def feed(request, linksonly=False):
                                       u"type": u"text/html",
                                       u"href": cd.get_absolute_url()
                                     })
-            handler.addQuickElement(u"published", rfc3339_date(cd.created_on).decode("ascii"))
-            handler.addQuickElement(u"updated", rfc3339_date(cd.created_on).decode("ascii"))
+            handler.addQuickElement(u"published", rfc3339_date(cd.created_on+timedelta(hours=5)).decode("ascii"))
+            handler.addQuickElement(u"updated", rfc3339_date(cd.created_on+timedelta(hours=5)).decode("ascii"))
             handler.endElement(u"entry")
 
     handler.endElement(u"feed")
