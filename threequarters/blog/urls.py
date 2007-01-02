@@ -28,7 +28,7 @@ urlpatterns += patterns('django.views.generic.date_based',
    (r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/(?P<slug>[-\w]+)/$', 'object_detail', dict(blogitems_dict, slug_field='slug')),
    (r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/$',                  'archive_day',   blogitems_dict),
    (r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/$',                                   'archive_month', blogitems_dict),
-   (r'^(?P<year>\d{4})/week/(?P<week>\d{2})/$',                                  'archive_week', blogitems_dict),
+   (r'^(?P<year>\d{4})/week/(?P<week>\d{1,2})/$',                                  'archive_week', blogitems_dict),
    (r'^(?P<year>\d{4})/$',                                                       'archive_year',  blogitems_dict),
    (r'^/?$',                                                                     'archive_index', dict(blogitems_dict, num_latest=25, template_name="blog/index.html")),
 )
@@ -56,7 +56,5 @@ urlpatterns += patterns('django.views.generic.simple',
     (r'^images/(?P<image>.*)$', 'redirect_to', {'url': 'http://static.groovymother.com/images/%(image)s'}),
     (r'^photos/(?P<image>.*)$', 'redirect_to', {'url': 'http://static.groovymother.com/photos/%(image)s'}),
     (r'^mirror/(?P<image>.*)$', 'redirect_to', {'url': 'http://static.groovymother.com/mirror/%(image)s'}),
-    (r'^atom.xml$', 'redirect_to', {'url': '/index.atom'}),
-    (r'^rss.xml$', 'redirect_to', {'url': '/index.atom'}),
 )
 

@@ -44,7 +44,7 @@ class Post(models.Model):
     slug = models.SlugField(maxlength=30, prepopulate_from=("title",))
     body_textile = models.TextField()
     body_xhtml = models.TextField(blank=True)
-    tags = models.CharField(maxlength=255)
+    tags = models.CharField(maxlength=255, blank=True)
     draft = models.BooleanField(default=False)
     created_on = models.DateTimeField(default=models.LazyDate())
     modified_on = models.DateTimeField(default=models.LazyDate())
@@ -219,7 +219,7 @@ class AmazonCD(models.Model):
         if not self.title:
             from threequarters import amazon
             amazon.setLicense("1AGTVVHBTYPBQKT7G482")
-            res = amazon.searchByASIN(self.asin, locale=AMAZON_COUNTRIES[self.store])[0]
+            res = amazon.searchByASIN(self.asin, locale=AMAZON_COUNTRIES[int(self.store)])[0]
             print res.ProductName.encode('UTF-8')
             self.title = res.ProductName
             try:

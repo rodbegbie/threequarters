@@ -58,6 +58,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.doc.XViewMiddleware',
     'django.middleware.gzip.GZipMiddleware',
 #    'django.middleware.http.ConditionalGetMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 )
 
 ROOT_URLCONF = 'threequarters.urls'
@@ -68,11 +70,13 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.flatpages',
+    'django.contrib.redirects',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'django.contrib.admin',
     'threequarters.blog'
 )
 
