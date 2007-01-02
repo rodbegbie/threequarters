@@ -121,6 +121,9 @@ a.linkpermalink {
     color: #4E1100; /* ugmo */
     border-bottom: 0px;
 }
+.hoverpermalink {
+    font-size: 150%; 
+}
 
 .sidebartitle {
     background-color: #DBF0B6; /* etiquette poor */
