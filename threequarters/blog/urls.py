@@ -15,6 +15,18 @@ def tag_wrapper(request, queryset, tag=None, *args, **kwargs):
     kwargs["extra_context"] = {'tag': tag}
     return object_list(request, queryset, *args, **kwargs) 
 
+def search_wrapper(request, queryset, q=None, *args, **kwargs):
+    from xapwrap.index import SmartReadOnlyIndex
+    idx = SmartReadOnlyIndex("/var/www/threequarters/searchindex")
+    results = idx.search(q)
+    if not results:
+        # No responses.  pass on empty queryset
+        queryset = queryset.filter(id=0)
+    else:
+        queryset = queryset.filter(id__in=[result["uid"]-10000 for result in results])
+    kwargs["extra_context"] = {'q': q}
+    return object_list(request, queryset, *args, **kwargs) 
+
 from threequarters.blog.models import BlogItem, Tag, Twitter
 
 blogitems_dict = {
@@ -36,6 +48,11 @@ urlpatterns += patterns('django.views.generic.date_based',
 # Tags
 urlpatterns += patterns('threequarters.blog.urls',
     (r'^tag/(?P<tag>[-\w]+)/$', 'tag_wrapper', dict(queryset=Tag.objects.all(), paginate_by=20, template_name="blog/tag.html")),
+)
+
+# Search
+urlpatterns += patterns('threequarters.blog.urls',
+    (r'^search/(?P<q>.+)/$', 'search_wrapper', dict(queryset=BlogItem.objects.all(), paginate_by=20, template_name="blog/tag.html")),
 )
 
 # Feeds

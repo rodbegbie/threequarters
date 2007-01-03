@@ -99,7 +99,7 @@ class Link(models.Model):
     modified_on = models.DateTimeField(default=models.LazyDate())
 
     class Admin:
-        list_display = ('title', 'url', 'created_on')
+        list_display = ('title', 'created_on')
         list_filter = ['created_on']
 
     class Meta:
