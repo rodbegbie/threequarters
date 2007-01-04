@@ -125,6 +125,8 @@ a.linkpermalink {
     font-size: 150%; 
 }
 
+/* Stuff for the sidebar */
+
 .sidebartitle {
     background-color: #DBF0B6; /* etiquette poor */
     padding: 0.2em;
@@ -145,4 +147,15 @@ a.linkpermalink {
 
 .twitterdate {
     font-style: italic;
+}
+
+.searchinput {
+    font-size: x-small;
+    width: 12em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+.searchbutton {
+    font-size: x-small;
+    width: 5em;
 }

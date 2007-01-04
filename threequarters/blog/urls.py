@@ -15,7 +15,8 @@ def tag_wrapper(request, queryset, tag=None, *args, **kwargs):
     kwargs["extra_context"] = {'tag': tag}
     return object_list(request, queryset, *args, **kwargs) 
 
-def search_wrapper(request, queryset, q=None, *args, **kwargs):
+def search_wrapper(request, queryset, *args, **kwargs):
+    q = request.GET.get("q", "")
     from xapwrap.index import SmartReadOnlyIndex
     idx = SmartReadOnlyIndex("/var/www/threequarters/searchindex")
     results = idx.search(q)
@@ -47,12 +48,12 @@ urlpatterns += patterns('django.views.generic.date_based',
 
 # Tags
 urlpatterns += patterns('threequarters.blog.urls',
-    (r'^tag/(?P<tag>[-\w]+)/$', 'tag_wrapper', dict(queryset=Tag.objects.all(), paginate_by=20, template_name="blog/tag.html")),
+    (r'^tag/(?P<tag>[-\w]+)/$', 'tag_wrapper', dict(queryset=Tag.objects.all(), paginate_by=20, template_name="blog/tag.html", allow_empty=True)),
 )
 
 # Search
 urlpatterns += patterns('threequarters.blog.urls',
-    (r'^search/(?P<q>.+)/$', 'search_wrapper', dict(queryset=BlogItem.objects.all(), paginate_by=20, template_name="blog/tag.html")),
+    (r'^search/$', 'search_wrapper', dict(queryset=BlogItem.objects.all(), paginate_by=20, template_name="blog/search.html", allow_empty=True)),
 )
 
 # Feeds

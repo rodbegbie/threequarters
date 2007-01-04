@@ -1,7 +1,7 @@
 {% extends "blog/base.html" %}
 
-{% block title %}Filed under '{{tag}}'{% endblock %}
-{% block title2 %}Filed under '{{tag}}'{% endblock %}
+{% block title %}Search results: '{{q}}'{% endblock %}
+{% block title2 %}Search results: '{{q}}'{% endblock %}
 
 {% block content %}
 {% for object in object_list %}
@@ -15,9 +15,9 @@
 <div class="sidebarcontent">
     <p>Page {{page}} of {{pages}}</p>
     <p>
-    {% if has_previous %}<a href="./?page={{previous}}">Previous page</a>{% endif %}
+    {% if has_previous %}<a href="./?q={{q}}&page={{previous}}">Previous page</a>{% endif %}
     {% if has_next %}{% if has_previous %}|{% endif %}{% endif %}
-    {% if has_next %}<a href="./?page={{next}}">Next page</a>{% endif %}
+    {% if has_next %}<a href="./?q={{q}}&page={{next}}">Next page</a>{% endif %}
 </div>
 {% endif %}
 
