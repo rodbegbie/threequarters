@@ -2,6 +2,29 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from datetime import datetime
 
+def blogitem_save(object, slug="", tags=""):
+    if not object.blogitem.all():
+        blogitem = object.blogitem.create(created_on=object.created_on,
+                                          slug=slug)
+    else:
+        blogitem = object.blogitem.get()
+        blogitem.created_on = object.created_on
+        blogitem.slug = slug
+        blogitem.save()
+   
+    if tags:
+        blogitem.tags.clear()
+        import string
+        from threequarters.utils import Translator
+        trans = Translator(keep=string.digits+string.lowercase)
+        for display in tags.split(","):
+            display = display.strip()
+            tag = trans(display.lower())
+            (tagitem, created) = Tag.objects.get_or_create(tag=tag)
+            tagitem.display = display
+            tagitem.save()
+            blogitem.tags.add(tagitem)
+
 class Tag(models.Model):
     """A tag on an item."""
     tag = models.SlugField()
@@ -29,7 +52,7 @@ class BlogItem(models.Model):
     tags = models.ManyToManyField(Tag)
 
     created_on = models.DateTimeField(default=models.LazyDate())
-    slug = models.SlugField()
+    slug = models.SlugField(blank=True)
 
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
@@ -73,6 +96,9 @@ class BlogItem(models.Model):
                           ]
             if self.content_object.artist:
                  textfields.append(TextField('artist', self.content_object.artist, True))
+        elif self.content_type.model == 'twitter':
+            textfields = [TextField('body', self.content_object.description, False)
+                          ]
 
         doc = Document(textfields,
                        uid=self.id+10000,
@@ -107,26 +133,8 @@ class Post(models.Model):
         self.body_xhtml = textile.textile(self.body_textile)
         super(Post, self).save() # Call the "real" save() method.
 
-        if not self.blogitem.all():
-            blogitem = self.blogitem.create(created_on=self.created_on,
-                                            slug=self.slug)
-        else:
-            blogitem = self.blogitem.get()
-            blogitem.created_on = self.created_on
-            blogitem.slug = self.slug
-            blogitem.save()
+        blogitem_save(self, self.slug, self.tags)
 
-        blogitem.tags.clear()
-        import string
-        from threequarters.utils import Translator
-        trans = Translator(keep=string.digits+string.lowercase)
-        for display in self.tags.split(","):
-            display = display.strip()
-            tag = trans(display.lower())
-            tagitem = Tag.objects.get_or_create(tag=tag)[0]
-            tagitem.display = display
-            tagitem.save()
-            blogitem.tags.add(tagitem)
 
     def get_absolute_url(self):
         return "/%s/%s/" % (self.created_on.strftime("%Y/%b/%d").lower(), self.slug)
@@ -166,27 +174,8 @@ class Link(models.Model):
     def save(self):
         self.modified_on = datetime.now()
         super(Link, self).save() # Call the "real" save() method.
+        blogitem_save(self, self.slug, self.tags)
 
-        if not self.blogitem.all():
-            blogitem = self.blogitem.create(created_on=self.created_on,
-                                            slug=self.slug)
-        else:
-            blogitem = self.blogitem.get()
-            blogitem.created_on = self.created_on
-            blogitem.slug = self.slug
-            blogitem.save()
-
-        blogitem.tags.clear()
-        import string
-        from threequarters.utils import Translator
-        trans = Translator(keep=string.digits+string.lowercase)
-        for display in self.tags.split(","):
-            display = display.strip()
-            tag = trans(display.lower())
-            tagitem = Tag.objects.get_or_create(tag=tag)[0]
-            tagitem.display = display
-            tagitem.save()
-            blogitem.tags.add(tagitem)
 
 class FlickrPhoto(models.Model):
     blogitem = models.GenericRelation(BlogItem)
@@ -212,27 +201,8 @@ class FlickrPhoto(models.Model):
 
     def save(self):
         super(FlickrPhoto, self).save() # Call the "real" save() method.
+        blogitem_save(self, tags=self.tags)
 
-        if not self.blogitem.all():
-            blogitem = self.blogitem.create(created_on=self.created_on,
-                                            slug="")
-        else:
-            blogitem = self.blogitem.get()
-            blogitem.created_on = self.created_on
-            blogitem.slug = ""
-            blogitem.save()
-
-        blogitem.tags.clear()
-        import string
-        from threequarters.utils import Translator
-        trans = Translator(keep=string.digits+string.lowercase)
-        for display in self.tags.split(","):
-            display = display.strip()
-            tag = trans(display.lower())
-            tagitem = Tag.objects.get_or_create(tag=tag)[0]
-            tagitem.display = display
-            tagitem.save()
-            blogitem.tags.add(tagitem)
 
 (AMAZON_COM,
  AMAZON_CO_UK) = range(2)
@@ -282,18 +252,11 @@ class AmazonCD(models.Model):
 
         super(AmazonCD, self).save() # Call the "real" save() method.
 
-        if not self.blogitem.all():
-            blogitem = self.blogitem.create(created_on=self.created_on,
-                                            slug=self.asin)
-        else:
-            blogitem = self.blogitem.get()
-            blogitem.created_on = self.created_on
-            blogitem.slug = self.asin
-            blogitem.save()
-
+        blogitem_save(self)
 
 
 class Twitter(models.Model):
+    blogitem = models.GenericRelation(BlogItem)
     twitter_id = models.IntegerField(db_index=True)
     description = models.TextField()
     created_on = models.DateTimeField(default=models.LazyDate())
@@ -308,4 +271,6 @@ class Twitter(models.Model):
     def get_absolute_url(self):
         return "http://twitter.com/rodbegbie/statuses/%d" % self.twitter_id
 
-
+    def save(self):
+        super(Twitter, self).save() # Call the "real" save() method.
+        blogitem_save(self)

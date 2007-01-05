@@ -31,7 +31,7 @@ def search_wrapper(request, queryset, *args, **kwargs):
 from threequarters.blog.models import BlogItem, Tag, Twitter
 
 blogitems_dict = {
-    'queryset': BlogItem.objects.all(),
+    'queryset': BlogItem.objects.all().exclude(content_type__model="twitter"),
     'date_field': 'created_on',
     'extra_context': { 'twitters': Twitter.objects.all()[:3],
                      },
