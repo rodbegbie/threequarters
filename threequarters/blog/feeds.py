@@ -10,7 +10,7 @@ def feed(request, linksonly=False):
         blogitems = BlogItem.objects.filter(content_type__model="link").order_by('-created_on')[:30]
         selfurl = "http://groovymother.com/links/index.atom"
     else:
-        blogitems = BlogItem.objects.all().order_by('-created_on')[:30]
+        blogitems = BlogItem.objects.exclude(content_type__model="twitter").order_by('-created_on')[:30]
         selfurl = "http://groovymother.com/index.atom"
 
     from StringIO import StringIO
