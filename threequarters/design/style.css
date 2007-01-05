@@ -114,15 +114,13 @@ a:active, a:hover {
     text-decoration: underline;
 }
 
-.linkpermalink {
+.permalink {
     float: right;
+    font-size: x-small;
 }
-a.linkpermalink {
-    color: #4E1100; /* ugmo */
+
+.permalink>a {
     border-bottom: 0px;
-}
-.hoverpermalink {
-    font-size: 150%; 
 }
 
 /* Stuff for the sidebar */

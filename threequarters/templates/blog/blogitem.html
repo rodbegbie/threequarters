@@ -5,7 +5,6 @@
 
 {% ifequal object.content_type.model "link" %}
     <div class="linkentry xfolkentry entry">
-        <a class="linkpermalink" href="{{object.content_object.get_absolute_url}}" title="permalink">&raquo;</a>
         <a name="{{object.content_object.slug}}" />
         {% if object.legacy %}
         <a name="{{object.legacy.mt_id|stringformat:"06d"}}" />
@@ -14,65 +13,84 @@
         <div class="description linkdescription">
             {{object.content_object.description|smartypants}}
         </div>
-        <div class="postinfo">
+        <div class="permalink">
             {% if object.content_object.via %}
-                [<a href="{{ object.content_object.via|fix_ampersands }}" title="I found this link at...">via</a>] : 
+                <a href="{{ object.content_object.via|fix_ampersands }}" title="I found this link at...">via</a> |
             {% endif %}
-            Filed under 
-            {% for tag in object.tags.all %}
-                : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
-            {% endfor %}
+            <a href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+        </div>
+        <div class="postinfo">
+            {% if object.content_object.tags %}
+                Filed under 
+                {% for tag in object.tags.all %}
+                    : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 
 
 {% else %}{% ifequal object.content_type.model "post" %}
     <div class="flickrentry entry">
-        <a class="linkpermalink" href="{{object.content_object.get_absolute_url}}" title="permalink">&raquo;</a>
-        <h4>{{object.content_object.title|smartypants}}</h2>
+        <h4>{{object.content_object.title|smartypants}}</h4>
         <p>{{object.content_object.body_xhtml}}</p>
+        <div class="permalink">
+            <a href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+        </div>
         <div class="postinfo">
-            Filed under 
-            {% for tag in object.tags.all %}
-                : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
-            {% endfor %}
+            {% if object.content_object.tags %}
+                Filed under 
+                {% for tag in object.tags.all %}
+                    : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
+                {% endfor %}
+                <br/>
+            {% endif %}
         </div>
     </div>
 
 {% else %}{% ifequal object.content_type.model "flickrphoto" %}
     <div class="flickrentry entry">
-        <a class="linkpermalink" href="{{object.content_object.get_absolute_url}}" title="permalink">&raquo;</a>
         <a href="{{object.content_object.get_absolute_url}}"><img class="flickrphoto" alt="{{object.content_object.title|smartypants}}" src="{{object.content_object.image_url}}" height="{{object.content_object.image_height}}" width="{{object.content_object.image_width}}" /></a>
         <h4>{{object.content_object.title|smartypants}}</h4>
         <div class="postbody">
             {{object.content_object.description|linebreaks}}
         </div>
+        <div class="permalink">
+            <a href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+        </div>
         <div class="postinfo">
-            Filed under 
-            {% for tag in object.tags.all %}
-                : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
-            {% endfor %}
+            {% if object.content_object.tags %}
+                Filed under 
+                {% for tag in object.tags.all %}
+                    : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 
 
 {% else %}{% ifequal object.content_type.model "amazoncd" %}
     <div class="amazonentry entry">
-        <a class="linkpermalink" href="{{object.content_object.get_absolute_url}}" title="permalink">&raquo;</a>
         <a href="{{object.content_object.get_absolute_url}}"><img class="flickrphoto" alt="{{object.content_object.title|smartypants}}" src="{{object.content_object.image_url}}" width="75" height="75" /></a>
         <h4>CD Purchase: {{object.content_object.artist|smartypants}} - {{object.content_object.title|smartypants}}</h4>
         <div class="postbody">
             {{object.content_object.comments|linebreaks}}
         </div>
-        <div class="postinfo"></div>
+        <div class="permalink">
+            <a href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+        </div>
+        <div class="postinfo">
+        </div>
     </div>
 
 
 {% else %}{% ifequal object.content_type.model "twitter" %}
     <div class="twitter entry">
-        <a class="linkpermalink" href="{{object.content_object.get_absolute_url}}" title="permalink">&raquo;</a>
         <div class="twitterdescription">
             {{object.content_object.description|smartypants}}
+        </div>
+        <div class="permalink">
+            <a href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
         </div>
         <div class="postinfo">
             Posted to Twitter at {{ object.created_on|date:"P" }}
