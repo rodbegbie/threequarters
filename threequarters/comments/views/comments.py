@@ -295,7 +295,26 @@ def post_free_comment(request):
     new_data['content_type_id'] = content_type_id
     new_data['object_id'] = object_id
     new_data['ip_address'] = request.META['REMOTE_ADDR']
-    new_data['is_public'] = IS_PUBLIC in option_list
+    # AKISMET CHANGES
+    #new_data['is_public'] = IS_PUBLIC in option_list
+    from django.contrib.sites.models import Site
+    from threequarters.akismet import Akismet
+    ak_api = Akismet(key=settings.AKISMET_API_KEY, blog_url='http://%s/' % Site.objects.get(pk=settings.SITE_ID).domain)
+    if ak_api.verify_key():
+        ak_data = {
+            'user_ip': request.META.get('REMOTE_ADDR', '127.0.0.1'),
+            'user_agent': request.META.get('HTTP_USER_AGENT', ''),
+            'referrer': request.META.get('HTTP_REFERER', ''),
+            'comment_type': 'comment',
+            'comment_author': new_data.get('person_name', ''),
+            'comment_author_email': new_data.get('person_email', ''),
+            'comment_author_url': new_data.get('person_url', ''),
+            }
+        if ak_api.comment_check(new_data.get('comment', ''), data=ak_data, build_data=True):
+            new_data['is_public'] = False
+        else:
+            new_data['is_public'] = IS_PUBLIC in option_list
+    # END AKISMET CHANGES
     manipulator = PublicFreeCommentManipulator()
     errors = manipulator.get_validation_errors(new_data)
     if errors or request.POST.has_key('preview'):
