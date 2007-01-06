@@ -1,4 +1,5 @@
 {% load smartypants %}
+{% load comments.comments %}
 {% ifchanged %}
 <h3 class="date">{{ object.created_on|date:"F j, Y" }}</h3>
 {% endifchanged %}
@@ -31,10 +32,12 @@
 
 
 {% else %}{% ifequal object.content_type.model "post" %}
+    {% get_free_comment_count for blog.blogitem object.id as comment_count %}
     <div class="flickrentry entry">
         <h4>{{object.content_object.title|smartypants}}</h4>
         <p>{{object.content_object.body_xhtml}}</p>
         <div class="permalink">
+            <a href="{{object.content_object.get_absolute_url}}#comments">{{comment_count}} comment{{comment_count|pluralize}}</a> |
             <a href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
         </div>
         <div class="postinfo">

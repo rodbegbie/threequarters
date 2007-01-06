@@ -1,6 +1,7 @@
 # Django settings for threequarters project.
 
-DEBUG = False
+INTERNAL_IPS=('192.168.77.149',)
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -77,12 +78,14 @@ INSTALLED_APPS = (
     'django.contrib.redirects',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'threequarters.blog'
+    'threequarters.blog',
+    'threequarters.comments',
 )
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates".
     # Always use forward slashes, even on Windows.
+    "./templates",
     "/var/www/threequarters/python/threequarters/templates",
 )
 
