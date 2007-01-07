@@ -186,7 +186,7 @@ a:active, a:hover {
     clear:both;
     font-style: italic;
     font-family: georgia, serif;
-    font-size: smaller;
+    font-size: 90%;
 }
 .commentform>form>p>label {
     font-size: smaller;
