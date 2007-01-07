@@ -3,6 +3,8 @@
 INTERNAL_IPS=('192.168.77.149',)
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+EMAIL_HOST = "mail.speakeasy.net"
+DEFAULT_FROM_EMAIL = "threequarters@arsecandle.org"
 
 ADMINS = (
     ('Rod Begbie', 'rod@arsecandle.org'),

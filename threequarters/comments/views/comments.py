@@ -340,7 +340,7 @@ def post_free_comment(request):
         else:
             manipulator.do_html2python(new_data)
             comment = manipulator.save(new_data)
-        return HttpResponseRedirect("../posted/?c=%s:%s" % (content_type_id, object_id))
+        return HttpResponseRedirect("../posted/?c=%s:%s&mod=%s" % (content_type_id, object_id, str(not comment.is_public)))
     else:
         raise Http404, _("The comment form didn't provide either 'preview' or 'post'")
 
@@ -361,4 +361,5 @@ def comment_was_posted(request):
             obj = content_type.get_object_for_this_type(pk=object_id)
         except ObjectDoesNotExist:
             pass
-    return render_to_response('comments/posted.html', {'object': obj}, context_instance=RequestContext(request))
+    mod = request.GET.get("mod", "True")
+    return render_to_response('comments/posted.html', {'object': obj, 'mod': mod}, context_instance=RequestContext(request))

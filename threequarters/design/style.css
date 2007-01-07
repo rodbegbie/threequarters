@@ -161,9 +161,10 @@ a:active, a:hover {
     font-size: x-small;
     width: 5em;
 }
+
 /* Comments */
 
-.comment_odd, .comment_even {
+.comment_odd, .comment_even, .commentform {
     padding-bottom: 5px;
     padding-right: 5px;
     margin-bottom: 1em;
@@ -177,9 +178,22 @@ a:active, a:hover {
 .comment_even {
     border-left: 5px solid #DBF0B6; /* etiquette poor */
 }
+.commentform {
+    border-left: 5px solid #4E1100; /* ugmo */
+}
 .commentinfo {
     clear:both;
     font-style: italic;
     font-family: georgia, serif;
+    font-size: 90%;
+}
+.commentform>form>p>label {
+    font-size: smaller;
+}
+.commentinput, .commenttextarea {
+    font-family: Monaco,'Courier New',Courier,monospace;
+}
+.commenttextarea {
+    font-size: smaller;
 }
 
