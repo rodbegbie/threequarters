@@ -1,0 +1,65 @@
+{% extends "blog/base.html" %}
+{% block title2 %}Preview your Comment{% endblock %}
+{% block content %}
+<h3>Preview your comment</h3>
+
+<form action="../postfree/" method="post">
+    {% if comment_form.has_errors %}
+        <p><strong style="color: red;">Please correct the following errors.</strong></p>
+    {% else %}
+        <div class="comment_odd">
+        <p class="commentinfo">About now,
+            {% if comment.person_url%}<a href="{{comment.person_url|escape}}">{%endif%}
+            {{ comment.person_name|escape }}{% if comment.person_url%}</a>{%endif%}
+            commented:
+        </p>
+        {{ comment.comment|escape|urlizetrunc:"40"|linebreaks }}
+        </div>
+
+        <p><input type="submit" name="post" value="Post public comment" /></p>
+
+        <h3>Or edit it again</h3>
+    {% endif %}
+
+    <div class="commentform">
+    {% if comment_form.person_name.errors %}
+        {{ comment_form.person_name.html_error_list }}
+    {% endif %}
+
+    <p><label for="id_person_name">Your name</label><br/>
+    {{ comment_form.person_name }}</p>
+
+    {% if comment_form.person_email.errors %}
+        {{ comment_form.person_email.html_error_list }}
+    {% endif %}
+
+    <p><label for="id_person_email">Your email</label><br/>
+    {{ comment_form.person_email }}</p>
+
+    {% if comment_form.person_url.errors %}
+        {{ comment_form.person_url.html_error_list }}
+    {% endif %}
+
+    <p><label for="id_person_url">Your homepage (optional)</label><br/>
+    {{ comment_form.person_url }}</p>
+
+    {% if comment_form.comment.errors %}
+        {{ comment_form.comment.html_error_list }}
+    {% endif %}
+
+    <p>
+        <label for="id_comment">Comment</label>
+        <br />
+        {{ comment_form.comment }}
+    </p>
+    
+    <input type="hidden" name="options" value="{{ options }}" />
+    <input type="hidden" name="target" value="{{ target }}" />
+    <input type="hidden" name="gonzo" value="{{ hash }}" />
+    
+    <p>
+        <input type="submit" name="preview" value="Preview revised comment" />
+    </p>
+    </div>
+</form>
+{% endblock %}

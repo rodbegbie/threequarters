@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<h3>Comment posted successfully</h3>
+
+<p>Thanks for contributing.</p>
+
+{% if object %}
+{% if object.is_public %}
+<ul>
+            <li><a href="{{ object.get_absolute_url }}">View your comment</a></li>
+</ul>
+{% else %}
+<p>Your comment has been held back for moderation.  Assuming it isn't
+spam, it should appear on the site in due course.</p>
+{% endif %}
+{% endif %}
+{% endblock %}

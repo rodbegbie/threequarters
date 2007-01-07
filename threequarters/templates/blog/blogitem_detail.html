@@ -1,9 +1,27 @@
+{% load comments.comments %}
 {% extends "blog/base.html" %}
 
-{% block title %}{{object.content_object.title}}{% endblock %}A
-{% block title2 %}{{object.content_object.title}}{% endblock %}A
+{% block title %}{{object.content_object.title}}{% endblock %}
+{% block title2 %}{{object.content_object.title}}{% endblock %}
 
 {% block content %}
 {% include "blog/blogitem.html" %}
+
+{% get_free_comment_list for blog.blogitem object.id as comment_list %}
+
+<h3 id="comments">Comments</h3>
+{% for comment in comment_list %}
+    <div class="comment_{% cycle odd,even %}" id="c{{ comment.id }}">
+        <p class="commentinfo">About {{ comment.submit_date|timesince }} ago, 
+            {% if comment.person_url%}<a href="{{comment.person_url|escape}}">{%endif%}
+            {{ comment.person_name|escape }}{% if comment.person_url%}</a>{%endif%}
+            commented:
+        </p>
+        {{ comment.comment|escape|urlizetrunc:40|linebreaks }}
+    </div>
+{% endfor %}
+
+<h3>Post a comment</h3>
+{% free_comment_form for blog.blogitem object.id %}
 {% endblock %}
 

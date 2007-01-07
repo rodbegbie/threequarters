@@ -77,7 +77,7 @@ class CommentCountNode(template.Node):
 
     def render(self, context):
         from django.conf import settings
-        manager = self.free and FreeComment.objects or Comment.objects
+        manager = self.free and FreeComment.public_comments or Comment.objects
         if self.context_var_name is not None:
             self.obj_id = template.resolve_variable(self.context_var_name, context)
         comment_count = manager.filter(object_id__exact=self.obj_id,
@@ -96,7 +96,7 @@ class CommentListNode(template.Node):
 
     def render(self, context):
         from django.conf import settings
-        get_list_function = self.free and FreeComment.objects.filter or Comment.objects.get_list_with_karma
+        get_list_function = self.free and FreeComment.public_comments.filter or Comment.objects.get_list_with_karma
         if self.context_var_name is not None:
             try:
                 self.obj_id = template.resolve_variable(self.context_var_name, context)

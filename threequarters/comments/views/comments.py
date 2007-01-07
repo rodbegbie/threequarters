@@ -123,6 +123,10 @@ class PublicFreeCommentManipulator(forms.Manipulator):
         self.fields = (
             forms.TextField(field_name="person_name", maxlength=50, is_required=True,
                 validator_list=[self.hasNoProfanities]),
+            forms.TextField(field_name="person_url", maxlength=128, is_required=False,
+                validator_list=[self.hasNoProfanities, validators.isValidURL]),
+            forms.TextField(field_name="person_email", maxlength=75, is_required=True,
+                validator_list=[self.hasNoProfanities, validators.isValidEmail]),
             forms.LargeTextField(field_name="comment", maxlength=3000, is_required=True,
                 validator_list=[self.hasNoProfanities]),
         )
@@ -136,7 +140,8 @@ class PublicFreeCommentManipulator(forms.Manipulator):
         "Helper function"
         return FreeComment(None, new_data["content_type_id"],
             new_data["object_id"], new_data["comment"].strip(),
-            new_data["person_name"].strip(), datetime.datetime.now(), new_data["is_public"],
+            new_data["person_name"].strip(), new_data["person_email"].strip(), 
+            new_data["person_url"].strip(), datetime.datetime.now(), new_data["is_public"],
             new_data["ip_address"], False, settings.SITE_ID)
 
     def save(self, new_data):

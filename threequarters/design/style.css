@@ -123,6 +123,10 @@ a:active, a:hover {
     border-bottom: 0px;
 }
 
+.entry>ol>li {
+    margin-bottom: 1.5em;
+}
+
 /* Stuff for the sidebar */
 
 .sidebartitle {
@@ -157,3 +161,25 @@ a:active, a:hover {
     font-size: x-small;
     width: 5em;
 }
+/* Comments */
+
+.comment_odd, .comment_even {
+    padding-bottom: 5px;
+    padding-right: 5px;
+    margin-bottom: 1em;
+    margin-left: 10px;
+    padding-left: 5px;
+}
+
+.comment_odd {
+    border-left: 5px solid #E7F4D7; /* uncouth */
+}
+.comment_even {
+    border-left: 5px solid #DBF0B6; /* etiquette poor */
+}
+.commentinfo {
+    clear:both;
+    font-style: italic;
+    font-family: georgia, serif;
+}
+

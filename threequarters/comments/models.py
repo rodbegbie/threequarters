@@ -160,18 +160,26 @@ class Comment(models.Model):
             {'user': self.user.username, 'date': self.submit_date,
             'comment': self.comment, 'domain': self.site.domain, 'url': self.get_absolute_url()}
 
+class ModeratedCommentManager(models.Manager):
+    def get_query_set(self):
+        return super(ModeratedCommentManager, self).get_query_set().filter(is_public__exact=True)
+
 class FreeComment(models.Model):
     # A FreeComment is a comment by a non-registered user.
     content_type = models.ForeignKey(ContentType)
     object_id = models.IntegerField(_('object ID'))
     comment = models.TextField(_('comment'), maxlength=3000)
-    person_name = models.CharField(_("person's name"), maxlength=50)
-    submit_date = models.DateTimeField(_('date/time submitted'), auto_now_add=True)
+    person_name = models.CharField(_("name"), maxlength=50)
+    person_email = models.EmailField(_("email address"))
+    person_url = models.URLField(_("url"), maxlength=128, blank=True, verify_exists=False)
+    submit_date = models.DateTimeField(_('date/time submitted'), auto_now_add=False)
     is_public = models.BooleanField(_('is public'))
     ip_address = models.IPAddressField(_('ip address'))
     # TODO: Change this to is_removed, like Comment
     approved = models.BooleanField(_('approved by staff'))
     site = models.ForeignKey(Site)
+    objects = models.Manager() 
+    public_comments = ModeratedCommentManager() 
     class Meta:
         verbose_name = _('free comment')
         verbose_name_plural = _('free comments')
@@ -179,7 +187,7 @@ class FreeComment(models.Model):
     class Admin:
         fields = (
             (None, {'fields': ('content_type', 'object_id', 'site')}),
-            ('Content', {'fields': ('person_name', 'comment')}),
+            ('Content', {'fields': ('person_name', 'person_email', 'person_url', 'comment')}),
             ('Meta', {'fields': ('submit_date', 'is_public', 'ip_address', 'approved')}),
         )
         list_display = ('person_name', 'submit_date', 'content_type', 'get_content_object')
@@ -191,7 +199,7 @@ class FreeComment(models.Model):
         return "%s: %s..." % (self.person_name, self.comment[:100])
 
     def get_absolute_url(self):
-        return self.get_content_object().get_absolute_url() + "#c" + str(self.id)
+        return self.get_content_object().content_object.get_absolute_url() + "#c" + str(self.id)
 
     def get_content_object(self):
         """
@@ -205,6 +213,16 @@ class FreeComment(models.Model):
             return None
 
     get_content_object.short_description = _('Content object')
+
+    def save(self):
+        #Send email
+        if not self.id:
+            from django.core.mail import mail_managers 
+            mail_subject = 'New comment posted on %s "%s"' % (self.site.name, self.get_content_object().content_object.title)
+            mail_body = 'On %s, %s posted the following comment on "%s":\n\n%s' % (self.submit_date.strftime("%A, %B %d, %Y at %I:%M %p"), self.person_name, self.get_content_object().content_object.title, self.comment)
+            mail_managers(mail_subject, mail_body, fail_silently=True)
+
+        super(FreeComment, self).save() 
 
 class KarmaScoreManager(models.Manager):
     def vote(self, user_id, comment_id, score):

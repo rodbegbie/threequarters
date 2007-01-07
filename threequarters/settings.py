@@ -1,7 +1,7 @@
 # Django settings for threequarters project.
 
 INTERNAL_IPS=('192.168.77.149',)
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -89,3 +89,4 @@ TEMPLATE_DIRS = (
     "/var/www/threequarters/python/threequarters/templates",
 )
 
+AKISMET_API_KEY="d7b8758ca65f"
