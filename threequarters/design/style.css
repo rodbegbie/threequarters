@@ -103,6 +103,7 @@ h4 {
     margin-top: 6px;
     font-style: italic;
     font-family: georgia, serif;
+    font-size: smaller;
 }
 
 a:link, a:visited {
@@ -185,7 +186,7 @@ a:active, a:hover {
     clear:both;
     font-style: italic;
     font-family: georgia, serif;
-    font-size: 90%;
+    font-size: smaller;
 }
 .commentform>form>p>label {
     font-size: smaller;
