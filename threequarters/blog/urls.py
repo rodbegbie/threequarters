@@ -42,7 +42,7 @@ urlpatterns += patterns('django.views.generic.date_based',
    (r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/$',                  'archive_day',   blogitems_dict),
    (r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/$',                                   'archive_month', blogitems_dict),
    (r'^(?P<year>\d{4})/week/(?P<week>\d{1,2})/$',                                  'archive_week', blogitems_dict),
-   (r'^(?P<year>\d{4})/$',                                                       'archive_year',  blogitems_dict),
+#   (r'^(?P<year>\d{4})/$',                                                       'archive_year',  blogitems_dict),
    (r'^/?$',                                                                     'archive_index', dict(blogitems_dict, num_latest=25, template_name="blog/index.html")),
 )
 
@@ -66,6 +66,7 @@ urlpatterns += patterns('threequarters.blog.feeds',
 urlpatterns += patterns('threequarters.blog.mtredirects',
     (r'^archives/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[-\w]+).html', 'entry'),
     (r'^links/archives/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})-week/', 'linkarchive'),
+    (r'^links/archives/week_(?P<year>\d{4})_(?P<month>\d{2})_(?P<day>\d{2}).html', 'linkarchive'),
     (r'^links/tag/(?P<tag>[-\w]+)/', 'linktag'),
 )
 
