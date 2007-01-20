@@ -99,6 +99,10 @@ class BlogItem(models.Model):
         elif self.content_type.model == 'twitter':
             textfields = [TextField('body', self.content_object.description, False)
                           ]
+        elif self.content_type.model == 'lastfmtrack':
+            textfields = [TextField('title', self.content_object.title, False),
+                          TextField('artist', self.content_object.artist, False)
+                          ]
 
         doc = Document(textfields,
                        uid=self.id+10000,
@@ -273,4 +277,47 @@ class Twitter(models.Model):
 
     def save(self):
         super(Twitter, self).save() # Call the "real" save() method.
+        blogitem_save(self)
+
+class LastFMTrack(models.Model):
+    blogitem = models.GenericRelation(BlogItem)
+    last_fm_id = models.IntegerField()
+    artist = models.CharField(maxlength=255)
+    title = models.CharField(maxlength=255)
+    last_fm_url = models.URLField()
+    created_on = models.DateTimeField(default=models.LazyDate())
+
+    class Admin:
+        list_display = ('artist','title', 'created_on')
+        list_filter = ['created_on']
+
+    class Meta:
+        ordering = ["-created_on"]
+    
+    def get_absolute_url(self):
+        return last_fm_url
+
+    def save(self):
+        super(LastFMTrack, self).save() # Call the "real" save() method.
+        blogitem_save(self)
+
+class YelpReview(models.Model):
+    blogitem = models.GenericRelation(BlogItem)
+    business = models.CharField(maxlength=255)
+    review = models.TextField()
+    yelp_url = models.URLField()
+    created_on = models.DateTimeField(default=models.LazyDate())
+
+    class Admin:
+        list_display = ('business', 'created_on')
+        list_filter = ['created_on']
+
+    class Meta:
+        ordering = ["-created_on"]
+    
+    def get_absolute_url(self):
+        return yelp_url
+
+    def save(self):
+        super(YelpReview, self).save() # Call the "real" save() method.
         blogitem_save(self)

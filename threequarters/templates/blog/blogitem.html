@@ -99,8 +99,36 @@
             Posted to Twitter at {{ object.created_on|date:"P" }}
         </div>
     </div>
+
+{% else %}{% ifequal object.content_type.model "lastfmtrack" %}
+    <div class="twitter entry">
+        <div class="twitterdescription">
+            {{object.content_object.description|smartypants}}
+        </div>
+        <div class="permalink">
+            <a href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+        </div>
+        <div class="postinfo">
+            Posted to Twitter at {{ object.created_on|date:"P" }}
+        </div>
+    </div>
+
+{% else %}{% ifequal object.content_type.model "yelpreview" %}
+    <div class="twitter entry">
+        <div class="twitterdescription">
+            {{object.content_object.description|smartypants}}
+        </div>
+        <div class="permalink">
+            <a href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+        </div>
+        <div class="postinfo">
+            Posted to Twitter at {{ object.created_on|date:"P" }}
+        </div>
+    </div>
 {% else %}
     <h1>UNKNOWN CONTENT TYPE {{object.content_type}}</h1>
+{% endifequal %}
+{% endifequal %}
 {% endifequal %}
 {% endifequal %}
 {% endifequal %}
