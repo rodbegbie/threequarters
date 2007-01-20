@@ -100,9 +100,7 @@ class BlogItem(models.Model):
             textfields = [TextField('body', self.content_object.description, False)
                           ]
         elif self.content_type.model == 'lastfmtrack':
-            textfields = [TextField('title', self.content_object.title, False),
-                          TextField('artist', self.content_object.artist, False)
-                          ]
+            return #Don't bother indexing LastFM tracks
 
         doc = Document(textfields,
                        uid=self.id+10000,
@@ -295,7 +293,7 @@ class LastFMTrack(models.Model):
         ordering = ["-created_on"]
     
     def get_absolute_url(self):
-        return last_fm_url
+        return self.last_fm_url
 
     def save(self):
         super(LastFMTrack, self).save() # Call the "real" save() method.
@@ -316,7 +314,7 @@ class YelpReview(models.Model):
         ordering = ["-created_on"]
     
     def get_absolute_url(self):
-        return yelp_url
+        return self.yelp_url
 
     def save(self):
         super(YelpReview, self).save() # Call the "real" save() method.

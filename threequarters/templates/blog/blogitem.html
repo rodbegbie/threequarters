@@ -89,8 +89,8 @@
 
 {% else %}{% ifequal object.content_type.model "twitter" %}
     <div class="twitter entry">
-        <div class="postbody">
-           {{object.content_object.artist|smartypants}} - {{object.content_object.track|smartypants}}
+        <div class="twitterdescription">
+            {{object.content_object.description|smartypants}}
         </div>
         <div class="permalink">
             <a href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
@@ -102,8 +102,8 @@
 
 {% else %}{% ifequal object.content_type.model "lastfmtrack" %}
     <div class="lastfmtrack entry">
-        <div class="twitterdescription">
-            {{object.content_object.description|smartypants}}
+        <div class="postbody">
+           {{object.content_object.artist|smartypants}} - {{object.content_object.title|smartypants}}
         </div>
         <div class="permalink">
             <a href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
