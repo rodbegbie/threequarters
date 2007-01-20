@@ -28,7 +28,7 @@
 I'm <b><span class="fn">Rod <span class="surname">Begbie</span></span></b> -- A 30-year-old Scottish geek who lives in <span class="adr"><span class="locality">Somerville</span>, <span class="region">MA</span></span>.  By day, I work on smart music systems for a company whose name Rhymes With Nose.  By night, I'm asleep.</p>
 <ul>
     <li>Email: <a class="email" href="mailto:rod@arsecandle.org" title="email">rod@arsecandle.org</a></li>
-    <li>Google Talk/Jabber: <a class="url" href="xmpp:rodbegbie@gmail.com">rodbegbie@gmail.com</a></li>
+    <li>Google Talk/Jabber: <a class="url" href="xmpp:rod@arsecandle.org">rod@arsecandle.org</a></li>
     <li>GPG Key: <a href="http://www.begbie.com/pgp-key.asc">9054 90AD 8340 C9B4 F536 66CE 37F6 1D5C 8C80 C35F</a></li>
 </ul>
 </div>
@@ -42,33 +42,14 @@ I'm <b><span class="fn">Rod <span class="surname">Begbie</span></span></b> -- A 
 </ul>
 </div>
 
-{% include "blog/searchbox.html" %}
+{% include "blog/sidebar/searchbox.html" %}
 
-<div class="sidebartitle">Twitters</div>
-<div class="sidebarcontent">
-    {% for twitter in twitters %}
-        <p>{{ twitter.description }} &mdash;<span class="twitterdate">about {{ twitter.created_on|timesince }} ago</span></p>
-    {% endfor %}
-    <p><a href="http://twitter.com/rodbegbie">Follow me on Twitter</a></p>
-</div>
-<div class="sidebartitle">License</div>
-<div class="sidebarcontent">
-<p>
-<!--Creative Commons License--><a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/"><img alt="Creative Commons License" style="border-width: 0" src="http://i.creativecommons.org/l/by-sa/2.5/88x31.png"/></a><br/>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/2.5/">Creative Commons Attribution-Share Alike 2.5  License</a>.<!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-    <Work rdf:about="">
-        <license rdf:resource="http://creativecommons.org/licenses/by-sa/2.5/" />
-    <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text" />
-    </Work>
-    <License rdf:about="http://creativecommons.org/licenses/by-sa/2.5/"><permits rdf:resource="http://web.resource.org/cc/Reproduction"/><permits rdf:resource="http://web.resource.org/cc/Distribution"/><requires rdf:resource="http://web.resource.org/cc/Notice"/><requires rdf:resource="http://web.resource.org/cc/Attribution"/><permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/><requires rdf:resource="http://web.resource.org/cc/ShareAlike"/></License></rdf:RDF> -->
-</p>
-</div>
+{% include "blog/sidebar/twitters.html" %}
 
-<div class="sidebartitle">Powered By</div>
-<div class="sidebarcontent">
-<ul>
-    <li><a href="http://www.djangoproject.com/">Django</a></li>
-    <li><a href="http://www.python.org/">Python</a></li>
-    <li><a href="http://speakeasy.net/">Speakeasy.net</a></li>
-</ul>
-</div>
+{% include "blog/sidebar/lastfmtracks.html" %}
+
+{% include "blog/sidebar/license.html" %}
+
+{% include "blog/sidebar/poweredby.html" %}
+
 {% endblock %}

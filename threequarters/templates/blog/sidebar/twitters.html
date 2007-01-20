@@ -1,0 +1,8 @@
+<div class="sidebartitle">Twitters</div>
+<div class="sidebarcontent">
+    {% for twitter in twitters %}
+        <p>{{ twitter.description }} &mdash;<span class="twitterdate">about {{ twitter.created_on|timesince }} ago</span></p>
+    {% endfor %}
+    <p><a href="http://twitter.com/rodbegbie">Follow me on Twitter</a></p>
+</div>
+

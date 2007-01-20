@@ -34,7 +34,7 @@ blogitems_dict = {
     'queryset': BlogItem.objects.all().exclude(content_type__model="twitter").exclude(content_type__model="lastfmtrack"),
     'date_field': 'created_on',
     'extra_context': { 'twitters': Twitter.objects.all()[:3],
-                       'tracks': LastFMTrack.objects.all()[:3],
+                       'lastfmtracks': LastFMTrack.objects.all()[:3],
                      },
 }
 
