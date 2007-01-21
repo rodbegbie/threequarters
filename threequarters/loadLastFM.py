@@ -9,7 +9,7 @@ tree = ET.parse(file)
 elem = tree.getroot()
 
 for track in elem.getchildren():
-    print track.find('name').text
+    print track.find('name').text.encode('utf-8')
     uts = int(track.find('date').get('uts'))
     (lastfmtrack, new) = LastFMTrack.objects.get_or_create(last_fm_id=uts)
     lastfmtrack.artist = track.find('artist').text
