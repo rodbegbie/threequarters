@@ -5,8 +5,7 @@
 {% endifchanged %}
 
 {% ifequal object.content_type.model "link" %}
-    <div class="linkentry xfolkentry entry">
-        <a name="{{object.content_object.slug}}" />
+    <div class="linkentry xfolkentry entry" id="{{object.content_object.slug}}" >
         {% if object.legacy %}
         <a name="{{object.legacy.mt_id|stringformat:"06d"}}" />
         {% endif %}
