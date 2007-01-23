@@ -58,6 +58,9 @@ class BlogItem(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = models.GenericForeignKey()
 
+    def __str__(self):
+        return self.slug
+
     class Meta:
         ordering = ["-created_on"]
 
@@ -141,6 +144,9 @@ class Post(models.Model):
     def get_absolute_url(self):
         return "/%s/%s/" % (self.created_on.strftime("%Y/%b/%d").lower(), self.slug)
 
+    def __str__(self):
+        return self.slug
+
     
 class Link(models.Model):
     blogitem = models.GenericRelation(BlogItem)
@@ -173,6 +179,9 @@ class Link(models.Model):
         
         return "/%d/week/%d/#%s" % (year, week, self.slug)
 
+    def __str__(self):
+        return self.slug
+
     def save(self):
         self.modified_on = datetime.now()
         super(Link, self).save() # Call the "real" save() method.
@@ -200,6 +209,9 @@ class FlickrPhoto(models.Model):
     
     def get_absolute_url(self):
         return self.flickr_url
+
+    def __str__(self):
+        return self.title
 
     def save(self):
         super(FlickrPhoto, self).save() # Call the "real" save() method.
@@ -233,6 +245,9 @@ class AmazonCD(models.Model):
     
     def get_absolute_url(self):
         return AMAZON_URLS[self.store] % self.asin
+
+    def __str__(self):
+        return self.title
 
     def save(self):
         if not self.title:
@@ -273,6 +288,9 @@ class Twitter(models.Model):
     def get_absolute_url(self):
         return "http://twitter.com/rodbegbie/statuses/%d" % self.twitter_id
 
+    def __str__(self):
+        return self.description
+
     def save(self):
         super(Twitter, self).save() # Call the "real" save() method.
         blogitem_save(self)
@@ -295,6 +313,9 @@ class LastFMTrack(models.Model):
     def get_absolute_url(self):
         return self.last_fm_url
 
+    def __str__(self):
+        return self.title
+
     def save(self):
         super(LastFMTrack, self).save() # Call the "real" save() method.
         blogitem_save(self)
@@ -303,6 +324,7 @@ class YelpReview(models.Model):
     blogitem = models.GenericRelation(BlogItem)
     business = models.CharField(maxlength=255)
     review = models.TextField()
+    score = models.IntegerField()
     yelp_url = models.URLField()
     created_on = models.DateTimeField(default=models.LazyDate())
 
@@ -315,6 +337,9 @@ class YelpReview(models.Model):
     
     def get_absolute_url(self):
         return self.yelp_url
+
+    def __str__(self):
+        return self.business
 
     def save(self):
         super(YelpReview, self).save() # Call the "real" save() method.
