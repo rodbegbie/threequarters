@@ -88,6 +88,8 @@ class BlogItem(models.Model):
             if self.content_object.via:
                 textfields.append(TextField('via', self.content_object.via, True))
         elif self.content_type.model == 'flickrphoto':
+            if not self.content_object.title:
+                return # Don't bother indexing photos without titles
             textfields = [TextField('title', self.content_object.title, True),
                           TextField('body', self.content_object.description, False)
                           ]
