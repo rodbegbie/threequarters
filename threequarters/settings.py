@@ -61,6 +61,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.doc.XViewMiddleware',
     'django.middleware.gzip.GZipMiddleware',
 #    'django.middleware.http.ConditionalGetMiddleware',
+    'django.middleware.cache.CacheMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 )
@@ -92,3 +93,7 @@ TEMPLATE_DIRS = (
 )
 
 AKISMET_API_KEY="d7b8758ca65f"
+
+# Cache Settings
+CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+CACHE_MIDDLEWARE_SECONDS = 300
