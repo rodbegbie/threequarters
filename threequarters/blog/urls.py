@@ -65,7 +65,8 @@ urlpatterns += patterns('threequarters.blog.feeds',
 
 # Old MT redirects
 urlpatterns += patterns('threequarters.blog.mtredirects',
-    (r'^archives/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[-\w]+).html', 'entry'),
+    (r'^archives/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[-\w]+)\.html', 'entry'),
+    (r'^archives/(?P<id>\d{6})\.html', 'entryById'),
     (r'^links/archives/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})-week/', 'linkarchive'),
     (r'^links/archives/week_(?P<year>\d{4})_(?P<month>\d{2})_(?P<day>\d{2}).html', 'linkarchive'),
     (r'^links/tag/(?P<tag>[-\w]+)/', 'linktag'),
