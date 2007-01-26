@@ -33,6 +33,9 @@
 {% else %}{% ifequal object.content_type.model "post" %}
     {% get_free_comment_count for blog.blogitem object.id as comment_count %}
     <div class="flickrentry entry">
+        {% if object.legacy %}
+        <a name="{{object.legacy.mt_id|stringformat:"06d"}}" />
+        {% endif %}
         <h4>{{object.content_object.title|smartypants}}</h4>
         {{object.content_object.body_xhtml}}
         <div class="permalink">
