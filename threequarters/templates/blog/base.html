@@ -32,8 +32,8 @@
 
 <div id="sidebar">
 {% block sidebar %}
-<div class="sidebartitle">TODO</div>
-<div class="sidebarcontent"><p>Put something useful here</p></div>
+{% include "blog/sidebar/searchbox.html" %}
+{% include "blog/sidebar/poweredby.html" %}
 {% endblock %}
 </div>
 
