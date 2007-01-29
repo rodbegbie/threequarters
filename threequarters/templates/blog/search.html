@@ -4,9 +4,13 @@
 {% block title2 %}Search results: '{{q}}'{% endblock %}
 
 {% block content %}
-{% for object in object_list %}
-    {% include "blog/blogitem.html" %}
-{% endfor %}
+{% if object_list %}
+    {% for object in object_list %}
+        {% include "blog/blogitem.html" %}
+    {% endfor %}
+{% else %}
+    <p>No results found</p>
+{% endif %}
 {% endblock %}
 
 {% block sidebar %}
