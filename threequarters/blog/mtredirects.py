@@ -6,6 +6,10 @@ def entry(request, year, month, day, slug):
     url = "/%s/%s/%s/%s/" % (year, MONTHS[int(month)], day, slug[:15])
     return HttpResponsePermanentRedirect(url)
 
+def month(request, year, month):
+    url = "/%s/%s/" % (year, MONTHS[int(month)])
+    return HttpResponsePermanentRedirect(url)
+
 def entryById(request, id):
     from models import Legacy
     return HttpResponsePermanentRedirect(Legacy.objects.get(mt_id=int(id)).blogitem_set.get().content_object.get_absolute_url())
