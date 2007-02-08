@@ -7,7 +7,7 @@
 {% ifequal object.content_type.model "link" %}
     <div class="linkentry xfolkentry entry" id="{{object.content_object.slug}}" >
         {% if object.legacy %}
-        <a name="{{object.legacy.mt_id|stringformat:"06d"}}" />
+        <a name="{{object.legacy.mt_id|stringformat:"06d"}}"></a>
         {% endif %}
         <h4><a class="taggedlink linklink" href="{{ object.content_object.url|fix_ampersands }}">{{object.content_object.title|smartypants}}</a></h4>
         <div class="description linkdescription">
@@ -34,7 +34,7 @@
     {% get_free_comment_count for blog.blogitem object.id as comment_count %}
     <div class="flickrentry entry">
         {% if object.legacy %}
-        <a name="{{object.legacy.mt_id|stringformat:"06d"}}" />
+        <a name="{{object.legacy.mt_id|stringformat:"06d"}}"></a>
         {% endif %}
         <h4>{{object.content_object.title|smartypants}}</h4>
         {{object.content_object.body_xhtml}}
