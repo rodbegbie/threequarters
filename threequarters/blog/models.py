@@ -156,6 +156,7 @@ class Link(models.Model):
     slug = models.SlugField(maxlength=30, prepopulate_from=("title",))
     description = models.TextField()
     url = models.URLField()
+    #verify_exists=False)
     via = models.URLField(blank=True)
     tags = models.CharField(maxlength=255)
     created_on = models.DateTimeField(default=models.LazyDate())
