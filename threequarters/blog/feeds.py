@@ -131,7 +131,7 @@ def feed(request, linksonly=False):
             handler.startElement(u"entry", {})
             handler.addQuickElement(u"title", u"CD Purchase: %s - %s" % (cd.artist, cd.title))
             handler.addQuickElement(u"id", "tag:groovymother.com,%s:%s"%(cd.created_on.strftime('%Y-%m-%d'), cd.id))
-            content = """<a href="%s"><img src="%s"><br>%s - %s</a>""" % (cd.get_absolute_url(), cd.image_url, cd.artist, cd.title)
+            content = """<p><a href="%s"><img src="%s"><br/>%s - %s</a></p><p>%s</p>""" % (cd.get_absolute_url(), cd.image_url, cd.artist, cd.title, cd.comments)
             handler.addQuickElement(u"content", content, {u"type": u"html"})
 
             handler.addQuickElement(u"link", None,
