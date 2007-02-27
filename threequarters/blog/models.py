@@ -159,6 +159,8 @@ class Link(models.Model):
     #verify_exists=False)
     via = models.URLField(blank=True)
     tags = models.CharField(maxlength=255)
+    has_thumbnail = models.BooleanField(default=False)
+    generate_thumbnail = models.BooleanField(default=True)
     created_on = models.DateTimeField(default=models.LazyDate())
     modified_on = models.DateTimeField(default=models.LazyDate())
 
@@ -187,6 +189,7 @@ class Link(models.Model):
 
     def save(self):
         self.modified_on = datetime.now()
+        self.generate_thumbnail = False
         super(Link, self).save() # Call the "real" save() method.
         blogitem_save(self, self.slug, self.tags)
 
