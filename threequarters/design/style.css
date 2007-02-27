@@ -94,6 +94,15 @@ h4 {
     margin-top: 0;
 }
 
+.linkthumbnail {
+    float: right;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border: 1px solid;
+    background: white;
+    padding: 3px;
+}
+
 .flickrphoto {
     float: left;
     margin-right: 5px;
