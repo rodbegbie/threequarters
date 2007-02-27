@@ -130,6 +130,7 @@ a:active, a:hover {
 }
 
 .permalink {
+    clear:both;
     float: right;
     font-size: x-small;
 }
