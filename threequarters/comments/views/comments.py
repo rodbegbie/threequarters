@@ -1,5 +1,5 @@
 from django.core import validators
-from django import forms
+from django import oldforms as forms
 from django.core.mail import mail_admins, mail_managers
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
