@@ -29,7 +29,7 @@ class Tag(models.Model):
     """A tag on an item."""
     tag = models.SlugField()
     display = models.CharField(maxlength=100)
-    last_used = models.DateTimeField(default=models.LazyDate())
+    last_used = models.DateTimeField(auto_now=True)
     
     class Meta:
         ordering = ["tag"]
@@ -124,8 +124,8 @@ class Post(models.Model):
     body_xhtml = models.TextField(blank=True)
     tags = models.CharField(maxlength=255, blank=True)
     draft = models.BooleanField(default=False)
-    created_on = models.DateTimeField(default=models.LazyDate())
-    modified_on = models.DateTimeField(default=models.LazyDate())
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
 
     class Admin:
         list_display = ('title', 'slug', 'created_on', 'draft')
@@ -135,7 +135,6 @@ class Post(models.Model):
         ordering = ["-created_on"]
 
     def save(self):
-        self.modified_on = datetime.now()
         import textile 
         self.body_xhtml = textile.textile(self.body_textile)
         super(Post, self).save() # Call the "real" save() method.
@@ -161,8 +160,8 @@ class Link(models.Model):
     tags = models.CharField(maxlength=255)
     has_thumbnail = models.BooleanField(default=False)
     generate_thumbnail = models.BooleanField(default=True)
-    created_on = models.DateTimeField(default=models.LazyDate())
-    modified_on = models.DateTimeField(default=models.LazyDate())
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
 
     class Admin:
         list_display = ('title', 'created_on')
@@ -188,7 +187,6 @@ class Link(models.Model):
         return self.slug
 
     def save(self):
-        self.modified_on = datetime.now()
         super(Link, self).save() # Call the "real" save() method.
         blogitem_save(self, self.slug, self.tags)
 
@@ -239,7 +237,7 @@ class AmazonCD(models.Model):
     artist = models.CharField(maxlength=255, blank=True)
     image_url = models.URLField(blank=True)
     comments = models.TextField(blank=True)
-    created_on = models.DateTimeField(default=models.LazyDate())
+    created_on = models.DateTimeField(auto_now_add=True)
 
     class Admin:
         list_display = ('asin', 'store', 'title', 'created_on')
