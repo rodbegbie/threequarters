@@ -501,6 +501,7 @@ def smartyPants(text, attr=default_smartypants_attr):
 
 				if convert_quot != "0":
 					t = re.sub('&quot;', '"', t)
+					t = re.sub('&#39;', "'", t)
 
 				if do_dashes != "0":
 					if do_dashes == "1":
