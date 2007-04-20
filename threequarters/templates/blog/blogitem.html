@@ -10,7 +10,7 @@
         <a name="{{object.legacy.mt_id|stringformat:"06d"}}"></a>
         {% endif %}
         {% if object.content_object.has_thumbnail %}
-            <a href="{{object.content_object.url|fix_ampersands}}"><img class="linkthumbnail" alt="" src="http://static.groovymother.com/thumbnails/{{object.content_object.id}}.png" height="100" width="133" /></a>
+            <a href="{{object.content_object.url|fix_ampersands}}"><img class="linkthumbnail corner iradius14" alt="" src="http://static.groovymother.com/thumbnails/{{object.content_object.id}}.png" height="100" width="133" /></a>
         {% endif %}
         <h4><a class="taggedlink linklink" href="{{ object.content_object.url|fix_ampersands }}">{{object.content_object.title|escape|smartypants}}</a></h4>
         <div class="description linkdescription">
