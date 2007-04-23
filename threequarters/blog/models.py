@@ -64,6 +64,11 @@ class BlogItem(models.Model):
     class Meta:
         ordering = ["-created_on"]
 
+    def age(self):
+        from datetime import datetime
+        delta = datetime.today() - self.created_on
+        return delta.days
+
     def save(self):
         super(BlogItem, self).save() # Call the "real" save() method.
 

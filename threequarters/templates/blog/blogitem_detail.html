@@ -1,4 +1,5 @@
 {% load comments.comments %}
+{% load comparison %}
 {% extends "blog/base.html" %}
 
 {% block title %}{{object.content_object.title}}{% endblock %}
@@ -22,6 +23,10 @@
 {% endfor %}
 
 <h3>Post a comment</h3>
-{% free_comment_form for blog.blogitem object.id %}
+{% if_greater object.age 60 %}
+    <p>Due to spam, posting comments to old entries is disabled.</p>
+{% else %}
+    {% free_comment_form for blog.blogitem object.id %}
+{% endif_greater %}
 {% endblock %}
 

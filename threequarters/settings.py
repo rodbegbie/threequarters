@@ -84,6 +84,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'threequarters.blog',
     'threequarters.comments',
+    'threequarters.template_utils',
 )
 
 TEMPLATE_DIRS = (
