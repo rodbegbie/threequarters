@@ -174,6 +174,9 @@ class Link(models.Model):
 
     class Meta:
         ordering = ["-created_on"]
+
+    def get_comments_url(self):
+        return "/%s/%s/#comments" % (self.created_on.strftime("%Y/%b/%d").lower(), self.slug)
     
     def get_absolute_url(self):
         from datetime import timedelta

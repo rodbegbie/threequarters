@@ -1,10 +1,12 @@
 {% load smartypants %}
 {% load comments.comments %}
+{% load comparison %}
 {% ifchanged %}
 <h3 class="date">{{ object.created_on|date:"F j, Y" }}</h3>
 {% endifchanged %}
 
 {% ifequal object.content_type.model "link" %}
+    {% get_free_comment_count for blog.blogitem object.id as comment_count %}
     <div class="linkentry xfolkentry entry" id="{{object.content_object.slug}}" >
         {% if object.legacy %}
         <a name="{{object.legacy.mt_id|stringformat:"06d"}}"></a>
@@ -19,6 +21,13 @@
         <div class="permalink">
             {% if object.content_object.via %}
                 <a rel="via" href="{{ object.content_object.via|fix_ampersands }}" title="I found this link at...">via</a> |
+            {% endif %}
+            {% if comment_count %}
+                <a href="{{object.content_object.get_comments_url}}">{{comment_count}} comment{{comment_count|pluralize}}</a> |
+            {% else %}
+                {% if_less object.age 60 %}
+                    <a href="{{object.content_object.get_comments_url}}">{{comment_count}} comment{{comment_count|pluralize}}</a> |
+                {% endif_less %}
             {% endif %}
             <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
         </div>
