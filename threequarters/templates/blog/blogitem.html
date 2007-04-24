@@ -16,7 +16,7 @@
         {% endif %}
         <h4><a class="taggedlink linklink" href="{{ object.content_object.url|fix_ampersands }}">{{object.content_object.title|escape|smartypants}}</a></h4>
         <div class="description linkdescription">
-            {{object.content_object.description|escape|smartypants}}
+            {{object.content_object.description|escape|linebreaks|smartypants}}
         </div>
         <div class="permalink">
             {% if object.content_object.via %}
