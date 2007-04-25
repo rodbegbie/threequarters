@@ -192,7 +192,7 @@ def post_comment(request):
     if not request.POST:
         raise Http404, _("Only POSTs are allowed")
     try:
-        options, target, security_hash = request.POST['options'], request.POST['target'], request.POST['gonzo']
+        options, target, security_hash = request.POST['options'], request.POST['target'], request.POST['fozzie']
     except KeyError:
         raise Http404, _("One or more of the required fields wasn't submitted")
     photo_options = request.POST.get('photo_options', '')
@@ -285,7 +285,7 @@ def post_free_comment(request):
     if not request.POST:
         raise Http404, _("Only POSTs are allowed")
     try:
-        options, target, security_hash = request.POST['options'], request.POST['target'], request.POST['gonzo']
+        options, target, security_hash = request.POST['options'], request.POST['target'], request.POST['fozzie']
     except KeyError:
         raise Http404, _("One or more of the required fields wasn't submitted")
     ipaddr = request.META.get('REMOTE_ADDR')
