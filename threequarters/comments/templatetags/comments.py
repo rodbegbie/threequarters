@@ -56,14 +56,14 @@ class CommentFormNode(template.Node):
                 options.append(abbr)
         context['options'] = ','.join(options)
         if self.free:
-            context['hash'] = Comment.objects.get_security_hash(context['options'], '', '', context['target'])
+            context['hash'] = Comment.objects.get_security_hash(context['options'], '', '', context['target'], context['request'].META["REMOTE_ADDR"])
             default_form = loader.get_template(FREE_COMMENT_FORM)
         else:
             context['photo_options'] = self.photo_options
             context['rating_options'] = normalize_newlines(base64.encodestring(self.rating_options).strip())
             if self.rating_options:
                 context['rating_range'], context['rating_choices'] = Comment.objects.get_rating_options(self.rating_options)
-            context['hash'] = Comment.objects.get_security_hash(context['options'], context['photo_options'], context['rating_options'], context['target'])
+            context['hash'] = Comment.objects.get_security_hash(context['options'], context['photo_options'], context['rating_options'], context['target'], context['request'].META["REMOTE_ADDR"])
             default_form = loader.get_template(COMMENT_FORM)
         output = default_form.render(context)
         context.pop()

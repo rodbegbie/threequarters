@@ -1,7 +1,7 @@
 # Django settings for threequarters project.
 
 INTERNAL_IPS=('192.168.77.149',)
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 EMAIL_HOST = "mail.speakeasy.net"
 DEFAULT_FROM_EMAIL = "threequarters@arsecandle.org"
@@ -61,6 +61,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.csrf.middleware.CsrfMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'threequarters.django_openidconsumer.middleware.OpenIDMiddleware',
     'django.middleware.doc.XViewMiddleware',
 #    'django.middleware.cache.CacheMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
@@ -85,6 +86,7 @@ INSTALLED_APPS = (
     'threequarters.blog',
     'threequarters.comments',
     'threequarters.template_utils',
+    'threequarters.django_openidconsumer',
 )
 
 TEMPLATE_DIRS = (
@@ -99,3 +101,9 @@ AKISMET_API_KEY="d7b8758ca65f"
 # Cache Settings
 CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 CACHE_MIDDLEWARE_SECONDS = 300
+
+TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
+"django.core.context_processors.debug",
+"django.core.context_processors.i18n",
+"django.core.context_processors.request",
+)

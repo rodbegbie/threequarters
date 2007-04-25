@@ -197,7 +197,8 @@ def post_comment(request):
         raise Http404, _("One or more of the required fields wasn't submitted")
     photo_options = request.POST.get('photo_options', '')
     rating_options = normalize_newlines(request.POST.get('rating_options', ''))
-    if Comment.objects.get_security_hash(options, photo_options, rating_options, target) != security_hash:
+    ipaddr = request.META.get('REMOTE_ADDR')
+    if Comment.objects.get_security_hash(options, photo_options, rating_options, target, ipaddr) != security_hash:
         raise Http404, _("Somebody tampered with the comment form (security violation)")
     # Now we can be assured the data is valid.
     if rating_options:
@@ -287,7 +288,8 @@ def post_free_comment(request):
         options, target, security_hash = request.POST['options'], request.POST['target'], request.POST['gonzo']
     except KeyError:
         raise Http404, _("One or more of the required fields wasn't submitted")
-    if Comment.objects.get_security_hash(options, '', '', target) != security_hash:
+    ipaddr = request.META.get('REMOTE_ADDR')
+    if Comment.objects.get_security_hash(options, '', '', target, ipaddr) != security_hash:
         raise Http404, _("Somebody tampered with the comment form (security violation)")
     content_type_id, object_id = target.split(':') # target is something like '52:5157'
     content_type = ContentType.objects.get(pk=content_type_id)
