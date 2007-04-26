@@ -1,4 +1,3 @@
-{% load i18n %}
 {% if display_form %}
 <div class="commentform">
 <form action="/comments/postfree/" method="post">
@@ -6,7 +5,7 @@
 <p><label for="id_person_name">Your name</label><br/>
 <input class="commentinput" type="text" id="id_person_name" name="person_name" /></p>
 
-<p><label for="id_person_email">Your email</label><br/>
+<p><label for="id_person_email">Your email (won't be displayed on the site anywhere)</label><br/>
 <input class="commentinput" type="text" id="id_person_email" name="person_email" /></p>
 
 <p><label for="id_person_url">Your homepage (optional)</label><br/>
