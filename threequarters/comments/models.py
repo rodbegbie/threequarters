@@ -219,7 +219,7 @@ class FreeComment(models.Model):
         if not self.id:
             from django.core.mail import mail_managers 
             mail_subject = 'New comment posted on %s "%s"' % (self.site.name, self.get_content_object().content_object.title)
-            mail_body = 'On %s, %s (%s, %s) posted the following comment on "%s":\n\n%s' % (self.submit_date.strftime("%A, %B %d, %Y at %I:%M %p"), self.person_name, self.person_email, self.person_url, self.get_content_object().content_object.title, self.comment)
+            mail_body = 'On %s, %s (%s, %s) posted the following comment on "%s" (%s):\n\n%s' % (self.submit_date.strftime("%A, %B %d, %Y at %I:%M %p"), self.person_name, self.person_email, self.person_url, self.get_content_object().content_object.title, self.get_content_object().get_absolute_url(), self.comment)
             mail_managers(mail_subject, mail_body, fail_silently=True)
 
         super(FreeComment, self).save() 
