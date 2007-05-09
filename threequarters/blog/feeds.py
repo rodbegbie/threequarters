@@ -129,7 +129,10 @@ def feed(request, linksonly=False):
         elif item.content_type.model == "amazoncd":
             cd = item.content_object
             handler.startElement(u"entry", {})
-            handler.addQuickElement(u"title", u"CD Purchase: %s - %s" % (cd.artist, cd.title))
+            artist = cd.artist.decode("utf8")
+            title = cd.title.decode("utf8")
+            title = u"CD Purchase: %s - %s" % (artist, title)
+            handler.addQuickElement(u"title", title)
             handler.addQuickElement(u"id", "tag:groovymother.com,%s:%s"%(cd.created_on.strftime('%Y-%m-%d'), cd.id))
             content = """<p><a href="%s"><img src="%s"><br/>%s - %s</a></p><p>%s</p>""" % (cd.get_absolute_url(), cd.image_url, cd.artist, cd.title, cd.comments)
             handler.addQuickElement(u"content", content, {u"type": u"html"})
