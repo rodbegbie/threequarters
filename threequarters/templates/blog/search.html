@@ -19,9 +19,9 @@
 <div class="sidebarcontent">
     <p>Page {{page}} of {{pages}}</p>
     <p>
-    {% if has_previous %}<a href="./?q={{q}}&page={{previous}}">Previous page</a>{% endif %}
+    {% if has_previous %}<a href="./?q={{q}}&amp;page={{previous}}">Previous page</a>{% endif %}
     {% if has_next %}{% if has_previous %}|{% endif %}{% endif %}
-    {% if has_next %}<a href="./?q={{q}}&page={{next}}">Next page</a>{% endif %}
+    {% if has_next %}<a href="./?q={{q}}&amp;page={{next}}">Next page</a>{% endif %}
     </p>
 </div>
 {% endif %}
