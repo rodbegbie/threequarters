@@ -1,0 +1,7 @@
+{% extends "blog/base.html" %}
+{% load markup %}
+
+{% block title %}{{flatpage.title }}{% endblock %}
+{% block title2 %}{{ flatpage.title }}{% endblock %}
+
+{% block content %}{{ flatpage.content|textile }}{% endblock %}
