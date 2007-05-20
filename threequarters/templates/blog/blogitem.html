@@ -104,7 +104,7 @@
 {% else %}{% ifequal object.content_type.model "twitter" %}
     <div class="twitter entry">
         <div class="twitterdescription">
-            {{object.content_object.description|escape|smartypants}}
+            {{object.content_object.description|urlize|escape|smartypants}}
         </div>
         <div class="permalink">
             <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>

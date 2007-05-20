@@ -2,7 +2,7 @@
 <div class="sidebartitle">Twitters</div>
 <div class="sidebarcontent">
     {% for twitter in twitters %}
-        <p>{{ twitter.description|escape|smartypants }} &mdash;<span class="twitterdate">about {{ twitter.created_on|timesince }} ago</span></p>
+        <p>{{ twitter.description|escape|urlize|smartypants }} &mdash;<span class="twitterdate">about {{ twitter.created_on|timesince }} ago</span></p>
     {% endfor %}
     <p><a href="http://twitter.com/rodbegbie">Follow me on Twitter</a></p>
 </div>
