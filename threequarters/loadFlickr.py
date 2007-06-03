@@ -1,8 +1,10 @@
 from threequarters.blog.models import FlickrPhoto
 from threequarters import flickr
 import datetime
+import re
 
 flickr.API_KEY='1866fbe3d625142f11c545d7b881d511'
+machinetag = re.compile(".+:.+=.+")
 
 photos = flickr.people_getPublicPhotos(user_id="35034351963@N01", per_page=10)
 
@@ -25,7 +27,8 @@ for photo in photos:
     if photo.tags:
         tags = []
         for tag in photo.tags:
-            tags.append(tag.raw.encode('utf-8'))
+            if not machinetag.match(tag.raw):
+                tags.append(tag.raw.encode('utf-8'))
     
         flickrphoto.tags = ", ".join(tags)
 
