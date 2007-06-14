@@ -80,6 +80,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.flatpages',
+    'django.contrib.markup',
     'django.contrib.redirects',
     'django.contrib.sessions',
     'django.contrib.sites',
