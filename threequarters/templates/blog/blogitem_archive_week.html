@@ -1,3 +1,4 @@
+{% load comparison %}
 {% extends "blog/base.html" %}
 
 
@@ -8,5 +9,14 @@
 {% for object in object_list %}
     {% include "blog/blogitem.html" %}
 {% endfor %}
+{% endblock %}
+
+{% block sidebar %}
+{% include "blog/sidebar/about.html" %}
+{% if_greater object_list.0.age 60 %}
+    {% include "blog/sidebar/adsense.html" %}
+{% endif_greater %}
+{% include "blog/sidebar/searchbox.html" %}
+{% include "blog/sidebar/poweredby.html" %}
 {% endblock %}
 
