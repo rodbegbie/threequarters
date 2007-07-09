@@ -102,6 +102,7 @@
 
 
 {% else %}{% ifequal object.content_type.model "twitter" %}
+{% ifnotequal object.content_object.description.0 "@" %}
     <div class="twitter entry">
         <div class="twitterdescription">
             {{object.content_object.description|escape|urlize|smartypants}}
@@ -113,7 +114,7 @@
             Posted to Twitter at {{ object.created_on|date:"P" }}
         </div>
     </div>
-
+{% endifnotequal %}
 {% else %}{% ifequal object.content_type.model "lastfmtrack" %}
     <div class="lastfmtrack entry">
         <div class="postbody">

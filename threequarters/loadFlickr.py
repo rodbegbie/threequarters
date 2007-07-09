@@ -6,7 +6,7 @@ import re
 flickr.API_KEY='1866fbe3d625142f11c545d7b881d511'
 machinetag = re.compile(".+:.+=.+")
 
-photos = flickr.people_getPublicPhotos(user_id="35034351963@N01", per_page=10)
+photos = flickr.people_getPublicPhotos(user_id="35034351963@N01", per_page=20)
 
 for photo in photos:
     print photo.title.encode('utf-8'), photo.dateposted

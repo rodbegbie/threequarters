@@ -31,12 +31,10 @@ def search_wrapper(request, queryset, *args, **kwargs):
 from threequarters.blog.models import BlogItem, Tag, Twitter, LastFMTrack
 
 blogitems_dict = {
-    #'queryset': BlogItem.objects.all().exclude(content_type__model="twitter").exclude(content_type__model="lastfmtrack"),
+#'queryset': BlogItem.objects.all().exclude(content_type__model="lastfmtrack").exclude(content_type__model="twitter", content_object__description__startswith="@"),
     'queryset': BlogItem.objects.all().exclude(content_type__model="lastfmtrack"),
     'date_field': 'created_on',
-    'extra_context': { #'twitters': Twitter.objects.all()[:3],
-                       'lastfmtracks': LastFMTrack.objects.all()[:3],
-                     },
+    'extra_context': { 'lastfmtracks': LastFMTrack.objects.all()[:3] },
 }
 
 urlpatterns += patterns('django.views.generic.date_based',
