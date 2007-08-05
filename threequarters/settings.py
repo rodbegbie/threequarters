@@ -63,7 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'threequarters.django_openidconsumer.middleware.OpenIDMiddleware',
     'django.middleware.doc.XViewMiddleware',
-#    'django.middleware.cache.CacheMiddleware',
+    'django.middleware.cache.CacheMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 )
