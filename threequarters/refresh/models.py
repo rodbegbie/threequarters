@@ -35,4 +35,4 @@ class BodyFat(models.Model):
         list_display = ('time', 'percent')
 
     def __str__(self):
-        return "BodyFat: %.1f%" % self.percent
+        return "BodyFat: %.1f%%" % self.percent
