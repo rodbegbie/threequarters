@@ -11,7 +11,7 @@ class Weight(models.Model):
         list_display = ('time', 'weight')
 
     def __str__(self):
-        return "Weight"
+        return "Weight: %.1flbs" % weight
 
 class ShangriLaOil(models.Model):
     """(ShangriLaOil description)"""
@@ -25,3 +25,14 @@ class ShangriLaOil(models.Model):
     def __str__(self):
         return "ShangriLaOil"
 
+class BodyFat(models.Model):
+    """(BodyFat description)"""
+    
+    percent = models.FloatField(max_digits=3, decimal_places=1)
+    time = models.DateTimeField(auto_now_add=True)
+
+    class Admin:
+        list_display = ('time', 'percent')
+
+    def __str__(self):
+        return "BodyFat: %.1f%" % self.percent
