@@ -11,7 +11,7 @@ class Weight(models.Model):
         list_display = ('time', 'weight')
 
     def __str__(self):
-        return "Weight: %.1flbs" % weight
+        return "Weight: %.1flbs" % self.weight
 
 class ShangriLaOil(models.Model):
     """(ShangriLaOil description)"""
