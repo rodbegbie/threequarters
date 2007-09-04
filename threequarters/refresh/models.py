@@ -37,3 +37,15 @@ class BodyFat(models.Model):
 
     def __str__(self):
         return "BodyFat: %.1f%%" % self.percent
+
+class Steps(models.Model):
+    """(Steps description)"""
+
+    steps = models.IntegerField(blank=False, null=False)
+    time = models.DateField(default=datetime.datetime.now)
+
+    class Admin:
+        list_display = ('time', 'steps')
+
+    def __str__(self):
+        return "Steps: %d" % self.steps
