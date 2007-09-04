@@ -9,6 +9,7 @@ json = urlopen(url).read()
 for entry in simplejson.loads(json):
     desc = entry["text"].encode('utf-8')
     desc = desc.replace("&quot;", '"')
+    desc = desc.replace("&amp;", '&')
     print desc
     (twitter, new) = Twitter.objects.get_or_create(twitter_id = entry["id"])
     twitter.description = desc
