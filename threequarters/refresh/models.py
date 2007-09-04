@@ -1,11 +1,12 @@
 from django.db import models
+import datetime
 
 class Weight(models.Model):
     """(Weight description)"""
     weight = models.FloatField(max_digits=5, decimal_places=1)
     underwear = models.BooleanField(default=True)
     jeans = models.BooleanField(default=False)
-    time = models.DateTimeField(auto_now_add=True)
+    time = models.DateTimeField(default=datetime.datetime.now)
 
     class Admin:
         list_display = ('time', 'weight')
@@ -17,7 +18,7 @@ class ShangriLaOil(models.Model):
     """(ShangriLaOil description)"""
     
     tablespoons = models.FloatField(max_digits=3, decimal_places=1)
-    time = models.DateTimeField(auto_now_add=True)
+    time = models.DateTimeField(default=datetime.datetime.now)
 
     class Admin:
         list_display = ('time','tablespoons')
@@ -29,7 +30,7 @@ class BodyFat(models.Model):
     """(BodyFat description)"""
     
     percent = models.FloatField(max_digits=3, decimal_places=1)
-    time = models.DateTimeField(auto_now_add=True)
+    time = models.DateTimeField(default=datetime.datetime.now)
 
     class Admin:
         list_display = ('time', 'percent')
