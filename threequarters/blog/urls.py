@@ -43,7 +43,7 @@ urlpatterns += patterns('django.views.generic.date_based',
    (r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/$',                                   'archive_month', blogitems_dict),
    (r'^(?P<year>\d{4})/week/(?P<week>\d{1,2})/$',                                  'archive_week', blogitems_dict),
 #   (r'^(?P<year>\d{4})/$',                                                       'archive_year',  blogitems_dict),
-   (r'^/?$',                                                                     'archive_index', dict(blogitems_dict, num_latest=30, template_name="blog/index.html")),
+   (r'^/?$',                                                                     'archive_index', dict(blogitems_dict, num_latest=50, template_name="blog/index.html")),
 )
 
 # Tags
