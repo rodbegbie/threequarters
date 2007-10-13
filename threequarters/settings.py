@@ -76,18 +76,19 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'threequarters.template_utils',
+    'threequarters.django_openidconsumer',
+    'threequarters.blog',
+    'threequarters.refresh',
+    'threequarters.comments',
+    'django.contrib.flatpages',
+    'django.contrib.redirects',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.flatpages',
     'django.contrib.markup',
-    'django.contrib.redirects',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'threequarters.blog',
-    'threequarters.comments',
-    'threequarters.template_utils',
-    'threequarters.django_openidconsumer',
 )
 
 TEMPLATE_DIRS = (
@@ -102,6 +103,7 @@ AKISMET_API_KEY="d7b8758ca65f"
 # Cache Settings
 CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 CACHE_MIDDLEWARE_SECONDS = 300
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
 "django.core.context_processors.debug",
