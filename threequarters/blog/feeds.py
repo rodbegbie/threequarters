@@ -71,6 +71,10 @@ def feed(request, linksonly=False):
             handler.startElement(u"entry", {})
             handler.addQuickElement(u"title", link.title)
             handler.addQuickElement(u"summary", link.description, {u"type": u"text"})
+            if not linksonly:
+                content = """<p><a href="%s"><img src="http://static.groovymother.com/thumbnails/%s.png" height="100" width="133" /></a><br>%s</p>""" % (link.url, link.id, link.description)
+                handler.addQuickElement(u"content", content, {u"type": u"html"})
+
             handler.addQuickElement(u"id", "tag:groovymother.com,%s:%s"%(link.created_on.strftime('%Y-%m-%d'), link.id))
 
             handler.addQuickElement(u"link", None,
@@ -102,8 +106,7 @@ def feed(request, linksonly=False):
                                         })
             handler.endElement(u"entry")
 
-
-        elif item.content_type.model == "flickrphoto":
+        elif item.content_type.model == "flickrphotoXXXX":
             photo = item.content_object
             handler.startElement(u"entry", {})
             handler.addQuickElement(u"title", photo.title)
