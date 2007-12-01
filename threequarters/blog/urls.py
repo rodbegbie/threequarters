@@ -79,6 +79,7 @@ urlpatterns += patterns('threequarters.blog.mtredirects',
 urlpatterns += patterns('django.views.generic.simple',
     (r'^images/(?P<image>.*)$', 'redirect_to', {'url': 'http://static.groovymother.com/images/%(image)s'}),
     (r'^photos/(?P<image>.*)$', 'redirect_to', {'url': 'http://static.groovymother.com/photos/%(image)s'}),
+    (r'^downloads/(?P<image>.*)$', 'redirect_to', {'url': 'http://static.groovymother.com/downloads/%(image)s'}),
     (r'^mirror/(?P<image>.*)$', 'redirect_to', {'url': 'http://static.groovymother.com/mirror/%(image)s'}),
 )
 
