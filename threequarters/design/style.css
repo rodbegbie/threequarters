@@ -82,6 +82,10 @@ h3.date {
     border-top: 2px solid #CC4F06; /* brash */
 }
 
+.twitter {
+    font-size: smaller;
+}
+
 .entry:hover {
     border-left: 5px solid #DBF0B6; /* etiquette poor */
 }
