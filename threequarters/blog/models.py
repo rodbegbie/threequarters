@@ -286,6 +286,7 @@ class AmazonCD(models.Model):
 class Twitter(models.Model):
     blogitem = models.GenericRelation(BlogItem)
     twitter_id = models.IntegerField(db_index=True)
+    starts_with_at = models.BooleanField(default=False)
     description = models.TextField()
     created_on = models.DateTimeField(default=models.LazyDate())
 
@@ -303,6 +304,7 @@ class Twitter(models.Model):
         return self.description
 
     def save(self):
+        self.starts_with_at = (self.description[0] == "@")
         super(Twitter, self).save() # Call the "real" save() method.
         blogitem_save(self)
 
