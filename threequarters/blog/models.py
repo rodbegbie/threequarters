@@ -57,6 +57,8 @@ class BlogItem(models.Model):
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = models.GenericForeignKey()
+    
+    display_on_homepage = models.BooleanField(default=True)
 
     def __str__(self):
         return self.slug
@@ -70,8 +72,16 @@ class BlogItem(models.Model):
         return delta.days
 
     def save(self):
-        super(BlogItem, self).save() # Call the "real" save() method.
+        # Check if it's to be displayed on the homepage
+        if ((self.content_type.model == 'post' and self.content_object.draft) or
+            (self.content_type.model == 'twitter' and self.content_object.starts_with_at) or
+             self.content_type.model == 'lastfmtrack'):
+            self.display_on_homepage = False
+        else:
+            self.display_on_homepage = True
 
+        super(BlogItem, self).save() # Call the "real" save() method.
+        
         # Save to search index
         from xapwrap.index import SmartIndex
         from xapwrap.document import Document, TextField, SortKey
