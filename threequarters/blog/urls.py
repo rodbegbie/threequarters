@@ -32,7 +32,7 @@ from threequarters.blog.models import BlogItem, Tag, Twitter, LastFMTrack
 
 blogitems_dict = {
 #'queryset': BlogItem.objects.all().exclude(content_type__model="lastfmtrack").exclude(content_type__model="twitter", content_object__description__startswith="@"),
-    'queryset': BlogItem.objects.all().filter(display_on_homepage),
+    'queryset': BlogItem.objects.all().filter(display_on_homepage = True),
     'date_field': 'created_on',
     'extra_context': { 'lastfmtracks': LastFMTrack.objects.all()[:3] },
 }
