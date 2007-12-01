@@ -207,7 +207,7 @@ a:active, a:hover {
     font-size: smaller;
 }
 .commentinput, .commenttextarea {
-    font-family: Monaco,'Courier New',Courier,monospace;
+    font-family: "Andale Mono", Monaco, 'Courier New', Courier, monospace;
 }
 .commenttextarea {
     font-size: smaller;
