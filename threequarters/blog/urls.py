@@ -62,6 +62,16 @@ urlpatterns += patterns('threequarters.blog.feeds',
     (r'^links/index.atom$', 'feed', {'linksonly': True}),
 )
 
+from threequarters.blog.feeds import CommentsFeed
+feeds = {
+    'comments': CommentsFeed,
+}
+
+urlpatterns += patterns('',
+	(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed',
+	        {'feed_dict': feeds}),
+)
+
 # Old MT redirects
 urlpatterns += patterns('threequarters.blog.mtredirects',
     (r'^archives/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[-\w]+)\.html', 'entry'),

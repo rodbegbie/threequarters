@@ -1,9 +1,13 @@
 # Django settings for threequarters project.
 
-INTERNAL_IPS=('192.168.77.149',)
+INTERNAL_IPS=('66.92.76.138',)
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
-EMAIL_HOST = "mail.speakeasy.net"
+EMAIL_HOST = "sputtering.arsecandle.org"
+EMAIL_HOST_USER = "threequarters@arsecandle.org"
+EMAIL_HOST_PASSWORD = "threeoverfour"
+EMAIL_USE_TLS = True
+
 DEFAULT_FROM_EMAIL = "threequarters@arsecandle.org"
 
 ADMINS = (
@@ -61,8 +65,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.csrf.middleware.CsrfMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'threequarters.django_openidconsumer.middleware.OpenIDMiddleware',
-    'django.middleware.doc.XViewMiddleware',
+#    'threequarters.django_openidconsumer.middleware.OpenIDMiddleware',
+#    'django.middleware.doc.XViewMiddleware',
     'django.middleware.cache.CacheMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
@@ -110,3 +114,6 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
 "django.core.context_processors.i18n",
 "django.core.context_processors.request",
 )
+
+USE_ETAGS = True
+

@@ -314,7 +314,7 @@ class Twitter(models.Model):
         return self.description
 
     def save(self):
-        self.starts_with_at = (self.description[0] == "@")
+        self.starts_with_at = (self.description and self.description[0] == "@")
         super(Twitter, self).save() # Call the "real" save() method.
         blogitem_save(self)
 
