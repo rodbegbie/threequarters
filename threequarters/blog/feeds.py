@@ -16,6 +16,9 @@ class CommentsFeed(Feed):
     def items(self):
         return FreeComment.objects.all()[:10]
 
+    def item_pubdate(self, item):
+        return item.submit_date
+
 def feed(request, linksonly=False):
     if linksonly:
         blogitems = BlogItem.objects.filter(content_type__model="link").order_by('-created_on')[:30]
