@@ -115,5 +115,5 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
 "django.core.context_processors.request",
 )
 
-USE_ETAGS = True
+#USE_ETAGS = True
 
