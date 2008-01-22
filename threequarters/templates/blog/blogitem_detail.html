@@ -32,8 +32,8 @@
 
 {% block sidebar %}
 {% include "blog/sidebar/about.html" %}
-{% if_greater object.age 60 %}
-    {% include "blog/sidebar/adsense.html" %}
+{% if_greater object.age 30 %}
+    {% include "blog/sidebar/rubicon.html" %}
 {% endif_greater %}
 {% include "blog/sidebar/searchbox.html" %}
 {% include "blog/sidebar/poweredby.html" %}
