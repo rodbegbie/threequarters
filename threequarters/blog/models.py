@@ -211,7 +211,7 @@ class Link(models.Model):
 
 class FlickrPhoto(models.Model):
     blogitem = models.GenericRelation(BlogItem)
-    flickr_id = models.IntegerField(db_index=True)
+    flickr_id = models.BigIntegerField(db_index=True)
     title = models.CharField(maxlength=255)
     description = models.TextField()
     flickr_url = models.URLField()
