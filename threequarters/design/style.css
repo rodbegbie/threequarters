@@ -55,6 +55,10 @@ h3.date {
     border-right: 1px dashed;
 }
 
+#precontent {
+    text-align: center;
+}
+
 #sidebar {
     float: right;
     width: 16em;

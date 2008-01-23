@@ -1,11 +1,28 @@
+{% load comparison %}
 {% extends "blog/base.html" %}
 
 {% block title %}Entries for {{ month|date:"F Y" }}{% endblock %}
 {% block title2 %}Entries for {{ month|date:"F Y" }}{% endblock %}
 
+{% block precontent %}
+{% if_greater object_list.0.age 60 %}
+    {% include "blog/sidebar/rubiconleaderboard.html" %}
+{% endif_greater %}
+{% endblock %}
+
+
 {% block content %}
 {% for object in object_list %}
     {% include "blog/blogitem.html" %}
 {% endfor %}
+{% endblock %}
+
+{% block sidebar %}
+{% include "blog/sidebar/about.html" %}
+{% if_greater object_list.0.age 30 %}
+    {% include "blog/sidebar/rubicon.html" %}
+{% endif_greater %}
+{% include "blog/sidebar/searchbox.html" %}
+{% include "blog/sidebar/poweredby.html" %}
 {% endblock %}
 
