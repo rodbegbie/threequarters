@@ -6,7 +6,7 @@
 
 {% block precontent %}
 {% if_greater object_list.0.age 60 %}
-    {% include "blog/sidebar/rubiconleaderboard.html" %}
+    {% include "blog/sidebar/adsenseleaderboard.html" %}
 {% endif_greater %}
 {% endblock %}
 
@@ -19,9 +19,7 @@
 
 {% block sidebar %}
 {% include "blog/sidebar/about.html" %}
-{% if_greater object_list.0.age 30 %}
-    {% include "blog/sidebar/rubicon.html" %}
-{% endif_greater %}
+{% include "blog/sidebar/adsense.html" %}
 {% include "blog/sidebar/searchbox.html" %}
 {% include "blog/sidebar/poweredby.html" %}
 {% endblock %}
