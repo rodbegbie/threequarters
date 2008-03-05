@@ -25,6 +25,20 @@ def blogitem_save(object, slug="", tags=""):
             tagitem.save()
             blogitem.tags.add(tagitem)
 
+class Location(models.Model):
+    """A location from Fire Eagle"""
+    name = models.CharField(maxlength=255)
+    located_at = models.DateTimeField()
+
+    class Meta:
+        ordering = ["-located_at"]
+
+    def __str__(self):
+        return self.name
+
+    class Admin:
+        list_display = ["name", "located_at"]
+
 class Tag(models.Model):
     """A tag on an item."""
     tag = models.SlugField()
