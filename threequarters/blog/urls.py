@@ -28,13 +28,13 @@ def search_wrapper(request, queryset, *args, **kwargs):
     kwargs["extra_context"] = {'q': q}
     return object_list(request, queryset, *args, **kwargs) 
 
-from threequarters.blog.models import BlogItem, Tag, Twitter, LastFMTrack
+from threequarters.blog.models import BlogItem, Tag, Twitter, LastFMTrack, Location
 
 blogitems_dict = {
 #'queryset': BlogItem.objects.all().exclude(content_type__model="lastfmtrack").exclude(content_type__model="twitter", content_object__description__startswith="@"),
     'queryset': BlogItem.objects.all().filter(display_on_homepage = True),
     'date_field': 'created_on',
-    'extra_context': { 'lastfmtracks': LastFMTrack.objects.all()[:3] },
+    'extra_context': { 'lastfmtracks': LastFMTrack.objects.all()[:3], 'location': Location.objects.all()[0] },
 }
 
 urlpatterns += patterns('django.views.generic.date_based',
