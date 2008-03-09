@@ -3,7 +3,7 @@
 INTERNAL_IPS=('66.92.76.138',)
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
-EMAIL_HOST = "sputtering.arsecandle.org"
+EMAIL_HOST = "flaming.arsecandle.org"
 EMAIL_HOST_USER = "threequarters@arsecandle.org"
 EMAIL_HOST_PASSWORD = "threeoverfour"
 EMAIL_USE_TLS = True
