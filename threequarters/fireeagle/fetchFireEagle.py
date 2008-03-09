@@ -23,6 +23,6 @@ for location in locations:
 	located_at = location["located_at"] + datetime.timedelta(hours=3)
 	#print "LOCATED_AT", located_at, "LAST", lastloc.located_at
 	if located_at <> lastloc.located_at:
-	    print "ADDING LOCATION", name, loc
+	    print "ADDING LOCATION", name
             loc = Location(name=name, located_at=located_at)
 	    loc.save()
