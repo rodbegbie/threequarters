@@ -12,7 +12,7 @@ def tag_wrapper(request, queryset, tag=None, *args, **kwargs):
         # Tag not found
         from django.http import Http404
         raise Http404
-    kwargs["extra_context"] = {'tag': tag}
+    kwargs["extra_context"] = {'tag': tag, 'location': Location.objects.all()[0] }
     return object_list(request, queryset, *args, **kwargs) 
 
 def search_wrapper(request, queryset, *args, **kwargs):
@@ -25,7 +25,7 @@ def search_wrapper(request, queryset, *args, **kwargs):
         queryset = queryset.filter(id=0)
     else:
         queryset = queryset.filter(id__in=[result["uid"]-10000 for result in results])
-    kwargs["extra_context"] = {'q': q}
+    kwargs["extra_context"] = {'q': q, 'location': Location.objects.all()[0] }
     return object_list(request, queryset, *args, **kwargs) 
 
 from threequarters.blog.models import BlogItem, Tag, Twitter, LastFMTrack, Location
