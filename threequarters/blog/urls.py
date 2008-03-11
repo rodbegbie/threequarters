@@ -34,7 +34,7 @@ blogitems_dict = {
 #'queryset': BlogItem.objects.all().exclude(content_type__model="lastfmtrack").exclude(content_type__model="twitter", content_object__description__startswith="@"),
     'queryset': BlogItem.objects.all().filter(display_on_homepage = True),
     'date_field': 'created_on',
-    'extra_context': { 'lastfmtracks': LastFMTrack.objects.all()[:3], 'location': Location.objects.all()[0] },
+    'extra_context': { 'lastfmtracks': LastFMTrack.objects.all()[:3], 'location': Location.objects.all()[:1] },
 }
 
 urlpatterns += patterns('django.views.generic.date_based',
