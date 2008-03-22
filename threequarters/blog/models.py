@@ -287,12 +287,13 @@ class AmazonCD(models.Model):
     def save(self):
         if not self.title:
             from threequarters import amazon
-            amazon.setLicense("1AGTVVHBTYPBQKT7G482")
-            res = amazon.searchByASIN(self.asin, locale=AMAZON_COUNTRIES[int(self.store)])[0]
-            print res.ProductName.encode('UTF-8')
-            self.title = res.ProductName
+            amazon.setLicenseKey("1AGTVVHBTYPBQKT7G482")
+            amazon.setLocale(AMAZON_COUNTRIES[int(self.store)])
+            res = amazon.ItemLookup(ItemId=self.asin, ResponseGroup="Medium")[0]
+            print res.Title.encode('UTF-8')
+            self.title = res.Title
             try:
-                artist = res.Artists.Artist
+                artist = res.Artist
                 if isinstance(artist, list):
                     artist = artist[0]
                 self.artist = artist
@@ -300,7 +301,7 @@ class AmazonCD(models.Model):
                 # artist name failed for some reason
                 # Audiobook?
                 pass
-            self.image_url = res.ImageUrlSmall
+            self.image_url = res.ImageSets[0].SmallImage.URL
 
         super(AmazonCD, self).save() # Call the "real" save() method.
 
