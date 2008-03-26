@@ -293,7 +293,10 @@ class AmazonCD(models.Model):
             print res.Title.encode('UTF-8')
             self.title = res.Title
             try:
-                artist = res.Artist
+                if hasattr(res, "Artist"):
+                    artist = res.Artist
+                elif hasattr(res, "Creator"):
+                    artist = res.Creator
                 if isinstance(artist, list):
                     artist = artist[0]
                 self.artist = artist
@@ -301,7 +304,7 @@ class AmazonCD(models.Model):
                 # artist name failed for some reason
                 # Audiobook?
                 pass
-            self.image_url = res.ImageSets[0].SmallImage.URL
+            self.image_url = res.SmallImage.URL
 
         super(AmazonCD, self).save() # Call the "real" save() method.
 
