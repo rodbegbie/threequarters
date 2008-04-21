@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+from threequarters.blog.models import BlogItem, Tag, Twitter, LastFMTrack, Location
 
 urlpatterns = patterns('',
 )
@@ -12,7 +13,7 @@ def tag_wrapper(request, queryset, tag=None, *args, **kwargs):
         # Tag not found
         from django.http import Http404
         raise Http404
-    kwargs["extra_context"] = {'tag': tag, 'location': Location.objects.all()[0] }
+    kwargs["extra_context"] = {'tag': tag, 'location': Location.objects.all()[:1] }
     return object_list(request, queryset, *args, **kwargs) 
 
 def search_wrapper(request, queryset, *args, **kwargs):
@@ -25,10 +26,8 @@ def search_wrapper(request, queryset, *args, **kwargs):
         queryset = queryset.filter(id=0)
     else:
         queryset = queryset.filter(id__in=[result["uid"]-10000 for result in results])
-    kwargs["extra_context"] = {'q': q, 'location': Location.objects.all()[0] }
+    kwargs["extra_context"] = {'q': q, 'location': Location.objects.all()[:1] }
     return object_list(request, queryset, *args, **kwargs) 
-
-from threequarters.blog.models import BlogItem, Tag, Twitter, LastFMTrack, Location
 
 blogitems_dict = {
 #'queryset': BlogItem.objects.all().exclude(content_type__model="lastfmtrack").exclude(content_type__model="twitter", content_object__description__startswith="@"),
