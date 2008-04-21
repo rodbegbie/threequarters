@@ -24,7 +24,7 @@ def feed(request, linksonly=False):
         blogitems = BlogItem.objects.filter(content_type__model="link").order_by('-created_on')[:30]
         selfurl = "http://groovymother.com/links/index.atom"
     else:
-        blogitems = BlogItem.objects.exclude(content_type__model__in=["twitter","lastfmtrack","flickrphoto"]).order_by('-created_on')[:30]
+        blogitems = BlogItem.objects.exclude(content_type__model__in=["twitter","lastfmtrack","flickrphoto"]).filter(display_on_homepage=True).order_by('-created_on')[:30]
         selfurl = "http://groovymother.com/index.atom"
 
     from StringIO import StringIO
