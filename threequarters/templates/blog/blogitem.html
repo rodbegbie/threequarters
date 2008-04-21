@@ -88,13 +88,13 @@
 
 {% else %}{% ifequal object.content_type.model "amazoncd" %}
     <div class="amazonentry entry">
-        <a href="{{object.content_object.get_absolute_url}}"><img class="flickrphoto" alt="{{object.content_object.title|escape|smartypants}}" src="{{object.content_object.image_url}}" width="75" height="75" /></a>
+        <a href="{{object.content_object.get_absolute_url|fix_ampersands}}"><img class="flickrphoto" alt="{{object.content_object.title|escape|smartypants}}" src="{{object.content_object.image_url}}" width="75" height="75" /></a>
         <h4>CD Purchase: {{object.content_object.artist|escape|smartypants}} - {{object.content_object.title|escape|smartypants}}</h4>
         <div class="postbody">
             {{object.content_object.comments|linebreaks}}
         </div>
         <div class="permalink">
-            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+            <a rel="bookmark" href="{{object.content_object.get_absolute_url|fix_ampersands}}" title="Permanent link to this entry">#</a>
         </div>
         <div class="postinfo">
         </div>
