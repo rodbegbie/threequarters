@@ -257,8 +257,8 @@ class FlickrPhoto(models.Model):
  AMAZON_CO_UK) = range(2)
 AMAZON_COUNTRIES = ("us", "uk")
 AMAZON_CHOICES=[(n, AMAZON_COUNTRIES[n]) for n in range(2)]
-AMAZON_URLS=("http://amazon.com/o/ASIN/%s/groovymother-20/ref=nosim/",
-             "http://amazon.co.uk/o/ASIN/%s/groovymother-21/ref=nosim/",
+AMAZON_URLS=("http://www.amazon.com/gp/product/%s?ie=UTF8&tag=groovymother-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=%s",
+             "http://www.amazon.co.uk/gp/product/%s?ie=UTF8&tag=groovymother-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=%s",
              )
 
 class AmazonCD(models.Model):
@@ -279,7 +279,7 @@ class AmazonCD(models.Model):
         ordering = ["-created_on"]
     
     def get_absolute_url(self):
-        return AMAZON_URLS[self.store] % self.asin
+        return AMAZON_URLS[self.store] % (self.asin, self.asin)
 
     def __str__(self):
         return self.title
