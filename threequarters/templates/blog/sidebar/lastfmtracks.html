@@ -4,6 +4,6 @@
     {% for track in lastfmtracks %}
         <p>{{ track.artist|escape|smartypants }} - {{ track.title|escape|smartypants }} &mdash;<span class="twitterdate">about {{ track.created_on|timesince }} ago</span></p>
     {% endfor %}
-    <p><a href="http://last.fm/user/rodbegbie/">Powered by Last.FM</a></p>
+    <p><a href="http://last.fm/user/rodbegbie/" rel="me">Powered by Last.FM</a></p>
 </div>
 
