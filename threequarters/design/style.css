@@ -43,9 +43,10 @@ h3.date {
     margin-top: 0;
 }
 
-#body {
+#mainbody {
     width: 60em;
     margin: 0 auto;
+    background: white;
 }
 
 #content {
@@ -77,8 +78,20 @@ h3.date {
     padding-left: 5px;
 }
 
-.flickrentry, .postentry {
+.postentry {
     background: #E7F4D7; /* uncouth */
+}
+
+.flickrentry {
+    background: #E7CBCA; /* weddingpink */
+}
+
+.linkentry {
+    background: #F2F8E8; /* frothy */
+}
+
+.amazonentry {
+    background: #E2DEB0; /* bacteria */
 }
 
 .selectedentry {
@@ -88,6 +101,7 @@ h3.date {
 
 .twitter {
     font-size: smaller;
+    background: #F2F8F8; /* frothy */
 }
 
 .entry:hover {
