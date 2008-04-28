@@ -44,7 +44,7 @@
 
 {% else %}{% ifequal object.content_type.model "post" %}
     {% get_free_comment_count for blog.blogitem object.id as comment_count %}
-    <div class="flickrentry entry">
+    <div class="postentry entry">
         {% if object.legacy %}
         <a name="{{object.legacy.mt_id|stringformat:"06d"}}"></a>
         {% endif %}
