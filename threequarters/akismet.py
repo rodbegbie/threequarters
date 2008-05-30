@@ -72,7 +72,7 @@ class APIKeyError(AkismetError):
 class Akismet(object):
     """A class for working with the akismet API"""
 
-    baseurl = 'rest.akismet.com/1.1/'
+    baseurl = 'api.antispam.typepad.com/1.1/'
 
     def __init__(self, key=None, blog_url=None, agent=None):
         """Automatically calls ``setAPIKey``."""

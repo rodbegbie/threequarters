@@ -102,7 +102,9 @@ TEMPLATE_DIRS = (
     "/var/www/threequarters/python/threequarters/templates",
 )
 
-AKISMET_API_KEY="d7b8758ca65f"
+#AKISMET_API_KEY="d7b8758ca65f"
+AKISMET_API_KEY="55170912e6c191cbe7621ba4f173a809"
+COMMENTS_ALLOW_PROFANITIES=True
 
 # Cache Settings
 CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
