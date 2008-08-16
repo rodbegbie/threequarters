@@ -197,7 +197,7 @@ def post_comment(request):
         raise Http404, _("One or more of the required fields wasn't submitted")
     photo_options = request.POST.get('photo_options', '')
     rating_options = normalize_newlines(request.POST.get('rating_options', ''))
-    ipaddr = request.META.get('REMOTE_ADDR')
+    ipaddr = request.META.get('HTTP_X_FORWARDED_FOR')
     if Comment.objects.get_security_hash(options, photo_options, rating_options, target, ipaddr) != security_hash:
         raise Http404, _("Somebody tampered with the comment form (security violation)")
     # Now we can be assured the data is valid.
@@ -214,7 +214,7 @@ def post_comment(request):
     new_data = request.POST.copy()
     new_data['content_type_id'] = content_type_id
     new_data['object_id'] = object_id
-    new_data['ip_address'] = request.META.get('REMOTE_ADDR')
+    new_data['ip_address'] = request.META.get('HTTP_X_FORWARDED_FOR')
     new_data['is_public'] = IS_PUBLIC in option_list
     manipulator = PublicCommentManipulator(request.user,
         ratings_required=RATINGS_REQUIRED in option_list,
@@ -253,7 +253,7 @@ def post_comment(request):
     elif request.POST.has_key('post'):
         # If the IP is banned, mail the admins, do NOT save the comment, and
         # serve up the "Thanks for posting" page as if the comment WAS posted.
-        if request.META['REMOTE_ADDR'] in settings.BANNED_IPS:
+        if request.META['HTTP_X_FORWARDED_FOR'] in settings.BANNED_IPS:
             mail_admins("Banned IP attempted to post comment", str(request.POST) + "\n\n" + str(request.META))
         else:
             manipulator.do_html2python(new_data)
@@ -288,9 +288,9 @@ def post_free_comment(request):
         options, target, security_hash = request.POST['options'], request.POST['target'], request.POST['fozzie']
     except KeyError:
         raise Http404, _("One or more of the required fields wasn't submitted")
-    ipaddr = request.META.get('REMOTE_ADDR')
-    if Comment.objects.get_security_hash(options, '', '', target, ipaddr) != security_hash:
-        raise Http404, _("Somebody tampered with the comment form (security violation)")
+    ipaddr = request.META.get('HTTP_X_FORWARDED_FOR')
+    if request.POST.has_key('post') and Comment.objects.get_security_hash(options, '', '', target, ipaddr) != security_hash:
+        pass # raise Http404, _("Somebody tampered with the comment form (security violation)")
     content_type_id, object_id = target.split(':') # target is something like '52:5157'
     content_type = ContentType.objects.get(pk=content_type_id)
     try:
@@ -301,7 +301,7 @@ def post_free_comment(request):
     new_data = request.POST.copy()
     new_data['content_type_id'] = content_type_id
     new_data['object_id'] = object_id
-    new_data['ip_address'] = request.META['REMOTE_ADDR']
+    new_data['ip_address'] = request.META['HTTP_X_FORWARDED_FOR']
     # AKISMET CHANGES
     #new_data['is_public'] = IS_PUBLIC in option_list
     from django.contrib.sites.models import Site
@@ -309,7 +309,7 @@ def post_free_comment(request):
     ak_api = Akismet(key=settings.AKISMET_API_KEY, blog_url='http://%s/' % Site.objects.get(pk=settings.SITE_ID).domain)
     if ak_api.verify_key():
         ak_data = {
-            'user_ip': request.META.get('REMOTE_ADDR', '127.0.0.1'),
+            'user_ip': request.META.get('HTTP_X_FORWARDED_FOR', '127.0.0.1'),
             'user_agent': request.META.get('HTTP_USER_AGENT', ''),
             'referrer': request.META.get('HTTP_REFERER', ''),
             'comment_type': 'comment',
@@ -336,7 +336,7 @@ def post_free_comment(request):
     elif request.POST.has_key('post'):
         # If the IP is banned, mail the admins, do NOT save the comment, and
         # serve up the "Thanks for posting" page as if the comment WAS posted.
-        if request.META['REMOTE_ADDR'] in settings.BANNED_IPS:
+        if request.META['HTTP_X_FORWARDED_FOR'] in settings.BANNED_IPS:
             from django.core.mail import mail_admins
             mail_admins("Practical joker", str(request.POST) + "\n\n" + str(request.META))
         else:
