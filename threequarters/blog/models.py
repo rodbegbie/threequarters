@@ -83,62 +83,62 @@ class BlogItem(models.Model):
 
     def save(self, *args, **kwargs):
         # Check if it's to be displayed on the homepage
-        # if ((self.content_type.model == 'post' and self.content_object.draft) or
-        #     (self.content_type.model == 'twitter' and self.content_object.starts_with_at) or
-        #      self.content_type.model == 'lastfmtrack'):
-        #     self.display_on_homepage = False
-        # else:
-        #     self.display_on_homepage = True
-        # 
-        # super(BlogItem, self).save(*args, **kwargs) # Call the "real" save() method.
-        # 
-        # # Save to search index
-        # from xapwrap.index import SmartIndex
-        # from xapwrap.document import Document, TextField, SortKey
-        # idx = SmartIndex('/var/www/threequarters/searchindex', False)
-        # 
-        # if self.content_type.model == 'post':
-        #     textfields = [TextField('title', self.content_object.title, True),
-        #                   TextField('body', self.content_object.body_xhtml, False)
-        #                   ]
-        #     if self.content_object.tags:
-        #         textfields.append(TextField('tags', self.content_object.tags, True))
-        # elif self.content_type.model == 'link':
-        #     textfields = [TextField('title', self.content_object.title, True),
-        #                   TextField('body', self.content_object.description, False),
-        #                   TextField('url', self.content_object.url, True),
-        #                   ]
-        #     if self.content_object.tags:
-        #         textfields.append(TextField('tags', self.content_object.tags, True))
-        #     if self.content_object.via:
-        #         textfields.append(TextField('via', self.content_object.via, True))
-        # elif self.content_type.model == 'flickrphoto':
-        #     if not self.content_object.title:
-        #         return # Don't bother indexing photos without titles
-        #     textfields = [TextField('title', self.content_object.title, True),
-        #                   TextField('body', self.content_object.description, False)
-        #                   ]
-        #     if self.content_object.tags:
-        #         textfields.append(TextField('tags', self.content_object.tags, True))
-        # elif self.content_type.model == 'amazoncd':
-        #     textfields = [TextField('title', self.content_object.title, True),
-        #                   TextField('body', self.content_object.comments, False)
-        #                   ]
-        #     if self.content_object.artist:
-        #          textfields.append(TextField('artist', self.content_object.artist, True))
-        # elif self.content_type.model == 'twitter':
-        #     textfields = [TextField('body', self.content_object.description, False)
-        #                   ]
-        # elif self.content_type.model == 'lastfmtrack':
-        #     return #Don't bother indexing LastFM tracks
-        # 
-        # doc = Document(textfields,
-        #                uid=self.id+10000,
-        #                sortFields = [SortKey('date', self.content_object.created_on)],
-        #                )
-        # idx.index(doc)
-        # idx.close()
+        if ((self.content_type.model == 'post' and self.content_object.draft) or
+            (self.content_type.model == 'twitter' and self.content_object.starts_with_at) or
+             self.content_type.model == 'lastfmtrack'):
+            self.display_on_homepage = False
+        else:
+            self.display_on_homepage = True
 
+        super(BlogItem, self).save(*args, **kwargs) # Call the "real" save() method.
+        
+        # # Save to search index
+        #         from xapwrap.index import SmartIndex
+        #         from xapwrap.document import Document, TextField, SortKey
+        #         idx = SmartIndex('/var/www/threequarters/searchindex', False)
+        #         
+        #         if self.content_type.model == 'post':
+        #             textfields = [TextField('title', self.content_object.title, True),
+        #                           TextField('body', self.content_object.body_xhtml, False)
+        #                           ]
+        #             if self.content_object.tags:
+        #                 textfields.append(TextField('tags', self.content_object.tags, True))
+        #         elif self.content_type.model == 'link':
+        #             textfields = [TextField('title', self.content_object.title, True),
+        #                           TextField('body', self.content_object.description, False),
+        #                           TextField('url', self.content_object.url, True),
+        #                           ]
+        #             if self.content_object.tags:
+        #                 textfields.append(TextField('tags', self.content_object.tags, True))
+        #             if self.content_object.via:
+        #                 textfields.append(TextField('via', self.content_object.via, True))
+        #         elif self.content_type.model == 'flickrphoto':
+        #             if not self.content_object.title:
+        #                 return # Don't bother indexing photos without titles
+        #             textfields = [TextField('title', self.content_object.title, True),
+        #                           TextField('body', self.content_object.description, False)
+        #                           ]
+        #             if self.content_object.tags:
+        #                 textfields.append(TextField('tags', self.content_object.tags, True))
+        #         elif self.content_type.model == 'amazoncd':
+        #             textfields = [TextField('title', self.content_object.title, True),
+        #                           TextField('body', self.content_object.comments, False)
+        #                           ]
+        #             if self.content_object.artist:
+        #                  textfields.append(TextField('artist', self.content_object.artist, True))
+        #         elif self.content_type.model == 'twitter':
+        #             textfields = [TextField('body', self.content_object.description, False)
+        #                           ]
+        #         elif self.content_type.model == 'lastfmtrack':
+        #             return #Don't bother indexing LastFM tracks
+        #         
+        #         doc = Document(textfields,
+        #                        uid=self.id+10000,
+        #                        sortFields = [SortKey('date', self.content_object.created_on)],
+        #                        )
+        #         idx.index(doc)
+        #         idx.close()
+        
 
 
 class Post(models.Model):
