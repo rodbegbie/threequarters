@@ -1,7 +1,7 @@
 # Django settings for threequarters project.
 
 INTERNAL_IPS=('66.92.76.138',)
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 EMAIL_HOST = "flaming.arsecandle.org"
 EMAIL_HOST_USER = "threequarters@arsecandle.org"
@@ -25,7 +25,7 @@ DATABASE_PORT = ''             # Set to empty string for default. Not used with 
 
 # Local time zone for this installation. All choices can be found here:
 # http://www.postgresql.org/docs/current/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
-TIME_ZONE = 'EST5EDT'
+TIME_ZONE = 'America/Los_Angeles'
 
 # Language code for this installation. All choices can be found here:
 # http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
@@ -54,7 +54,7 @@ SECRET_KEY = 'y03j!q8vw$2n4o)37x+*ijz08i%$3%$ik%7y)zl%5pqfpf^s3w'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
+     'django.template.loaders.eggs.load_template_source',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -81,10 +81,8 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'threequarters.template_utils',
-    'threequarters.django_openidconsumer',
     'threequarters.blog',
-    'threequarters.refresh',
-    'threequarters.comments',
+    'django.contrib.comments',
     'django.contrib.flatpages',
     'django.contrib.redirects',
     'django.contrib.admin',
@@ -99,11 +97,11 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates".
     # Always use forward slashes, even on Windows.
     "./templates",
-    "/var/www/threequarters/python/threequarters/templates",
+    #"/var/www/threequarters/python/threequarters/templates",
 )
 
-#AKISMET_API_KEY="d7b8758ca65f"
-AKISMET_API_KEY="55170912e6c191cbe7621ba4f173a809"
+AKISMET_API_KEY="d7b8758ca65f"
+#TYPEPAD_ANTISPAM_API_KEY="55170912e6c191cbe7621ba4f173a809"
 COMMENTS_ALLOW_PROFANITIES=True
 
 # Cache Settings

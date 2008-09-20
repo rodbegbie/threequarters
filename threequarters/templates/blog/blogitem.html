@@ -1,12 +1,12 @@
 {% load smartypants %}
-{% load comments.comments %}
+{% load comments %}
 {% load comparison %}
 {% ifchanged %}
 <h3 class="date">{{ object.created_on|date:"F j, Y" }}</h3>
 {% endifchanged %}
 
 {% ifequal object.content_type.model "link" %}
-    {% get_free_comment_count for blog.blogitem object.id as comment_count %}
+    {% get_comment_count for blog.blogitem object.id as comment_count %}
     <div class="linkentry xfolkentry entry" id="{{object.content_object.slug}}" >
         {% if object.legacy %}
         <a name="{{object.legacy.mt_id|stringformat:"06d"}}"></a>
@@ -43,13 +43,13 @@
 
 
 {% else %}{% ifequal object.content_type.model "post" %}
-    {% get_free_comment_count for blog.blogitem object.id as comment_count %}
+    {% get_comment_count for blog.blogitem object.id as comment_count %}
     <div class="postentry entry">
         {% if object.legacy %}
         <a name="{{object.legacy.mt_id|stringformat:"06d"}}"></a>
         {% endif %}
         <h4>{{object.content_object.title|escape|smartypants}}</h4>
-        {{object.content_object.body_xhtml}}
+        {{object.content_object.body_xhtml|safe}}
         <div class="permalink">
             <a href="{{object.content_object.get_absolute_url}}#comments">{{comment_count}} comment{{comment_count|pluralize}}</a> |
             <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
@@ -70,7 +70,7 @@
         <a href="{{object.content_object.get_absolute_url}}"><img class="flickrphoto" alt="{{object.content_object.title|escape|smartypants}}" src="{{object.content_object.image_url}}" height="{{object.content_object.image_height}}" width="{{object.content_object.image_width}}" /></a>
         <h4>{{object.content_object.title|escape|smartypants}}</h4>
         <div class="postbody">
-            {{object.content_object.description|linebreaks}}
+            {{object.content_object.description|safe|linebreaks}}
         </div>
         <div class="permalink">
             <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>

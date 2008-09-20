@@ -11,7 +11,7 @@ class Translator:
         else:
             self.delete = self.allchars.translate(self.allchars, keep.translate(self.allchars, delete))
     def __call__(self, s):
-        return s.translate(self.trans, self.delete)
+        return s.encode('utf-8').translate(self.trans, self.delete).decode('utf-8')
 
 
 

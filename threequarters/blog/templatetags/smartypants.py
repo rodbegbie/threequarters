@@ -881,9 +881,12 @@ __description__ = "Smart-quotes, smart-ellipses, and smart-dashes for weblog ent
 
 #RAB: Smartypants filter
 from django import template
+from django.utils.safestring import mark_safe
+from django.utils.encoding import smart_str, force_unicode
 register = template.Library()
 
 def smartypants(value):
-    return smartyPants(value)
+    return mark_safe(force_unicode(smartyPants(smart_str(value))))
 
+smartypants.is_safe=True
 register.filter(smartypants)

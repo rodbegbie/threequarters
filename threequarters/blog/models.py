@@ -1,5 +1,7 @@
 from django.db import models
+from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
+from threequarters.blog.fields import BigIntegerField
 from datetime import datetime
 
 def blogitem_save(object, slug="", tags=""):
@@ -27,7 +29,7 @@ def blogitem_save(object, slug="", tags=""):
 
 class Location(models.Model):
     """A location from Fire Eagle"""
-    name = models.CharField(maxlength=255)
+    name = models.CharField(max_length=255)
     located_at = models.DateTimeField()
 
     class Meta:
@@ -36,13 +38,10 @@ class Location(models.Model):
     def __str__(self):
         return self.name
 
-    class Admin:
-        list_display = ["name", "located_at"]
-
 class Tag(models.Model):
     """A tag on an item."""
     tag = models.SlugField()
-    display = models.CharField(maxlength=100)
+    display = models.CharField(max_length=100)
     last_used = models.DateTimeField(auto_now=True)
     
     class Meta:
@@ -56,21 +55,18 @@ class Tag(models.Model):
 
 class Legacy(models.Model):
     mt_id = models.IntegerField(db_index=True, unique=True)
-    basename = models.CharField(maxlength=50)
+    basename = models.CharField(max_length=50)
     
-    class Admin:
-        pass
-
 class BlogItem(models.Model):
     legacy = models.ForeignKey(Legacy, null=True)
     tags = models.ManyToManyField(Tag)
 
-    created_on = models.DateTimeField(default=models.LazyDate())
+    created_on = models.DateTimeField(default=datetime.now)
     slug = models.SlugField(blank=True)
 
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
-    content_object = models.GenericForeignKey()
+    content_object = generic.GenericForeignKey()
     
     display_on_homepage = models.BooleanField(default=True)
 
@@ -85,7 +81,7 @@ class BlogItem(models.Model):
         delta = datetime.today() - self.created_on
         return delta.days
 
-    def save(self):
+    def save(self, *args, **kwargs):
         # Check if it's to be displayed on the homepage
         if ((self.content_type.model == 'post' and self.content_object.draft) or
             (self.content_type.model == 'twitter' and self.content_object.starts_with_at) or
@@ -94,79 +90,77 @@ class BlogItem(models.Model):
         else:
             self.display_on_homepage = True
 
-        super(BlogItem, self).save() # Call the "real" save() method.
+        super(BlogItem, self).save(*args, **kwargs) # Call the "real" save() method.
         
-        # Save to search index
-        from xapwrap.index import SmartIndex
-        from xapwrap.document import Document, TextField, SortKey
-        idx = SmartIndex('/var/www/threequarters/searchindex', False)
-
-        if self.content_type.model == 'post':
-            textfields = [TextField('title', self.content_object.title, True),
-                          TextField('body', self.content_object.body_xhtml, False)
-                          ]
-            if self.content_object.tags:
-                textfields.append(TextField('tags', self.content_object.tags, True))
-        elif self.content_type.model == 'link':
-            textfields = [TextField('title', self.content_object.title, True),
-                          TextField('body', self.content_object.description, False),
-                          TextField('url', self.content_object.url, True),
-                          ]
-            if self.content_object.tags:
-                textfields.append(TextField('tags', self.content_object.tags, True))
-            if self.content_object.via:
-                textfields.append(TextField('via', self.content_object.via, True))
-        elif self.content_type.model == 'flickrphoto':
-            if not self.content_object.title:
-                return # Don't bother indexing photos without titles
-            textfields = [TextField('title', self.content_object.title, True),
-                          TextField('body', self.content_object.description, False)
-                          ]
-            if self.content_object.tags:
-                textfields.append(TextField('tags', self.content_object.tags, True))
-        elif self.content_type.model == 'amazoncd':
-            textfields = [TextField('title', self.content_object.title, True),
-                          TextField('body', self.content_object.comments, False)
-                          ]
-            if self.content_object.artist:
-                 textfields.append(TextField('artist', self.content_object.artist, True))
-        elif self.content_type.model == 'twitter':
-            textfields = [TextField('body', self.content_object.description, False)
-                          ]
-        elif self.content_type.model == 'lastfmtrack':
-            return #Don't bother indexing LastFM tracks
-
-        doc = Document(textfields,
-                       uid=self.id+10000,
-                       sortFields = [SortKey('date', self.content_object.created_on)],
-                       )
-        idx.index(doc)
-        idx.close()
+        # # Save to search index
+        # from xapwrap.index import SmartIndex
+        # from xapwrap.document import Document, TextField, SortKey
+        # idx = SmartIndex('/var/www/threequarters/searchindex', False)
+        # 
+        # if self.content_type.model == 'post':
+        #     textfields = [TextField('title', self.content_object.title, True),
+        #                   TextField('body', self.content_object.body_xhtml, False)
+        #                   ]
+        #     if self.content_object.tags:
+        #         textfields.append(TextField('tags', self.content_object.tags, True))
+        # elif self.content_type.model == 'link':
+        #     textfields = [TextField('title', self.content_object.title, True),
+        #                   TextField('body', self.content_object.description, False),
+        #                   TextField('url', self.content_object.url, True),
+        #                   ]
+        #     if self.content_object.tags:
+        #         textfields.append(TextField('tags', self.content_object.tags, True))
+        #     if self.content_object.via:
+        #         textfields.append(TextField('via', self.content_object.via, True))
+        # elif self.content_type.model == 'flickrphoto':
+        #     if not self.content_object.title:
+        #         return # Don't bother indexing photos without titles
+        #     textfields = [TextField('title', self.content_object.title, True),
+        #                   TextField('body', self.content_object.description, False)
+        #                   ]
+        #     if self.content_object.tags:
+        #         textfields.append(TextField('tags', self.content_object.tags, True))
+        # elif self.content_type.model == 'amazoncd':
+        #     textfields = [TextField('title', self.content_object.title, True),
+        #                   TextField('body', self.content_object.comments, False)
+        #                   ]
+        #     if self.content_object.artist:
+        #          textfields.append(TextField('artist', self.content_object.artist, True))
+        # elif self.content_type.model == 'twitter':
+        #     textfields = [TextField('body', self.content_object.description, False)
+        #                   ]
+        # elif self.content_type.model == 'lastfmtrack':
+        #     return #Don't bother indexing LastFM tracks
+        # 
+        # doc = Document(textfields,
+        #                uid=self.id+10000,
+        #                sortFields = [SortKey('date', self.content_object.created_on)],
+        #                )
+        # idx.index(doc)
+        # idx.close()
 
 
 
 class Post(models.Model):
-    blogitem = models.GenericRelation(BlogItem)
-    title = models.CharField(maxlength=255)
-    slug = models.SlugField(maxlength=30, prepopulate_from=("title",))
+    blogitem = generic.GenericRelation(BlogItem)
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=30)
     body_textile = models.TextField()
     body_xhtml = models.TextField(blank=True)
-    tags = models.CharField(maxlength=255, blank=True)
+    tags = models.CharField(max_length=255, blank=True)
     draft = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 
-    class Admin:
-        list_display = ('title', 'slug', 'created_on', 'draft')
-        list_filter = ['created_on', 'draft']
-
     class Meta:
         ordering = ["-created_on"]
 
-    def save(self):
+    def save(self, **kwargs):
         import textile 
-        self.body_xhtml = textile.textile(self.body_textile)
-        super(Post, self).save() # Call the "real" save() method.
+        self.body_xhtml = textile.textile(self.body_textile.encode('utf-8'),
+                        encoding='utf-8',
+                        output='utf-8')
+        super(Post, self).save(**kwargs) # Call the "real" save() method.
 
         blogitem_save(self, self.slug, self.tags)
 
@@ -179,22 +173,18 @@ class Post(models.Model):
 
     
 class Link(models.Model):
-    blogitem = models.GenericRelation(BlogItem)
-    title = models.CharField(maxlength=255)
-    slug = models.SlugField(maxlength=30, prepopulate_from=("title",))
+    blogitem = generic.GenericRelation(BlogItem)
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=30)
     description = models.TextField()
     url = models.URLField()
     #verify_exists=False)
     via = models.URLField(blank=True)
-    tags = models.CharField(maxlength=255)
+    tags = models.CharField(max_length=255)
     has_thumbnail = models.BooleanField(default=False)
     generate_thumbnail = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
-
-    class Admin:
-        list_display = ('title', 'created_on')
-        list_filter = ['created_on']
 
     class Meta:
         ordering = ["-created_on"]
@@ -224,16 +214,16 @@ class Link(models.Model):
 
 
 class FlickrPhoto(models.Model):
-    blogitem = models.GenericRelation(BlogItem)
-    flickr_id = models.BigIntegerField(db_index=True)
-    title = models.CharField(maxlength=255)
+    blogitem = generic.GenericRelation(BlogItem)
+    flickr_id = BigIntegerField(db_index=True)
+    title = models.CharField(max_length=255)
     description = models.TextField()
     flickr_url = models.URLField()
     image_url = models.URLField()
     image_width = models.IntegerField(default=0)
     image_height = models.IntegerField(default=0)
-    tags = models.CharField(maxlength=255)
-    created_on = models.DateTimeField(default=models.LazyDate())
+    tags = models.CharField(max_length=255)
+    created_on = models.DateTimeField(default=datetime.now)
 
     class Admin:
         list_display = ('title', 'created_on')
@@ -262,11 +252,11 @@ AMAZON_URLS=("http://www.amazon.com/gp/product/%s?ie=UTF8&tag=groovymother-20&li
              )
 
 class AmazonCD(models.Model):
-    blogitem = models.GenericRelation(BlogItem)
-    asin = models.CharField(db_index=True, maxlength=15)
+    blogitem = generic.GenericRelation(BlogItem)
+    asin = models.CharField(db_index=True, max_length=15)
     store = models.IntegerField(choices=AMAZON_CHOICES, default=AMAZON_COM)
-    title = models.CharField(maxlength=255, blank=True)
-    artist = models.CharField(maxlength=255, blank=True)
+    title = models.CharField(max_length=255, blank=True)
+    artist = models.CharField(max_length=255, blank=True)
     image_url = models.URLField(blank=True)
     comments = models.TextField(blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -312,11 +302,11 @@ class AmazonCD(models.Model):
 
 
 class Twitter(models.Model):
-    blogitem = models.GenericRelation(BlogItem)
+    blogitem = generic.GenericRelation(BlogItem)
     twitter_id = models.IntegerField(db_index=True)
     starts_with_at = models.BooleanField(default=False)
     description = models.TextField()
-    created_on = models.DateTimeField(default=models.LazyDate())
+    created_on = models.DateTimeField(default=datetime.now)
 
     class Admin:
         list_display = ('description', 'created_on')
@@ -337,12 +327,12 @@ class Twitter(models.Model):
         blogitem_save(self)
 
 class LastFMTrack(models.Model):
-    blogitem = models.GenericRelation(BlogItem)
+    blogitem = generic.GenericRelation(BlogItem)
     last_fm_id = models.IntegerField()
-    artist = models.CharField(maxlength=255)
-    title = models.CharField(maxlength=255)
+    artist = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
     last_fm_url = models.URLField()
-    created_on = models.DateTimeField(default=models.LazyDate())
+    created_on = models.DateTimeField(default=datetime.now)
 
     class Admin:
         list_display = ('artist','title', 'created_on')
@@ -362,12 +352,12 @@ class LastFMTrack(models.Model):
         blogitem_save(self)
 
 class YelpReview(models.Model):
-    blogitem = models.GenericRelation(BlogItem)
-    business = models.CharField(maxlength=255)
+    blogitem = generic.GenericRelation(BlogItem)
+    business = models.CharField(max_length=255)
     review = models.TextField()
     score = models.IntegerField()
     yelp_url = models.URLField()
-    created_on = models.DateTimeField(default=models.LazyDate())
+    created_on = models.DateTimeField(default=datetime.now)
 
     class Admin:
         list_display = ('business', 'created_on')
@@ -385,3 +375,52 @@ class YelpReview(models.Model):
     def save(self):
         super(YelpReview, self).save() # Call the "real" save() method.
         blogitem_save(self)
+
+
+# Source: http://sciyoshi.com/blog/2008/aug/27/using-akismet-djangos-new-comments-framework/
+from django.contrib.comments.signals import comment_was_posted
+
+def on_comment_was_posted(sender, comment, request, *args, **kwargs):
+    # spam checking can be enabled/disabled per the comment's target Model
+    #if comment.content_type.model_class() != Entry:
+    #    return
+
+    from django.contrib.sites.models import Site
+    from django.conf import settings
+
+    try:
+        from akismet import Akismet
+    except:
+        return
+
+    # use TypePad's AntiSpam if the key is specified in settings.py
+    if hasattr(settings, "TYPEPAD_ANTISPAM_API_KEY"):
+        ak = Akismet(
+            key=settings.TYPEPAD_ANTISPAM_API_KEY,
+            blog_url='http://%s/' % Site.objects.get(pk=settings.SITE_ID).domain
+        )
+        ak.baseurl = 'api.antispam.typepad.com/1.1/'
+    else:
+        ak = Akismet(
+            key=settings.AKISMET_API_KEY,
+            blog_url='http://%s/' % Site.objects.get(pk=settings.SITE_ID).domain
+        )
+
+    if ak.verify_key():
+        data = {
+            'user_ip': request.META.get('REMOTE_ADDR', '127.0.0.1'),
+            'user_agent': request.META.get('HTTP_USER_AGENT', ''),
+            'referrer': request.META.get('HTTP_REFERER', ''),
+            'comment_type': 'comment',
+            'comment_author': comment.user_name.encode('utf-8'),
+        }
+
+        if ak.comment_check(comment.comment.encode('utf-8'), data=data, build_data=True):
+            comment.flags.create(
+                user=comment.content_object.author,
+                flag='spam'
+            )
+            comment.is_public = False
+            comment.save()
+
+comment_was_posted.connect(on_comment_was_posted)

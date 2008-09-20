@@ -1,5 +1,5 @@
 from threequarters.blog.models import *
-from threequarters.comments.models import FreeComment
+from django.contrib.comments.models import Comment
 from django.contrib.syndication.feeds import Feed
 from django.http import HttpResponse
 from django.utils.xmlutils import SimplerXMLGenerator
@@ -14,7 +14,7 @@ class CommentsFeed(Feed):
     feed_type = Atom1Feed
 
     def items(self):
-        return FreeComment.objects.all()[:10]
+        return Comment.objects.all()[:10]
 
     def item_pubdate(self, item):
         return item.submit_date
