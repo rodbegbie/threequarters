@@ -92,52 +92,52 @@ class BlogItem(models.Model):
 
         super(BlogItem, self).save(*args, **kwargs) # Call the "real" save() method.
         
-        # # Save to search index
-        # from xapwrap.index import SmartIndex
-        # from xapwrap.document import Document, TextField, SortKey
-        # idx = SmartIndex('/var/www/threequarters/searchindex', False)
-        # 
-        # if self.content_type.model == 'post':
-        #     textfields = [TextField('title', self.content_object.title, True),
-        #                   TextField('body', self.content_object.body_xhtml, False)
-        #                   ]
-        #     if self.content_object.tags:
-        #         textfields.append(TextField('tags', self.content_object.tags, True))
-        # elif self.content_type.model == 'link':
-        #     textfields = [TextField('title', self.content_object.title, True),
-        #                   TextField('body', self.content_object.description, False),
-        #                   TextField('url', self.content_object.url, True),
-        #                   ]
-        #     if self.content_object.tags:
-        #         textfields.append(TextField('tags', self.content_object.tags, True))
-        #     if self.content_object.via:
-        #         textfields.append(TextField('via', self.content_object.via, True))
-        # elif self.content_type.model == 'flickrphoto':
-        #     if not self.content_object.title:
-        #         return # Don't bother indexing photos without titles
-        #     textfields = [TextField('title', self.content_object.title, True),
-        #                   TextField('body', self.content_object.description, False)
-        #                   ]
-        #     if self.content_object.tags:
-        #         textfields.append(TextField('tags', self.content_object.tags, True))
-        # elif self.content_type.model == 'amazoncd':
-        #     textfields = [TextField('title', self.content_object.title, True),
-        #                   TextField('body', self.content_object.comments, False)
-        #                   ]
-        #     if self.content_object.artist:
-        #          textfields.append(TextField('artist', self.content_object.artist, True))
-        # elif self.content_type.model == 'twitter':
-        #     textfields = [TextField('body', self.content_object.description, False)
-        #                   ]
-        # elif self.content_type.model == 'lastfmtrack':
-        #     return #Don't bother indexing LastFM tracks
-        # 
-        # doc = Document(textfields,
-        #                uid=self.id+10000,
-        #                sortFields = [SortKey('date', self.content_object.created_on)],
-        #                )
-        # idx.index(doc)
-        # idx.close()
+        # Save to search index
+        from xapwrap.index import SmartIndex
+        from xapwrap.document import Document, TextField, SortKey
+        idx = SmartIndex('/var/www/threequarters/searchindex', False)
+        
+        if self.content_type.model == 'post':
+            textfields = [TextField('title', self.content_object.title, True),
+                          TextField('body', self.content_object.body_xhtml, False)
+                          ]
+            if self.content_object.tags:
+                textfields.append(TextField('tags', self.content_object.tags, True))
+        elif self.content_type.model == 'link':
+            textfields = [TextField('title', self.content_object.title, True),
+                          TextField('body', self.content_object.description, False),
+                          TextField('url', self.content_object.url, True),
+                          ]
+            if self.content_object.tags:
+                textfields.append(TextField('tags', self.content_object.tags, True))
+            if self.content_object.via:
+                textfields.append(TextField('via', self.content_object.via, True))
+        elif self.content_type.model == 'flickrphoto':
+            if not self.content_object.title:
+                return # Don't bother indexing photos without titles
+            textfields = [TextField('title', self.content_object.title, True),
+                          TextField('body', self.content_object.description, False)
+                          ]
+            if self.content_object.tags:
+                textfields.append(TextField('tags', self.content_object.tags, True))
+        elif self.content_type.model == 'amazoncd':
+            textfields = [TextField('title', self.content_object.title, True),
+                          TextField('body', self.content_object.comments, False)
+                          ]
+            if self.content_object.artist:
+                 textfields.append(TextField('artist', self.content_object.artist, True))
+        elif self.content_type.model == 'twitter':
+            textfields = [TextField('body', self.content_object.description, False)
+                          ]
+        elif self.content_type.model == 'lastfmtrack':
+            return #Don't bother indexing LastFM tracks
+        
+        doc = Document(textfields,
+                       uid=self.id+10000,
+                       sortFields = [SortKey('date', self.content_object.created_on)],
+                       )
+        idx.index(doc)
+        idx.close()
 
 
 
@@ -155,12 +155,12 @@ class Post(models.Model):
     class Meta:
         ordering = ["-created_on"]
 
-    def save(self, **kwargs):
+    def save(self, *args, **kwargs):
         import textile 
         self.body_xhtml = textile.textile(self.body_textile.encode('utf-8'),
                         encoding='utf-8',
                         output='utf-8')
-        super(Post, self).save(**kwargs) # Call the "real" save() method.
+        super(Post, self).save(*args, **kwargs) # Call the "real" save() method.
 
         blogitem_save(self, self.slug, self.tags)
 
@@ -208,8 +208,8 @@ class Link(models.Model):
     def __str__(self):
         return self.slug
 
-    def save(self):
-        super(Link, self).save() # Call the "real" save() method.
+    def save(self, *args, **kwargs):
+        super(Link, self).save(*args, **kwargs) # Call the "real" save() method.
         blogitem_save(self, self.slug, self.tags)
 
 
@@ -238,8 +238,8 @@ class FlickrPhoto(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self):
-        super(FlickrPhoto, self).save() # Call the "real" save() method.
+    def save(self, *args, **kwargs):
+        super(FlickrPhoto, self).save(*args, **kwargs) # Call the "real" save() method.
         blogitem_save(self, tags=self.tags)
 
 
@@ -274,7 +274,7 @@ class AmazonCD(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self):
+    def save(self, *args, **kwargs):
         if not self.title:
             from threequarters import amazon
             amazon.setLicenseKey("1AGTVVHBTYPBQKT7G482")
@@ -296,7 +296,7 @@ class AmazonCD(models.Model):
                 pass
             self.image_url = res.SmallImage.URL
 
-        super(AmazonCD, self).save() # Call the "real" save() method.
+        super(AmazonCD, self).save(*args, **kwargs) # Call the "real" save() method.
 
         blogitem_save(self)
 
@@ -321,9 +321,9 @@ class Twitter(models.Model):
     def __str__(self):
         return self.description
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.starts_with_at = (self.description and self.description[0] == "@")
-        super(Twitter, self).save() # Call the "real" save() method.
+        super(Twitter, self).save(*args, **kwargs) # Call the "real" save() method.
         blogitem_save(self)
 
 class LastFMTrack(models.Model):
@@ -347,8 +347,8 @@ class LastFMTrack(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self):
-        super(LastFMTrack, self).save() # Call the "real" save() method.
+    def save(self, *args, **kwargs):
+        super(LastFMTrack, self).save(*args, **kwargs) # Call the "real" save() method.
         blogitem_save(self)
 
 class YelpReview(models.Model):
@@ -372,8 +372,8 @@ class YelpReview(models.Model):
     def __str__(self):
         return self.business
 
-    def save(self):
-        super(YelpReview, self).save() # Call the "real" save() method.
+    def save(self, *args, **kwargs):
+        super(YelpReview, self).save(*args, **kwargs) # Call the "real" save() method.
         blogitem_save(self)
 
 
