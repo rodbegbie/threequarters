@@ -1,7 +1,7 @@
 # Django settings for threequarters project.
 
-INTERNAL_IPS=('66.92.76.138',)
-DEBUG = True
+INTERNAL_IPS=('69.17.48.8,)
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 EMAIL_HOST = "flaming.arsecandle.org"
 EMAIL_HOST_USER = "threequarters@arsecandle.org"
@@ -74,11 +74,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'threequarters.urls'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates".
-    # Always use forward slashes, even on Windows.
-)
-
 INSTALLED_APPS = (
     'threequarters.template_utils',
     'threequarters.blog',
@@ -97,7 +92,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates".
     # Always use forward slashes, even on Windows.
     "./templates",
-    #"/var/www/threequarters/python/threequarters/templates",
+    "/var/www/threequarters/python/threequarters/templates",
 )
 
 AKISMET_API_KEY="d7b8758ca65f"
