@@ -14,7 +14,7 @@ class CommentsFeed(Feed):
     feed_type = Atom1Feed
 
     def items(self):
-        return Comment.objects.all()[:10]
+        return Comment.objects.order_by('-submit_date')[:10]
 
     def item_pubdate(self, item):
         return item.submit_date

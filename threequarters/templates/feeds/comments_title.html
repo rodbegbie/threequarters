@@ -1,1 +1,1 @@
-New comment on '{{obj.get_content_object.content_object.title}}' from {{obj.person_name}}
+New {% if not obj.is_public %}SPAM{% endif %} comment on '{{obj.content_object.content_object.title}}' from {{obj.user_name}}
