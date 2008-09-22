@@ -157,7 +157,7 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         import textile 
-        self.modified_on = default=datetime.now
+        self.modified_on = default=datetime.now()
         self.body_xhtml = textile.textile(self.body_textile.encode('utf-8'),
                         encoding='utf-8',
                         output='utf-8')
@@ -209,7 +209,7 @@ class Link(models.Model):
         return self.slug
 
     def save(self, *args, **kwargs):
-        self.modified_on = datetime.now
+        self.modified_on = datetime.now()
         super(Link, self).save(*args, **kwargs) # Call the "real" save() method.
         blogitem_save(self, self.slug, self.tags)
 
