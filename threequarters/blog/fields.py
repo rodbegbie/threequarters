@@ -7,7 +7,7 @@ class BigIntegerField(IntegerField):
 		return "BigIntegerField"
 	
 	def db_type(self):
-		if settings.DATABASE_ENGINE == oracle:
+		if settings.DATABASE_ENGINE == "oracle":
 			return 'NUMBER(19)'
 		else:
 			return 'bigint'
