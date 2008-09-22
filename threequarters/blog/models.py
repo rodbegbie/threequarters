@@ -149,14 +149,15 @@ class Post(models.Model):
     body_xhtml = models.TextField(blank=True)
     tags = models.CharField(max_length=255, blank=True)
     draft = models.BooleanField(default=False)
-    created_on = models.DateTimeField(auto_now_add=True)
-    modified_on = models.DateTimeField(auto_now=True)
+    created_on = models.DateTimeField(default=datetime.now)
+    modified_on = models.DateTimeField(default=datetime.now)
 
     class Meta:
         ordering = ["-created_on"]
 
     def save(self, *args, **kwargs):
         import textile 
+        self.modified_on = default=datetime.now
         self.body_xhtml = textile.textile(self.body_textile.encode('utf-8'),
                         encoding='utf-8',
                         output='utf-8')
@@ -182,8 +183,8 @@ class Link(models.Model):
     tags = models.CharField(max_length=255)
     has_thumbnail = models.BooleanField(default=False)
     generate_thumbnail = models.BooleanField(default=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    modified_on = models.DateTimeField(auto_now=True)
+    created_on = models.DateTimeField(default=datetime.now)
+    modified_on = models.DateTimeField(default=datetime.now)
 
     class Meta:
         ordering = ["-created_on"]
@@ -208,6 +209,7 @@ class Link(models.Model):
         return self.slug
 
     def save(self, *args, **kwargs):
+        self.modified_on = datetime.now
         super(Link, self).save(*args, **kwargs) # Call the "real" save() method.
         blogitem_save(self, self.slug, self.tags)
 
@@ -258,7 +260,7 @@ class AmazonCD(models.Model):
     artist = models.CharField(max_length=255, blank=True)
     image_url = models.URLField(blank=True)
     comments = models.TextField(blank=True)
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(default=datetime.now)
 
     class Admin:
         list_display = ('asin', 'store', 'title', 'created_on')
