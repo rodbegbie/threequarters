@@ -20,7 +20,7 @@ lastloc = Location.objects.all()[0]
 for location in locations:
     if location["level"] == 3: # CITY
         name = location["name"]
-	located_at = location["located_at"] + datetime.timedelta(hours=3)
+	located_at = location["located_at"] 
 	#print "LOCATED_AT", located_at, "LAST", lastloc.located_at
 	if name <> lastloc.name:
 	    print "ADDING LOCATION", name
