@@ -15,4 +15,9 @@ admin.site.register(Link, LinkAdmin)
 
 class LocationAdmin(admin.ModelAdmin):
     list_display = ["name", "located_at"]
-admin.site.register(Location)
+admin.site.register(Location, LocationAdmin)
+
+
+class AmazonCDAdmin(admin.ModelAdmin):
+    list_display = ["asin", "artist", "title", "created_on"]
+admin.site.register(AmazonCD, AmazonCDAdmin)
