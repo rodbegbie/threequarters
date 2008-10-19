@@ -81,6 +81,9 @@ class BlogItem(models.Model):
         delta = datetime.today() - self.created_on
         return delta.days
 
+    def get_absolute_url(self):
+        return self.content_object.get_absolute_url()
+
     def save(self, *args, **kwargs):
         # Check if it's to be displayed on the homepage
         if ((self.content_type.model == 'post' and self.content_object.draft) or
@@ -178,7 +181,8 @@ class Link(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=30)
     description = models.TextField()
-    url = models.URLField(verify_exists=False)
+    url = models.URLField(verify_exists=True)
+    #models.CharField(max_length=200) #models.URLField(verify_exists=False)
     via = models.URLField(blank=True)
     tags = models.CharField(max_length=255)
     has_thumbnail = models.BooleanField(default=False)
@@ -409,7 +413,7 @@ def on_comment_was_posted(sender, comment, request, *args, **kwargs):
 
     if ak.verify_key():
         data = {
-            'user_ip': request.META.get('REMOTE_ADDR', '127.0.0.1'),
+            'user_ip': request.META.get('HTTP_X_REAL_IP', '127.0.0.1'),
             'user_agent': request.META.get('HTTP_USER_AGENT', ''),
             'referrer': request.META.get('HTTP_REFERER', ''),
             'comment_type': 'comment',
