@@ -14,9 +14,9 @@
         {% if object.content_object.has_thumbnail %}
             <a href="{{object.content_object.url|fix_ampersands}}"><img class="linkthumbnail" alt="" src="http://static.groovymother.com/thumbnails/{{object.content_object.id}}.png" height="100" width="133" /></a>
         {% endif %}
-        <h4><a class="taggedlink linklink" href="{{ object.content_object.url|fix_ampersands }}">{{object.content_object.title|escape|smartypants}}</a></h4>
+        <h4><a class="taggedlink linklink" href="{{ object.content_object.url|fix_ampersands }}">{{object.content_object.title}}</a></h4>
         <div class="description linkdescription">
-            {{object.content_object.description|escape|linebreaks|smartypants}}
+            {{object.content_object.description|linebreaks|smartypants}}
         </div>
         <div class="permalink">
             {% if object.content_object.via %}
@@ -48,7 +48,7 @@
         {% if object.legacy %}
         <a name="{{object.legacy.mt_id|stringformat:"06d"}}"></a>
         {% endif %}
-        <h4>{{object.content_object.title|escape|smartypants}}</h4>
+        <h4>{{object.content_object.title|smartypants}}</h4>
         {{object.content_object.body_xhtml|safe}}
         <div class="permalink">
             <a href="{{object.content_object.get_absolute_url}}#comments">{{comment_count}} comment{{comment_count|pluralize}}</a> |
@@ -67,8 +67,8 @@
 
 {% else %}{% ifequal object.content_type.model "flickrphoto" %}
     <div class="flickrentry entry">
-        <a href="{{object.content_object.get_absolute_url}}"><img class="flickrphoto" alt="{{object.content_object.title|escape|smartypants}}" src="{{object.content_object.image_url}}" height="{{object.content_object.image_height}}" width="{{object.content_object.image_width}}" /></a>
-        <h4>{{object.content_object.title|escape|smartypants}}</h4>
+        <a href="{{object.content_object.get_absolute_url}}"><img class="flickrphoto" alt="{{object.content_object.title|smartypants}}" src="{{object.content_object.image_url}}" height="{{object.content_object.image_height}}" width="{{object.content_object.image_width}}" /></a>
+        <h4>{{object.content_object.title|smartypants}}</h4>
         <div class="postbody">
             {{object.content_object.description|safe|linebreaks}}
         </div>
@@ -88,8 +88,8 @@
 
 {% else %}{% ifequal object.content_type.model "amazoncd" %}
     <div class="amazonentry entry">
-        <a href="{{object.content_object.get_absolute_url|fix_ampersands}}"><img class="flickrphoto" alt="{{object.content_object.title|escape|smartypants}}" src="{{object.content_object.image_url}}" width="75" height="75" /></a>
-        <h4>CD Purchase: {{object.content_object.artist|escape|smartypants}} - {{object.content_object.title|escape|smartypants}}</h4>
+        <a href="{{object.content_object.get_absolute_url|fix_ampersands}}"><img class="flickrphoto" alt="{{object.content_object.title|smartypants}}" src="{{object.content_object.image_url}}" width="75" height="75" /></a>
+        <h4>CD Purchase: {{object.content_object.artist|smartypants}} - {{object.content_object.title|smartypants}}</h4>
         <div class="postbody">
             {{object.content_object.comments|linebreaks}}
         </div>
@@ -104,7 +104,7 @@
 {% else %}{% ifequal object.content_type.model "twitter" %}
     <div class="twitter entry">
         <div class="twitterdescription">
-            {{object.content_object.description|escape|urlize|smartypants}}
+            {{object.content_object.description|urlize|smartypants}}
         </div>
         <div class="permalink">
             <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
@@ -116,7 +116,7 @@
 {% else %}{% ifequal object.content_type.model "lastfmtrack" %}
     <div class="lastfmtrack entry">
         <div class="postbody">
-           {{object.content_object.artist|escape|smartypants}} - {{object.content_object.title|escape|smartypants}}
+           {{object.content_object.artist|smartypants}} - {{object.content_object.title|smartypants}}
         </div>
         <div class="permalink">
             <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
@@ -129,7 +129,7 @@
 {% else %}{% ifequal object.content_type.model "yelpreview" %}
     <div class="twitter entry">
         <div class="twitterdescription">
-            {{object.content_object.description|escape|smartypants}}
+            {{object.content_object.description|smartypants}}
         </div>
         <div class="permalink">
             <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
