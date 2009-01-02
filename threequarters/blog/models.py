@@ -181,7 +181,7 @@ class Link(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=30)
     description = models.TextField()
-    url = models.URLField(verify_exists=True)
+    url = models.URLField(verify_exists=False)
     #models.CharField(max_length=200) #models.URLField(verify_exists=False)
     via = models.URLField(blank=True)
     tags = models.CharField(max_length=255)
@@ -230,10 +230,6 @@ class FlickrPhoto(models.Model):
     tags = models.CharField(max_length=255)
     created_on = models.DateTimeField(default=datetime.now)
 
-    class Admin:
-        list_display = ('title', 'created_on')
-        list_filter = ['created_on']
-
     class Meta:
         ordering = ["-created_on"]
     
@@ -265,10 +261,6 @@ class AmazonCD(models.Model):
     image_url = models.URLField(blank=True)
     comments = models.TextField(blank=True)
     created_on = models.DateTimeField(default=datetime.now)
-
-    class Admin:
-        list_display = ('asin', 'store', 'title', 'created_on')
-        list_filter = ['store', 'created_on']
 
     class Meta:
         ordering = ["-created_on"]
@@ -313,10 +305,6 @@ class Twitter(models.Model):
     description = models.TextField()
     created_on = models.DateTimeField(default=datetime.now)
 
-    class Admin:
-        list_display = ('description', 'created_on')
-        list_filter = ['created_on']
-
     class Meta:
         ordering = ["-created_on"]
     
@@ -339,10 +327,6 @@ class LastFMTrack(models.Model):
     last_fm_url = models.URLField()
     created_on = models.DateTimeField(default=datetime.now)
 
-    class Admin:
-        list_display = ('artist','title', 'created_on')
-        list_filter = ['created_on']
-
     class Meta:
         ordering = ["-created_on"]
     
@@ -363,10 +347,6 @@ class YelpReview(models.Model):
     score = models.IntegerField()
     yelp_url = models.URLField()
     created_on = models.DateTimeField(default=datetime.now)
-
-    class Admin:
-        list_display = ('business', 'created_on')
-        list_filter = ['created_on']
 
     class Meta:
         ordering = ["-created_on"]

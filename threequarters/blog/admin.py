@@ -19,7 +19,17 @@ class LocationAdmin(admin.ModelAdmin):
     list_display = ["name", "located_at"]
 admin.site.register(Location, LocationAdmin)
 
-
 class AmazonCDAdmin(admin.ModelAdmin):
     list_display = ["asin", "artist", "title", "created_on"]
 admin.site.register(AmazonCD, AmazonCDAdmin)
+
+class FlickrPhotoAdmin(admin.ModelAdmin):
+    list_display = ["flickr_id", "title", "created_on"]
+    list_filter = ['created_on']
+admin.site.register(FlickrPhoto, FlickrPhotoAdmin)
+
+class TwitterAdmin(admin.ModelAdmin):
+    list_display = ["description", "created_on"]
+    list_filter = ['created_on']
+admin.site.register(Twitter, TwitterAdmin)
+
