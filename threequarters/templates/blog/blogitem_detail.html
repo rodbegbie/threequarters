@@ -27,7 +27,9 @@
     <p>Due to spam, posting comments to old entries is disabled.</p>
 {% else %}
 <div class="commentform">
+<p>
     {% render_comment_form for blog.blogitem object.id %}
+</p>
 </div>
 {% endif_greater %}
 {% endblock %}
