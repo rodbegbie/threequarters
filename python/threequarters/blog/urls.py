@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 from threequarters.blog.models import BlogItem, Tag, Twitter, LastFMTrack, Location
-
+from threequarters.blog.search import BlogSearch
 urlpatterns = patterns('',
 )
 
@@ -18,14 +18,12 @@ def tag_wrapper(request, queryset, tag=None, *args, **kwargs):
 
 def search_wrapper(request, queryset, *args, **kwargs):
     q = request.GET.get("q", "")
-    from xapwrap.index import SmartReadOnlyIndex
-    idx = SmartReadOnlyIndex("/var/www/threequarters/searchindex")
-    results = idx.search(q)
+    results = BlogSearch().search(q)
     if not results:
         # No responses.  pass on empty queryset
         queryset = queryset.filter(id=0)
     else:
-        queryset = queryset.filter(id__in=[result["uid"]-10000 for result in results])
+        queryset = queryset.filter(id__in=[result["id"] for result in results])
     kwargs["extra_context"] = {'q': q, 'location': Location.objects.all()[:1] }
     return object_list(request, queryset, *args, **kwargs) 
 

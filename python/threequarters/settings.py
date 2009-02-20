@@ -54,7 +54,7 @@ SECRET_KEY = 'y03j!q8vw$2n4o)37x+*ijz08i%$3%$ik%7y)zl%5pqfpf^s3w'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
-     'django.template.loaders.eggs.load_template_source',
+    'django.template.loaders.eggs.load_template_source',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -110,3 +110,4 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
 
 #USE_ETAGS = True
 
+WHOOSH_INDEX_DIR = "/var/www/threequarters/whooshindex"
