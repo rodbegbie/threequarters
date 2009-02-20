@@ -23,7 +23,7 @@ def search_wrapper(request, queryset, *args, **kwargs):
         # No responses.  pass on empty queryset
         queryset = queryset.filter(id=0)
     else:
-        queryset = queryset.filter(id__in=[result["id"] for result in results])
+        queryset = queryset.filter(id__in=[int(result["id"]) for result in results])
     kwargs["extra_context"] = {'q': q, 'location': Location.objects.all()[:1] }
     return object_list(request, queryset, *args, **kwargs) 
 
