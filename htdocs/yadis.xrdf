@@ -1,0 +1,22 @@
+<xrds:XRDS xmlns:xrds="xri://$xrds" xmlns="xri://$xrd*($v*2.0)"
+      xmlns:openid="http://openid.net/xmlns/1.0"> 
+  <XRD>
+    <Service priority="1">
+      <Type>http://openid.net/signon/1.0</Type>
+      <URI>http://www.myopenid.com/server</URI>
+      <openid:Delegate>http://rodbegbie.myopenid.com/</openid:Delegate>
+    </Service>
+
+    <Service priority="2">
+      <Type>http://openid.net/signon/1.0</Type>
+      <URI>https://pip.verisignlabs.com/server</URI>
+      <openid:Delegate>https://rodbegbie.pip.verisignlabs.com/</openid:Delegate>
+    </Service>
+ 
+    <Service priority="3">
+      <Type>http://openid.net/signon/1.0</Type>
+      <URI>http://www.clickpass.com/openid_server</URI>
+      <openid:Delegate>http://clickpass.com/public/rodbegbie</openid:Delegate>
+    </Service>
+  </XRD>
+</xrds:XRDS>

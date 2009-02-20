@@ -1,0 +1,46 @@
+================================================================================
+XHTMLed's PEPPER MAKES MINT BETTER
+
+Installing the Error Tracker Pepper
+--------------------------------------------------------------------------------
+
+1. In order for this Pepper to function properly you'll need to create custom
+error pages for the following error types: 401, 403, 404, and 500.
+
+2. Include the link to the Mint external Javascript file:
+
+<script type="text/javascript" src="/mint/mint.js.php"></script>
+
+3. Upload the files to your root web directory (e.g. public_html).
+
+4. If your server is running Apache, add the lines below to a file named 
+".htaccess" in your root web directory. If your web server is not running Apache
+you'll need to contact your web host to find out what you need to do to have the
+server direct your visitors to your customized error pages.
+
+# error handling
+ErrorDocument 401 /401.php
+ErrorDocument 403 /403.php
+ErrorDocument 404 /404.php
+ErrorDocument 500 /500.php
+
+Note: Be sure to replace .php with the extension of the file type you're using.
+
+5. Upload the /xhtmled/ directory and its contents to /mint/pepper/.
+
+6. Login to your Mint installation and in the Preferences click "Install" under
+Pepper.
+
+7. Click the Error Tracker Pepper "Install" button. Click "Okay."
+
+8. Click Error Tracker under Pepper in the preferences pane.
+
+9. In each of the boxes, enter some words that are unique to each error page.
+
+10. Click "Done."
+
+================================================================================
+Copyright 2005 Jeff Miller. This package cannot be redistributed without
+permission from http://www.xhtmled.com/
+
+More info at: http://errortracker.xhtmled.com/

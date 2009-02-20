@@ -1,0 +1,116 @@
+body
+{
+	background: #333 url(../images/bg.gif) 0 0 repeat-y;
+	font: 10px/1 "Lucida Grande";
+	margin: 0;
+	padding: 0;
+	width: 320px;
+}
+
+body *
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#header
+{
+	background: url(../images/bg-header.gif) 0 0 repeat-x;
+	height: 32px;
+}
+
+#header a
+{
+	display: block;
+	background: url(../images/logo.gif) 0 0 no-repeat;
+	color: #CCC;
+	font-size: 9px;
+	line-height: 8px;
+	text-shadow: 2px 2px 1px #111;
+	padding: 12px 0 11px 65px;
+}
+
+#header a span
+{
+	display: none;
+}
+
+a
+{
+	text-decoration: none;
+}
+
+#content
+{
+	background: url(../images/bg-row.gif) 0 0 repeat;
+	padding: 0 0 1px;
+}
+
+.visits-list
+{
+	font: 12px/16px "HelveticaNeue";
+	color: #FFF;
+	text-shadow: 2px 2px 1px #6A8843;
+}
+
+.error
+{
+	color: #710101;
+	font: 12px/16px "HelveticaNeue";
+}
+
+.error,
+.visits-list li
+{
+	height: 32px;
+	padding: 5px 10px 7px;
+}
+
+.total,
+.etc
+{
+	float: left;
+}
+
+.total
+{
+	font: 36px/29px "HelveticaNeue-Light";
+	padding-right: 12px;
+}
+
+.etc span
+{
+	color: #4E6331;
+	text-shadow: none;
+}
+
+.etc em
+{
+	color: #CAFF8E;
+	font-style: normal;
+}
+
+.unique
+{
+	display: inline;
+}
+
+.junior-mint a
+{
+	display: block;
+	padding: 4px 10px 4px;
+	color: #FFF;
+	text-shadow: 2px 2px 1px #6A8843;
+}
+
+.junior-mint .update-available,
+.ever .visits-today,
+.ever .visits-hour,
+.today .visits-ever,
+.today .visits-hour,
+.hour .visits-ever,
+.hour .visits-today
+{
+	display: none;
+}

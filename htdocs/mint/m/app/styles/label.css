@@ -1,0 +1,43 @@
+body
+{
+	font: 11px/27px "Lucida Grande", Verdana, sans-serif;
+	margin: 0;
+	padding: 5px 33px 0 18px;
+	background: url(../images/bg-label.gif) 0 0 repeat-x;
+}
+
+a
+{
+	color: #FFF;
+	text-decoration: none;
+	text-shadow: 2px 2px 1px #6A8843;
+}
+
+div
+{
+	height: 27px;
+	background: url(../images/bg-tab-right.gif) 100% 100% no-repeat;
+}
+
+div a
+{
+	display: block;
+	float: left;
+	background: url(../images/bg-tab-diag.gif) 100% 100% no-repeat;
+}
+
+div a span
+{
+	display: block;
+	float: left;
+	background: url(../images/bg-tab-left.gif) 0 0 no-repeat;
+	padding: 0 24px 0 32px;
+}
+
+select
+{
+	position: absolute;
+	font-size: 10px;
+	top: 8px;
+	right: 33px;
+}

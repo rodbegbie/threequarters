@@ -1,0 +1,28 @@
+SOFTWARE LICENSE
+
+Software you download and install as part of Project Honey Pot is
+governed by the GNU Public License ("GPL"). You are free to copy,
+distribute or modify the software we distribute ("Software") under the
+terms of that license. Please note, however, that if you modify or
+redistribute the Software you must disconnect it completely from the
+Project Honey Pot service. Failure to do so is a breach of the Service
+Terms. Instructions on how to disconnect the software from the Project
+Honey Pot service is included with the software.
+
+Any software distributed as part of Project Honey Pot is done so WITHOUT
+ANY WARRANTY; without even either the implied warranty of MERCHANTABILITY
+or the implied warranty of FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
+
+A copy of the GNU General Public License is included with the copies of
+software distributed as part of Project Honey Pot. You may also receive
+a copy by writing to:
+
+Free Software Foundation, Inc. 59 Temple Place, Suite 330 Boston, MA
+02111-1307 USA
+
+Text of the GNU Public License may also be available here:
+
+http://www.gnu.org/licenses/gpl.txt
+
+October 8, 2004

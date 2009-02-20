@@ -1,0 +1,17 @@
+---------- ADD PROJECT HONEY POT BUTTON TO YOUR WEBSITE ------------
+
+If you want to support Project Honey Pot you can add a button to your website.
+The Project Honey Pot website button is included in this folder. Use the linking
+code below so you'll get credit for people who sign up for Project Honey Pot
+after being referred from your site:
+
+<a href="http://www.projecthoneypot.org?rf=46663">
+<img src="{url_of_img}" height="31px" width="88px" 
+alt="Stop Spam Harvesters, Join Project Honey Pot"></a>
+
+Replace {url_of_img} with the url pointing the Project Honey Pot button image on
+your site.
+
+If you create your own Project Honey Pot button, don't hesitate to send it to us
+and we may include it for other sites to install. The more people who
+participate in Project Honey Pot, the more effective it will be!

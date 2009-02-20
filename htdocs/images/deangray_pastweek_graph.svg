@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<?xml-stylesheet href="http://groovymother.com/mint/pepper/kylerove/freshview/styles.css" type="text/css"?>
+<svg width="100%" height="100%" viewBox="0 0 480 250" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" onload="init(evt)">
+    <script xlink:href="http://groovymother.com/mint/pepper/kylerove/freshview/graph.js"/>
+    <defs>
+        <g id="vertex">
+          <circle r="2.2" stroke-width="3.5" stroke="#7f7f7f" fill="#7f7f7f"/>
+          <circle r="2.2" stroke-width="2.0" stroke="#ffffff" fill="#ddf2c2"/>
+        </g>
+        <g id="y-line">
+            <path d="M0,0 H385" stroke-width="1" stroke="#676767"/>
+            <path d="M7,1 H385" stroke-width="1" stroke="#585858"/>
+        </g>
+        <g id="weekend-text" opacity="0.2">
+            <rect x="0" y="0" width="1" height="4"/>
+            <rect x="1" y="4" width="1" height="1"/>
+            <rect x="2" y="1" width="1" height="3"/>
+            <rect x="3" y="4" width="1" height="1"/>
+            <rect x="4" y="0" width="1" height="4"/>
+            
+            <rect x="9" y="0" width="1" height="5"/>
+            <rect x="10" y="0" width="2" height="1"/>
+            <rect x="10" y="2" width="2" height="1"/>
+            <rect x="10" y="4" width="2" height="1"/>
+             
+            <rect x="16" y="0" width="1" height="5"/>
+            <rect x="17" y="0" width="2" height="1"/>
+            <rect x="17" y="2" width="2" height="1"/>
+            <rect x="17" y="4" width="2" height="1"/>
+            
+            <rect x="23" y="0" width="1" height="5"/>
+            <rect x="24" y="2" width="1" height="1"/>
+            <rect x="25" y="1" width="1" height="1"/>
+            <rect x="26" y="0" width="1" height="1"/>
+            <rect x="25" y="3" width="1" height="1"/>
+            <rect x="26" y="4" width="1" height="1"/>
+            
+            <rect x="31" y="0" width="1" height="5"/>
+            <rect x="32" y="0" width="2" height="1"/>
+            <rect x="32" y="2" width="2" height="1"/>
+            <rect x="32" y="4" width="2" height="1"/>
+
+            <rect x="38" y="0" width="1" height="5"/>
+            <rect x="39" y="1" width="1" height="1"/>
+            <rect x="40" y="2" width="1" height="1"/>
+            <rect x="41" y="3" width="1" height="1"/>
+            <rect x="42" y="0" width="1" height="5"/>
+            
+            <rect x="47" y="0" width="1" height="5"/>
+            <rect x="48" y="4" width="2" height="1"/>
+            <rect x="48" y="0" width="2" height="1"/>
+            <rect x="50" y="1" width="1" height="3"/>
+        </g>
+        <filter id="shadow">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blur"/>
+            <feOffset in="blur" dx="0" dy="0" result="OffsetBlurredAlpha"/>
+        </filter>
+    </defs>
+    <g id="graph_region">
+        <rect x="63" y="9" width="378" height="180" fill="#5f5f5f"/>
+        <path d="M56,9 H441" stroke-width="1" stroke="#585858"/>
+        <path d="M56,189 H441" stroke-width="1" stroke="#585858"/>
+    </g>
+    <g id="y-axis">
+      <text x="53" y="193.5"><tspan>0</tspan></text>
+      <text x="53" y="173.5"><tspan>85</tspan></text>
+      <use x="56" y="169" xlink:href="#y-line"/>
+      <text x="53" y="153.5"><tspan>170</tspan></text>
+      <use x="56" y="149" xlink:href="#y-line"/>
+      <text x="53" y="133.5"><tspan>255</tspan></text>
+      <use x="56" y="129" xlink:href="#y-line"/>
+      <text x="53" y="113.5"><tspan>340</tspan></text>
+      <use x="56" y="109" xlink:href="#y-line"/>
+      <text x="53" y="93.5"><tspan>425</tspan></text>
+      <use x="56" y="89" xlink:href="#y-line"/>
+      <text x="53" y="73.5"><tspan>510</tspan></text>
+      <use x="56" y="69" xlink:href="#y-line"/>
+      <text x="53" y="53.5"><tspan>595</tspan></text>
+      <use x="56" y="49" xlink:href="#y-line"/>
+      <text x="53" y="33.5"><tspan>680</tspan></text>
+      <use x="56" y="29" xlink:href="#y-line"/>
+      <text x="53" y="13.5"><tspan>765</tspan></text>
+
+    </g>
+    <g id="x-axis">
+        <text x="315" y="202"><tspan>M</tspan></text>
+        <text x="378" y="202"><tspan>Tu</tspan></text>
+        <text x="441" y="202"><tspan>W</tspan></text>
+        <text x="63" y="202"><tspan>Th</tspan></text>
+        <text x="126" y="202"><tspan>F</tspan></text>
+        <text x="189" y="202"><tspan>Sa</tspan></text>
+        <text x="252" y="202"><tspan>Su</tspan></text>
+    </g>
+    <g id="data_areas">
+        <path d="M63,189L63,173L126,177L189,179L252,178L315,177L378,9L441,165L441,189Z" fill="#7b9f53" stroke="none"/>
+        <path d="M63,189L63,177L126,180L189,182L252,183L315,181L378,78L441,174L441,189Z" fill="#ace56e" stroke="none"/>
+    </g>
+    <g id="weekend-1" transform="translate(157.5,0)" visibility="visible">
+        <rect width="126" height="189" fill="#000000" opacity="0.09"/>
+        <use x="38" y="2" visibility="visible" xlink:href="#weekend-text"/>
+    </g>
+    <g id="weekend-2" transform="translate(0,0)" visibility="hidden">
+        <rect width="0" height="189" fill="#000000" opacity="0.09"/>
+        <use x="38" y="2" visibility="hidden" xlink:href="#weekend-text"/>
+    </g>
+    <g id="data_lines">
+        <path d="M63,173L126,177L189,179L252,178L315,177L378,9L441,165" fill="none" stroke="#e3f1cb" stroke-width="4"/>
+        <path d="M63,177L126,180L189,182L252,183L315,181L378,78L441,174" fill="none" stroke="#e3f1cb" stroke-width="4"/>
+    </g>
+    <g id="data_marks" onmouseover="path_show(evt)" onmouseout="path_hide(evt)">
+        <use id="1_0" x="63" y="173" xlink:href="#vertex"/>
+        <use id="2_0" x="63" y="177" xlink:href="#vertex"/>
+        <use id="1_1" x="126" y="177" xlink:href="#vertex"/>
+        <use id="2_1" x="126" y="180" xlink:href="#vertex"/>
+        <use id="1_2" x="189" y="179" xlink:href="#vertex"/>
+        <use id="2_2" x="189" y="182" xlink:href="#vertex"/>
+        <use id="1_3" x="252" y="178" xlink:href="#vertex"/>
+        <use id="2_3" x="252" y="183" xlink:href="#vertex"/>
+        <use id="1_4" x="315" y="177" xlink:href="#vertex"/>
+        <use id="2_4" x="315" y="181" xlink:href="#vertex"/>
+        <use id="1_5" x="378" y="9" xlink:href="#vertex"/>
+        <use id="2_5" x="378" y="78" xlink:href="#vertex"/>
+        <use id="1_6" x="441" y="165" xlink:href="#vertex"/>
+        <use id="2_6" x="441" y="174" xlink:href="#vertex"/>
+
+    </g>
+    <g id="data_labels">
+        <text id="label_1_0" x="108" y="168" visibility="hidden">69 total</text>
+        <text id="label_2_0" x="108" y="172" visibility="hidden">53 uniques</text>
+        <text id="label_1_1" x="126" y="172" visibility="hidden">49 total</text>
+        <text id="label_2_1" x="126" y="175" visibility="hidden">37 uniques</text>
+        <text id="label_1_2" x="189" y="174" visibility="hidden">41 total</text>
+        <text id="label_2_2" x="189" y="177" visibility="hidden">31 uniques</text>
+        <text id="label_1_3" x="252" y="173" visibility="hidden">46 total</text>
+        <text id="label_2_3" x="252" y="178" visibility="hidden">25 uniques</text>
+        <text id="label_1_4" x="315" y="172" visibility="hidden">53 total</text>
+        <text id="label_2_4" x="315" y="176" visibility="hidden">35 uniques</text>
+        <text id="label_1_5" x="378" y="39" visibility="hidden">764 total</text>
+        <text id="label_2_5" x="378" y="73" visibility="hidden">471 uniques</text>
+        <text id="label_1_6" x="396" y="160" visibility="hidden">101 total</text>
+        <text id="label_2_6" x="396" y="169" visibility="hidden">62 uniques</text>
+
+    </g>
+    <g id="legend">
+        <rect x="63" y="216" width="378" height="19" fill="#ffffff"/>
+        <path d="M63,216 H441" fill="none" stroke="#e3f1cb" stroke-width="1"/>
+        <path d="M63,235 H441" fill="none" stroke="#e3f1cb" stroke-width="1"/>
+        <rect x="193" y="220" width="9" height="9" fill="#7b9f53"/>
+        <rect x="256" y="220" width="9" height="9" fill="#ace56e"/>
+        <text x="207" y="228"><tspan>Total</tspan></text>
+        <text x="271" y="228"><tspan>Unique</tspan></text>
+    </g>
+    <g id="tooltip" transform="translate(100,100)" visibility="hidden">
+        <rect id="tooltip_shadow" x="1" y="1" width="80" height="20" opacity="0.6" fill="#eeeeee" style="filter:url(#shadow)"/>
+        <rect id="tooltip_box" x="0" y="0" width="80" height="20" fill="#eeeeee" stroke-width="1" stroke="#cccccc"/>
+        <text id="tooltip_text" x="40" y="13">0 0</text>
+    </g>
+</svg>

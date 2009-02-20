@@ -1,0 +1,32 @@
+================================================================================
+PEPPER MAKES MINT BETTER
+
+Installing XXX Strong Mint 2.21
+--------------------------------------------------------------------------------
+
+1. Remove all old XXX Strong Mint files from the Pepper directory (You should be installing this over a new install of Mint 1.2).
+
+2. Copy new files to /mint/pepper.
+
+3. Log into Mint, click Preferences, then Install (Under the Pepper heading).
+
+
+--------------------------------------------------------------------------------
+Updating XXX Strong Mint 2.21 from XXX Strong Mint 2.2 ONLY
+--------------------------------------------------------------------------------
+
+1. Overwrite /pepper/nathankunicki/xxxstrongmint/class.php with the new class.php.  No uninstall required.
+
+
+--------------------------------------------------------------------------------
+CHANGE LOG
+--------------------------------------------------------------------------------
+
+Changes from 2.2 to 2.21
+
+* XXX Strong Mint wasn't using user defined table prefixes.  Fixed.
+
+================================================================================
+Copyright 2005 Nathan Kunicki.
+
+More info at: http://www.dynamiclatitude.com/xxxstrong/
