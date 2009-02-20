@@ -1,5 +1,15 @@
-// Handles related-objects functionality: lookup link for raw_id_admin=True
+// Handles related-objects functionality: lookup link for raw_id_fields
 // and Add Another links.
+
+function html_unescape(text) {
+    // Unescape a string that was escaped using django.utils.html.escape.
+    text = text.replace(/&lt;/g, '<');
+    text = text.replace(/&gt;/g, '>');
+    text = text.replace(/&quot;/g, '"');
+    text = text.replace(/&#39;/g, "'");
+    text = text.replace(/&amp;/g, '&');
+    return text;
+}
 
 function showRelatedObjectLookupPopup(triggeringLink) {
     var name = triggeringLink.id.replace(/^lookup_/, '');
@@ -19,7 +29,7 @@ function showRelatedObjectLookupPopup(triggeringLink) {
 function dismissRelatedLookupPopup(win, chosenId) {
     var name = win.name.replace(/___/g, '.');
     var elem = document.getElementById(name);
-    if (elem.className.indexOf('vRawIdAdminField') != -1 && elem.value) {
+    if (elem.className.indexOf('vManyToManyRawIdAdminField') != -1 && elem.value) {
         elem.value += ',' + chosenId;
     } else {
         document.getElementById(name).value = chosenId;
@@ -30,12 +40,22 @@ function dismissRelatedLookupPopup(win, chosenId) {
 function showAddAnotherPopup(triggeringLink) {
     var name = triggeringLink.id.replace(/^add_/, '');
     name = name.replace(/\./g, '___');
-    var win = window.open(triggeringLink.href + '?_popup=1', name, 'height=500,width=800,resizable=yes,scrollbars=yes');
+    href = triggeringLink.href
+    if (href.indexOf('?') == -1) {
+        href += '?_popup=1';
+    } else {
+        href  += '&_popup=1';
+    }
+    var win = window.open(href, name, 'height=500,width=800,resizable=yes,scrollbars=yes');
     win.focus();
     return false;
 }
 
 function dismissAddAnotherPopup(win, newId, newRepr) {
+    // newId and newRepr are expected to have previously been escaped by
+    // django.utils.html.escape.
+    newId = html_unescape(newId);
+    newRepr = html_unescape(newRepr);
     var name = win.name.replace(/___/g, '.');
     var elem = document.getElementById(name);
     if (elem) {
