@@ -1,5 +1,5 @@
-#import xml.etree.cElementTree as ET
-import cElementTree as ET
+import xml.etree.cElementTree as ET
+#import cElementTree as ET
 from urllib import urlopen
 import time, datetime
 from threequarters.blog.models import LastFMTrack
