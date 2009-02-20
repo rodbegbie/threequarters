@@ -9,10 +9,6 @@ import os.path
 import time
 
 class BlogSearch(object):
-    __shared_state = {}
-    def __init__(self):
-        self.__dict__ = self.__shared_state
-
     schema = Schema(title=TEXT(stored=True), body=TEXT, url=TEXT, via=TEXT, artist=TEXT,
                     id=ID(stored=True, unique=True), tags=KEYWORD(scorable=True), date=ID(stored=True))
     index = None
