@@ -5,7 +5,7 @@ class PsycoMiddleware(object):
     """
     def process_request(self, request):
         try:
-            from psyco import psyco
+            import psyco
             psyco.profile()
         except ImportError:
             pass
