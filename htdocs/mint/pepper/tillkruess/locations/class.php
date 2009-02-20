@@ -35,7 +35,7 @@
 
 	class TK_Locations extends Pepper {
 
-		var $version = 243;
+		var $version = 244;
 
 		var $info = array(
 			'pepperName' => 'Locations',

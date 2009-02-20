@@ -13,7 +13,7 @@ $installPepper = "SI_SecretCrush";
 
 class SI_SecretCrush extends Pepper
 {
-	var $version	= 212; 
+	var $version	= 213; 
 	var $info		= array
 	(
 		'pepperName'	=> 'Secret Crush',
@@ -345,12 +345,14 @@ class SI_SecretCrush extends Pepper
 					$infoData['Platform'] = $r['platform'];
 				}
 				
-				$infoData['Where'] = '<a href="'.$r['resource'].'">'.$res_title.'</a>';
+				$resource_cleaned	= str_replace('&', '&amp;', $r['resource']);
+				$infoData['Where'] = '<a href="'.$resource_cleaned.'">'.$res_title.'</a>';
 				
 				$body = '<table>';
 				foreach ($infoData as $label => $value)
 				{
-					$body .= '<tr><th scope="row" align="left">'.$label.'</th><td>'.str_replace('&', '&amp;', $value).'</td></tr>';
+					$value_cleaned = ($label != 'Where') ? str_replace('&', '&amp;', $value) : $value;
+					$body .= '<tr><th scope="row" align="left">'.$label.'</th><td>'.$value_cleaned.'</td></tr>';
 				}
 				$body .= '</table>';
 				

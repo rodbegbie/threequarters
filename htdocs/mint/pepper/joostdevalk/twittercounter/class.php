@@ -14,7 +14,7 @@ $installPepper = "Yoast_TwitterCounter";
 	
 class Yoast_TwitterCounter extends Pepper
 {
-	var $version	= 102; 
+	var $version	= 104; 
 	var $info		= array
 	(
 		'pepperName'	=> 'TwitterCounter',
@@ -33,9 +33,9 @@ class Yoast_TwitterCounter extends Pepper
 	);
 	var $prefs = array
 	(
-		'username' => '',
-		'cache' => 0,
-		'cachetime' => 2
+		'tcusername' => '',
+		'tccache' => 0,
+		'tccachetime' => 2
 	);
 	
 	/**************************************************************************
@@ -100,21 +100,21 @@ class Yoast_TwitterCounter extends Pepper
 			<table>
 				<tr>
 					<td><label for="username">Twitter Username</label></td>
-					<td><span><input type='text' id='username' name='username' value='{$prefs['username']}' /></span></td>
+					<td><span><input type='text' id='username' name='tcusername' value='{$prefs['tcusername']}' /></span></td>
 				</tr>
 				<tr>
 					<td colspan='2'>Enter your Twitter Username.</td>
 				</tr>
 			</table>
 HERE;
-			$checked = ($prefs['cache'])?' checked="checked"':'';
+			$checked = ($prefs['tccache'])?' checked="checked"':'';
 			$preferences['Cache'] = <<<HERE
 			<table class='snug'>
 				<tr>
-					<td><input type="checkbox" id="cache" name="cache" class="cinch" value="0"$checked /> <label>Enable Cache</label></td>
+					<td><input type="checkbox" id="cache" name="tccache" class="cinch" value="0"$checked /> <label>Enable Cache</label></td>
 				</tr>
 				<tr>
-					<td>Enabling caching greatly enhances load times. Before turning on caching, CHMOD the joostdevalk/technorati/cache folder to 777.</td>
+					<td>Enabling caching greatly enhances load times. Before turning on caching, CHMOD the joostdevalk/twittercounter/cache folder to 777.</td>
 				</tr>
 			</table>
 HERE;
@@ -122,7 +122,7 @@ HERE;
 			<table class='snug'>
 				<tr>
 					<td>Cache Expires in </td>
-					<td><span class='inline'><input type='text' id='cachetime' size='3' maxlength='3' name='cachetime' value='{$prefs['cachetime']}' class='cinch' /></span></td>
+					<td><span class='inline'><input type='text' id='cachetime' size='3' maxlength='3' name='tccachetime' value='{$prefs['tccachetime']}' class='cinch' /></span></td>
 					<td> Hours</td>
 				</tr>
 			</table>
@@ -138,9 +138,9 @@ HERE;
 	 **************************************************************************/
 	function onSavePreferences() 
 	{
-		$this->prefs['username'] = $this->escapeSQL($_POST['username']);
-		$this->prefs['cache'] = (isset($_POST['cache']))?1:0;
-		$this->prefs['cachetime'] = $this->escapeSQL($_POST['cachetime']);
+		$this->prefs['tcusername'] = $this->escapeSQL($_POST['tcusername']);
+		$this->prefs['tccache'] = (isset($_POST['tccache']))?1:0;
+		$this->prefs['tccachetime'] = $this->escapeSQL($_POST['tccachetime']);
 	}
 	
 	/**************************************************************************
@@ -157,9 +157,9 @@ HERE;
 	function get_TwitterCounterData() {
 		
 		// Prep cache
-		$username 	= $this->prefs['username'];
-		$cache 		= $this->prefs['cache'];
-		$cachetime 	= $this->prefs['cachetime'];
+		$username 	= $this->prefs['tcusername'];
+		$cache 		= $this->prefs['tccache'];
+		$cachetime 	= $this->prefs['tccachetime'];
 		$cachefile 	= dirname(__FILE__) . '/cache/' . md5($username) . '.cache';
 		$cachetime 	= $cachetime * 3600;
 		
@@ -210,7 +210,7 @@ HERE;
 		$html = '';
 		$error = false;
 		
-		if ( $this->prefs['username'] != '' ) {
+		if ( $this->prefs['tcusername'] != '' ) {
 
 			$tableData['table'] = array('id'=>'','class'=>'inline-foot striped');
 			
