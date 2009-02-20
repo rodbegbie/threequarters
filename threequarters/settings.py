@@ -1,6 +1,6 @@
 # Django settings for threequarters project.
 
-INTERNAL_IPS=('69.17.48.8,)
+INTERNAL_IPS=('69.17.48.8',)
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 EMAIL_HOST = "flaming.arsecandle.org"
@@ -65,8 +65,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.csrf.middleware.CsrfMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-#    'threequarters.django_openidconsumer.middleware.OpenIDMiddleware',
-#    'django.middleware.doc.XViewMiddleware',
     'django.middleware.cache.CacheMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
