@@ -57,6 +57,11 @@ class BlogSearch(object):
             fields['body'] = item.content_object.description
             if item.content_object.tags:
                 fields['tags'] = item.content_object.tags
+        elif item.content_type.model == 'vimeoclip':
+            fields['title'] = item.content_object.title
+            fields['body'] = item.content_object.caption
+            if item.content_object.tags:
+                fields['tags'] = item.content_object.tags
         elif item.content_type.model == 'amazoncd':
              fields['title'] = item.content_object.title
              fields['body'] = item.content_object.comments

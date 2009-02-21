@@ -199,6 +199,35 @@ class FlickrPhoto(models.Model):
         blogitem_save(self, tags=self.tags)
 
 
+class VimeoClip(models.Model):
+    blogitem = generic.GenericRelation(BlogItem)
+    vimeo_id = models.IntegerField(db_index=True)
+    title = models.CharField(max_length=255)
+    caption= models.TextField(blank=True)
+    width = models.IntegerField(default=0)
+    height = models.IntegerField(default=0)
+    tags = models.CharField(max_length=255, blank=True)
+    created_on = models.DateTimeField(default=datetime.now)
+
+    class Meta:
+        ordering = ["-created_on"]
+    
+    def get_absolute_url(self):
+        return "http://vimeo.com/" + str(self.vimeo_id)
+
+    def __str__(self):
+        return self.title
+
+    def relative_width(self):
+        return 500
+
+    def relative_height(self):
+        return (self.relative_width() * self.height) / self.width
+
+    def save(self, *args, **kwargs):
+        super(VimeoClip, self).save(*args, **kwargs) # Call the "real" save() method.
+        blogitem_save(self, tags=self.tags)
+
 (AMAZON_COM,
  AMAZON_CO_UK) = range(2)
 AMAZON_COUNTRIES = ("us", "uk")

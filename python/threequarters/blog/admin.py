@@ -28,6 +28,11 @@ class FlickrPhotoAdmin(admin.ModelAdmin):
     list_filter = ['created_on']
 admin.site.register(FlickrPhoto, FlickrPhotoAdmin)
 
+class VimeoClipAdmin(admin.ModelAdmin):
+    list_display = ["vimeo_id", "title", "created_on"]
+    list_filter = ['created_on']
+admin.site.register(VimeoClip, VimeoClipAdmin)
+
 class TwitterAdmin(admin.ModelAdmin):
     list_display = ["description", "created_on"]
     list_filter = ['created_on']
