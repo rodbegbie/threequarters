@@ -39,7 +39,7 @@ class BlogSearch(object):
         fields = {}
         if item.content_type.model == 'post':
             fields['title'] = item.content_object.title
-            fields['body'] = item.content_object.body_xhtml
+            fields['body'] = item.content_object.body_textile
             if item.content_object.tags:
                 fields['tags'] = item.content_object.tags
         elif item.content_type.model == 'link':
