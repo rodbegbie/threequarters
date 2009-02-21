@@ -12,7 +12,8 @@ $(document).ready(function() {
         $(this).flash({
             swf: "http://vimeo.com/moogaloop.swf?clip_id=" + id,
             width: width,
-            height: height
+            height: height,
+            params: {allowscriptaccess: true, allowfullscreen: true}
         });
     });
 });
