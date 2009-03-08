@@ -73,7 +73,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'threequarters.urls'
 
 INSTALLED_APPS = (
-    'threequarters.template_utils',
     'threequarters.blog',
     'django.contrib.comments',
     'django.contrib.flatpages',

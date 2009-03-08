@@ -42,6 +42,9 @@ h3.date {
     font-size: large;
     margin-top: 0;
 }
+h3>a:link, h3>a:visited {
+    border: 0px;
+}
 
 #mainbody {
     width: 60em;

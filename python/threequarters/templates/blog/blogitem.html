@@ -2,7 +2,7 @@
 {% load comments %}
 {% load smart_if %}
 {% ifchanged %}
-<h3 class="date">{{ object.created_on|date:"F j, Y" }}</h3>
+<h3 class="date"><a href="{{object.created_on|date:"/Y/b/d/"}}">&#x27a0;</a> {{ object.created_on|date:"F j, Y" }}</h3>
 {% endifchanged %}
 
 {% ifequal object.content_type.model "link" %}
@@ -29,7 +29,7 @@
                     <a href="{{object.content_object.get_comments_url}}">{{comment_count}} comment{{comment_count|pluralize}}</a> |
                 {% endif %}
             {% endif %}
-            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
         </div>
         <div class="postinfo">
             {% if object.content_object.tags %}
@@ -52,7 +52,7 @@
         {{object.content_object.body_xhtml|safe}}
         <div class="permalink">
             <a href="{{object.content_object.get_absolute_url}}#comments">{{comment_count}} comment{{comment_count|pluralize}}</a> |
-            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
         </div>
         <div class="postinfo">
             {% if object.content_object.tags %}
@@ -72,7 +72,7 @@
             {{object.content_object.description|safe|linebreaks}}
         </div>
         <div class="permalink">
-            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
         </div>
         <div class="postinfo">
             {% if object.content_object.tags %}
@@ -92,7 +92,7 @@
             {{object.content_object.caption|safe|linebreaks}}
         </div>
         <div class="permalink">
-            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
         </div>
         <div class="postinfo">
             {% if object.content_object.tags %}
@@ -113,7 +113,7 @@
             {{object.content_object.comments|linebreaks}}
         </div>
         <div class="permalink">
-            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
         </div>
         <div class="postinfo">
         </div>
@@ -126,7 +126,7 @@
             {{object.content_object.description|urlize|smartypants}}
         </div>
         <div class="permalink">
-            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
         </div>
         <div class="postinfo">
             Posted to Twitter at {{ object.created_on|date:"P" }}
@@ -138,7 +138,7 @@
            {{object.content_object.artist|smartypants}} - {{object.content_object.title|smartypants}}
         </div>
         <div class="permalink">
-            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
         </div>
         <div class="postinfo">
             Listened to at {{ object.created_on|date:"P" }}
@@ -151,7 +151,7 @@
             {{object.content_object.description|smartypants}}
         </div>
         <div class="permalink">
-            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
+            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2372;</a>
         </div>
         <div class="postinfo">
             Posted to Yelp at {{ object.created_on|date:"P" }}
