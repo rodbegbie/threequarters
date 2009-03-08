@@ -1,10 +1,10 @@
 {% extends "blog/base.html" %}
-{% load comparison %}
+{% load smart_if %}
 
 {% block precontent %}
-{% if_greater object_list.0.age 60 %}
+{% if object_list.0.age > 60 %}
     {% include "blog/sidebar/adsenseleaderboard.html" %}
-{% endif_greater %}
+{% endif %}
 {% endblock %}
 
 {% block title %}Entries for {{ day|date:"l, F j, Y" }}{% endblock %}
@@ -18,9 +18,9 @@
 
 {% block sidebar %}
 {% include "blog/sidebar/about.html" %}
-{% if_greater object_list.0.age 30 %}
+{% if object_list.0.age > 30 %}
     {% include "blog/sidebar/adsense.html" %}
-{% endif_greater %}
+{% endif %}
 {% include "blog/sidebar/searchbox.html" %}
 {% include "blog/sidebar/poweredby.html" %}
 {% endblock %}

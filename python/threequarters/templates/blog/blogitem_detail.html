@@ -1,6 +1,6 @@
 {% extends "blog/base.html" %}
 {% load comments %}
-{% load comparison %}
+{% load smart_if %}
 
 {% block title %}{{object.content_object.title}}{% endblock %}
 {% block title2 %}{{object.content_object.title}}{% endblock %}
@@ -23,7 +23,7 @@
 {% endfor %}
 
 <h3>Post a comment</h3>
-{% if_greater object.age 60 %}
+{% if object.age > 60 %}
     <p>Due to spam, posting comments to old entries is disabled.</p>
 {% else %}
 <div class="commentform">
@@ -31,14 +31,14 @@
     {% render_comment_form for blog.blogitem object.id %}
 </p>
 </div>
-{% endif_greater %}
+{% endif %}
 {% endblock %}
 
 {% block sidebar %}
 {% include "blog/sidebar/about.html" %}
-{% if_greater object.age 30 %}
+{% if object.age > 30 %}
     {% include "blog/sidebar/adsense.html" %}
-{% endif_greater %}
+{% endif %}
 {% include "blog/sidebar/searchbox.html" %}
 {% include "blog/sidebar/poweredby.html" %}
 {% endblock %}

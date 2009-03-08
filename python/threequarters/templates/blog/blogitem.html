@@ -1,6 +1,6 @@
 {% load smartypants %}
 {% load comments %}
-{% load comparison %}
+{% load smart_if %}
 {% ifchanged %}
 <h3 class="date">{{ object.created_on|date:"F j, Y" }}</h3>
 {% endifchanged %}
@@ -25,9 +25,9 @@
             {% if comment_count %}
                 <a href="{{object.content_object.get_comments_url}}">{{comment_count}} comment{{comment_count|pluralize}}</a> |
             {% else %}
-                {% if_less object.age 60 %}
+                {% if object.age < 60 %}
                     <a href="{{object.content_object.get_comments_url}}">{{comment_count}} comment{{comment_count|pluralize}}</a> |
-                {% endif_less %}
+                {% endif %}
             {% endif %}
             <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">#</a>
         </div>
