@@ -1,14 +1,18 @@
 import xml.etree.cElementTree as ET
-from urllib import urlopen
+from urllib import FancyURLopener
 import time, datetime
 from threequarters.blog.models import VimeoClip
 
+class MyOpener(FancyURLopener):
+    version = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11 Not-really/I-am-actually-Python'
 url = 'http://vimeo.com/api/rodbegbie/clips.xml'
-file = urlopen(url) 
+opener = MyOpener()
+file = opener.open(url) 
 tree = ET.parse(file)
 elem = tree.getroot()
 
 for clip in elem.getchildren():
+    print clip
     print clip.find('title').text.encode('utf-8')
     clip_id = int(clip.find('clip_id').text)
     (vimeoclip, new) = VimeoClip.objects.get_or_create(vimeo_id=clip_id)
