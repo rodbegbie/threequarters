@@ -96,7 +96,9 @@ class BlogItem(models.Model):
 
         super(BlogItem, self).save(*args, **kwargs) # Call the "real" save() method.
         
-        BlogSearch().add_blogitem(self)
+        s = BlogSearch()
+        s.add_blogitem(self)
+        s.commit()
 
 
 class Post(models.Model):

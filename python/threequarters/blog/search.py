@@ -3,6 +3,7 @@ from django.conf import settings
 from whoosh.fields import Schema, STORED, ID, KEYWORD, TEXT
 from whoosh.qparser import MultifieldParser
 import whoosh.index
+import whoosh.writing
 
 import os
 import os.path
@@ -18,23 +19,26 @@ class BlogSearch(object):
             os.mkdir(settings.WHOOSH_INDEX_DIR)
         
         self.index = whoosh.index.create_in(settings.WHOOSH_INDEX_DIR, self.schema)
+        self.writer = self.index.writer()
+        self.searcher = self.index.searcher()
     
     def load_index(self):
         self.index = whoosh.index.open_dir(settings.WHOOSH_INDEX_DIR)
+        self.searcher = self.index.searcher()
         
     def search(self, term):
         if not self.index:
             self.load_index()
 
-        searcher = self.index.searcher()
         parser = MultifieldParser(("body", "title", "tags"), schema = self.schema)
         query = parser.parse(term)
-        results = searcher.search(query)#, sortedby="date", reverse=True)
+        results = self.searcher.search(query)#, sortedby="date", reverse=True)
         return results
         
     def add_blogitem(self, item):
         if not self.index:
             self.load_index()
+            self.writer = self.index.writer()
         
         fields = {}
         if item.content_type.model == 'post':
@@ -75,6 +79,8 @@ class BlogSearch(object):
         fields["id"] = unicode(item.id)
         fields["date"] = unicode(time.mktime(item.content_object.created_on.timetuple()))
 
-        writer = self.index.writer()
-        writer.update_document(**fields)
-        writer.commit()
+        self.writer.update_document(**fields)
+
+    def commit(self):
+        self.writer.commit() #mergetype=whoosh.writing.OPTIMIZE)
+	print "COMMITTED"
