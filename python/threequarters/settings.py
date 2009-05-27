@@ -60,6 +60,7 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.http.ConditionalGetMiddleware',
     #'threequarters.middleware.PsycoMiddleware',
+    'django.middleware.http.SetRemoteAddrFromForwardedFor',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'django.contrib.csrf.middleware.CsrfMiddleware',
