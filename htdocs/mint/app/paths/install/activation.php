@@ -36,7 +36,7 @@
 				<fieldset>
 					<table>
 						<tr>
-							<td colspan="2">Your Activation Key can be found in the email titled "Thank you for purchasing Mint" or by logging into the <a href="http://www.haveamint.com/account/">Mint Account Center</a> and looking under Account History.</td>
+							<td colspan="2">Your Activation Key can be found in the email titled "Thank you for purchasing Mint" or by logging into the <a href="http://www.haveamint.com/account/">Mint Account Center</a>.</td>
 						</tr>
 						<tr>
 							<td><span><input type="text" id="activation_key" name="activationKey" value="" /></span></td>

@@ -678,7 +678,7 @@ HERE;
 
 			if ($action == 'watch')
 			{
-				if (!in_array($resource,$watched))
+				if (!in_array($resource, $watched))
 				{
 					$watched[] = $resource;
 				}

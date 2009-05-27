@@ -1199,6 +1199,7 @@ SI.Scroll = {
 				}
 			}
 		else {
+			if (SI.IE) y -= this.yOffset;
 			this.scrollInterval = setInterval("SI.Scroll.scrollTo("+x+","+y+")",100);
 			this.scrollLoop = true;
 			}

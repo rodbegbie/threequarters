@@ -12,6 +12,7 @@
  ******************************************************************************/
 if (!defined('MINT')) { header('Location:/'); }; // Prevent viewing this file
 header('P3P: CP="NOI NID ADMa OUR IND COM NAV STA LOC"'); // See http://www.p3pwriter.com/LRN_111.asp for definitions
+header('Content-Type: text/html; charset=utf-8');
 
 include(MINT_ROOT.'app/lib/mint.php');
 include(MINT_ROOT.'app/lib/pepper.php');

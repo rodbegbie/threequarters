@@ -3,7 +3,7 @@
 /******************************************************************************
  Country Table
  
- Developer: Till Krüss
+ Developer: Till KrÃ¼ss
  Plug-in Name: Locations
  
  More info at: http://pepper.pralinenschachtel.de/
@@ -182,6 +182,7 @@
 		'PH' => 'Philippines',
 		'PK' => 'Pakistan',
 		'PL' => 'Poland',
+		'PM' => 'Saint Pierre and Miquelon',
 		'PR' => 'Puerto Rico',
 		'PS' => 'Palestinian territories',
 		'PT' => 'Portugal',

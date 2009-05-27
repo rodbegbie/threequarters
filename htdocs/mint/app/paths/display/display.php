@@ -20,18 +20,21 @@
 if (isset($_SERVER['HTTP_USER_AGENT']))
 {
 	$ua = $_SERVER['HTTP_USER_AGENT'];
-	if (strpos($ua, 'AppleWebKit'))
+	if (preg_match('#AppleWebKit/([.0-9]+)#', $ua, $m))
 	{
-		echo <<<HTML
+		$version = $m[1];
+		if ($version < 528.16)
+		{
+			echo <<<HTML
 <style type="text/css" title="text/css">
 /* <![CDATA[ */
-/* GROSS FIX FOR WEBKIT BROWSERS */
+/* GROSS FIX FOR LEGACY WEBKIT BROWSERS */
 .scroll table, .scroll table thead { margin-top: -16px; }
 .scroll table table, .scroll table table thead { margin-top: 0; }
 /* ]]> */
 </style>
 HTML;
-
+		}
 	}
 }
 ?>

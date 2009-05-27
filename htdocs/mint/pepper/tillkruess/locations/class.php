@@ -35,7 +35,7 @@
 
 	class TK_Locations extends Pepper {
 
-		var $version = 244;
+		var $version = 245;
 
 		var $info = array(
 			'pepperName' => 'Locations',
@@ -61,7 +61,8 @@
 
 		var $prefs = array(
 			'threshold' => 1,
-			'sortby' => 0
+			'sortby' => 0,
+			'apache' => 0
 		);
 
 		var $manifest = array(
@@ -108,6 +109,10 @@
 				if ($this->getInstalledVersion() < 236) {
 					$this->onInstall();
 				}
+				
+				if ($this->getInstalledVersion() < 245) {
+					$this->prefs['apache'] = 0;
+				}
 
 			}
 
@@ -148,7 +153,15 @@
 
 		function onRecord() {
 
-			if ($code = $this->get_countrycode()) {
+			$code = FALSE;
+
+			if ($this->prefs['apache']) {
+				$code = apache_note('GEOIP_COUNTRY_CODE');
+			} else {
+				$code = $this->get_countrycode();
+			}
+
+			if ($code) {
 
 				$this->data['locations']['total'][$code] = isset($this->data['locations']['total'][$code]) ? $this->data['locations']['total'][$code] + 1 : 1;
 
@@ -203,6 +216,7 @@
 			$sortby0 = $this->prefs['sortby'] == 0 ? ' selected="selected"' : '';
 			$sortby1 = $this->prefs['sortby'] == 1 ? ' selected="selected"' : '';
 			$threshold = $this->prefs['threshold'];
+			$apache = $this->prefs['apache'] ? ' checked="checked"' : '';
 
 			$preferences['Display'] = <<<HTML
 <table class="snug">
@@ -220,6 +234,19 @@
 </table>
 HTML;
 
+			$preferences['Performance'] = <<<HTML
+<table>
+	<tr>
+		<td>
+			<label>
+				<input type="checkbox" name="locationsplus_apache" value="1"{$apache} />
+				Use MaxMind's mod_geoip.
+			</label>
+		</td>
+	</tr>
+</table>
+HTML;
+
 			return $preferences;
 
 		}
@@ -233,6 +260,8 @@ HTML;
 			if (isset($_POST['locations_threshold']) && is_numeric($_POST['locations_threshold'])) {
 				$this->prefs['threshold'] = $_POST['locations_threshold'];
 			}
+
+			$this->prefs['apache'] = isset($_POST['locationsplus_apache']) ? 1 : 0;
 
 		}
 

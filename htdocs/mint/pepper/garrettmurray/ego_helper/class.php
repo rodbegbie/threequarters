@@ -34,7 +34,7 @@
 	class GM_Ego_Helper extends Pepper
 	{
 
-		var $version = 100;
+		var $version = 102;
 
 		var $info = array(
 			'pepperName'	=> 'Ego Helper',
@@ -92,7 +92,7 @@
 		{
 			global $Mint;
 			
-			if ($email == $Mint->cfg['email'] && $password == $Mint->cfg['password'])
+			if (urldecode($email) == $Mint->cfg['email'] && urldecode($password) == $Mint->cfg['password'])
 			{
 				$visits = $Mint->data[0]['visits'];
 			
@@ -152,11 +152,11 @@
 				echo "\n\t<referrers>";
 				foreach ($unique_refs as $ref):
 					echo "\n\t\t<item>";
-					echo "\n\t\t\t<date>{$ref['date']}</date>";
-					echo "\n\t\t\t<title>{$ref['title']}</title>";
-					echo "\n\t\t\t<link>{$ref['title_link']}</link>";
-					echo "\n\t\t\t<resource>{$ref['resource_title']}</resource>";
-					echo "\n\t\t\t<resource_link>{$ref['resource_link']}</resource_link>";
+					echo "\n\t\t\t<date>".$ref['date']."</date>";
+					echo "\n\t\t\t<title>".$this->clean_string($ref['title'])."</title>";
+					echo "\n\t\t\t<link>".$ref['title_link']."</link>";
+					echo "\n\t\t\t<resource>".$this->clean_string($ref['resource_title'])."</resource>";
+					echo "\n\t\t\t<resource_link>".$ref['resource_link']."</resource_link>";
 					echo "\n\t\t</item>";
 				endforeach;
 				echo "\n\t</referrers>";
@@ -164,27 +164,32 @@
 			}
 		}
 		
+		function clean_string($str)
+		{
+		    return str_replace('&', '&amp;', $str);
+		}
+		
 		function get_unique_referrers() 
 		{
 			global $Mint;
 			// Ignore certain domains
-			$ignoredDomains	= preg_split('/[\s,]+/', $Mint->prefs['ignoreReferringDomains']);
-			$ignoreQuery 	= '';
-			if (!empty($ignoredDomains))
-			{
-				foreach ($ignoredDomains as $domain)
-				{
-					if (empty($domain))
-					{
-						continue;
-					}
-					$ignoreQuery .= ' AND `domain_checksum` != '.crc32($domain);
-				}
-			}
+			// $ignoredDomains  = preg_split('/[\s,]+/', $Mint->prefs['ignoreReferringDomains']);
+			//           $ignoreQuery    = '';
+			//           if (!empty($ignoredDomains))
+			//           {
+			//               foreach ($ignoredDomains as $domain)
+			//               {
+			//                   if (empty($domain))
+			//                   {
+			//                       continue;
+			//                   }
+			//                   $ignoreQuery .= ' AND `domain_checksum` != '.crc32($domain);
+			//               }
+			//           }
 
 			$query = "SELECT `referer`, `resource`, `resource_title`, `dt`
 				FROM `{$Mint->db['tblPrefix']}visit` 
-				WHERE `referer_is_local` = 0 AND `search_terms` = '' {$ignoreQuery}
+				WHERE `referer_is_local` = 0 AND `search_terms` = ''
 				GROUP BY `referer_checksum` 
 				ORDER BY `dt` DESC 
 				LIMIT 0,5";

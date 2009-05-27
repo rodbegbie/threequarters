@@ -109,27 +109,6 @@ $SI_SearchEngines[] = array
 );
 $SI_SearchEngines[] = array
 (
-	'name'          => 'Cuil',
-	'url'           => 'http://cuil.com/search',
-	'domain'        => 'cuil',
-	'query'         => 'q'
-);
-$SI_SearchEngines[] = array
-(
-	'name'          => 'Search.com',
-	'url'           => 'http://www.search.com/search',
-	'domain'        => 'www.search',
-	'query'         => 'q'
-);
-$SI_SearchEngines[] = array
-(
-	'name'          => 'mywebsearch',
-	'url'           => 'http://search.mywebsearch.com/mywebsearch/AJmain.jhtml',
-	'domain'        => 'search.mywebsearch',
-	'query'         => 'searchfor'
-);
-$SI_SearchEngines[] = array
-(
 	'name'          => 'Search.com',
 	'url'           => 'http://www.search.com/search',
 	'domain'        => 'www.search',

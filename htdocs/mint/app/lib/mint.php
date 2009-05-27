@@ -14,7 +14,7 @@
 
 class Mint
 {
-	var $version		= 216;
+	var $version		= 217;
 	var $db				= array
 	(
 		'server'	=> 'localhost',
@@ -3547,7 +3547,7 @@ HERE;
 			}
 			else if ($reverse)
 			{
-				if (preg_match("/(.(\s|\/|\?|&).{1,$len}$)/ms", $var, $match))
+				if (preg_match("/(.(\s|\/|\?|&|_|-).{1,$len}$)/ms", $var, $match))
 				{
 					$abbr = "<abbr title=\"$var\">&#8230;".str_replace('?', '<wbr />?', $match[1])."</abbr>";
 				}
@@ -3558,7 +3558,7 @@ HERE;
 			}
 			else 
 			{
-				if (preg_match("/^(.{1,$len})(\s|\/|\?|&)./ms", $var, $match))
+				if (preg_match("/^(.{1,$len})(\s|\/|\?|&|_|-)./ms", $var, $match))
 				{
 					$abbr = "<abbr title=\"$var\">".str_replace('?', '<wbr />?', $match[1])."&#8230;</abbr>";
 				}
