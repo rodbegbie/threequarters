@@ -286,7 +286,7 @@ class AmazonCD(models.Model):
 
 class Twitter(models.Model):
     blogitem = generic.GenericRelation(BlogItem)
-    twitter_id = models.IntegerField(db_index=True)
+    twitter_id = BigIntegerField(db_index=True)
     starts_with_at = models.BooleanField(default=False)
     description = models.TextField()
     created_on = models.DateTimeField(default=datetime.now)
