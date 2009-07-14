@@ -144,6 +144,7 @@
 		'MC' => 'Monaco',
 		'MD' => 'Republic of Moldova',
 		'ME' => 'Montenegro',
+		'MF' => 'Saint Martin',
 		'MG' => 'Madagascar',
 		'MH' => 'Marshall Islands',
 		'MK' => 'The Former Yugoslav Republic of Macedonia',

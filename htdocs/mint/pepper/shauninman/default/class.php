@@ -13,7 +13,7 @@ $installPepper = "SI_Default";
 
 class SI_Default extends Pepper
 {
-	var $version	= 208;
+	var $version	= 209;
 	var $info		= array
 	(
 		'pepperName'	=> 'Default',
@@ -678,7 +678,7 @@ HERE;
 
 			if ($action == 'watch')
 			{
-				if (!in_array($resource, $watched))
+				if (!in_array($resource,$watched))
 				{
 					$watched[] = $resource;
 				}

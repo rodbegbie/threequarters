@@ -36,6 +36,13 @@ $SI_SearchEngines[] = array
 );
 $SI_SearchEngines[] = array
 (
+	'name'          => 'Bing',
+	'url'           => 'http://www.bing.com/search',
+	'domain'        => 'bing',
+	'query'         => 'q'
+);
+$SI_SearchEngines[] = array
+(
 	'name'			=> 'AlltheWeb',
 	'url'			=> 'http://www.alltheweb.com/search',
 	'domain'		=> 'alltheweb',
