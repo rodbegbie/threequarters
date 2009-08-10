@@ -261,6 +261,7 @@ class AmazonCD(models.Model):
         if not self.title:
             from threequarters import amazon
             amazon.setLicenseKey("1AGTVVHBTYPBQKT7G482")
+            amazon.setSecretKey("RSDWQPUbS4wsvMBU33BkElMsCvrEpjje2iChPj6r")
             amazon.setLocale(AMAZON_COUNTRIES[int(self.store)])
             res = amazon.ItemLookup(ItemId=self.asin, ResponseGroup="Medium")[0]
             print res.Title.encode('UTF-8')
