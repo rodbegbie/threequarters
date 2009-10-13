@@ -13,7 +13,7 @@ $installPepper = "SI_UserAgent";
 
 class SI_UserAgent extends Pepper
 {
-	var $version	= 205; 
+	var $version	= 206; 
 	var $info		= array
 	(
 		'pepperName'	=> 'User Agent 007',
@@ -861,7 +861,8 @@ HERE;
 					'10.2' => 'Jaguar',
 					'10.3' => 'Panther',
 					'10.4' => 'Tiger',
-					'10.5' => 'Leopard'
+					'10.5' => 'Leopard',
+					'10.6' => 'Snow Leopard'
 				);
 
 				if (isset($builds[$build]))
@@ -896,7 +897,7 @@ HERE;
 		}
 
 		// Should never detect robots that are unable to run JavaScript but they are in here anyway
-		if (preg_match_all('/(chrome|safari|shiira|firefox|firebird|feedonfeeds|flock|phoenix|galeon|liferea|netnewswire|pulpfiction|feeddemon|magpierss|shrook|newsfire|bloglines|feedmania|avantgo|newsgator|opera|omniweb|camino|chimera|epiphany|konqueror|icab|lynx|(?<!find)links)(?: \(|\/|[^\/]*\/| )v?([0-9.]*)/i', $user_agent, $m))
+		if (preg_match_all('/(chrome|safari|blazer|shiira|firefox|firebird|feedonfeeds|flock|phoenix|galeon|liferea|netnewswire|pulpfiction|feeddemon|magpierss|shrook|newsfire|bloglines|feedmania|avantgo|newsgator|opera|omniweb|camino|chimera|epiphany|konqueror|icab|lynx|(?<!find)links)(?: \(|\/|[^\/]*\/| )v?([0-9.]*)/i', $user_agent, $m))
 		{
 			$ua['family']	= $m[1][0];
 			$ua['version']	= $m[2][0];

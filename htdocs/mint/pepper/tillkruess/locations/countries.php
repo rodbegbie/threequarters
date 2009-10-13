@@ -87,6 +87,7 @@
 		'GD' => 'Grenada',
 		'GE' => 'Georgia',
 		'GF' => 'French Guiana',
+		'GG' => 'Guernsey',
 		'GH' => 'Ghana',
 		'GI' => 'Gibraltar',
 		'GL' => 'Greenland',
