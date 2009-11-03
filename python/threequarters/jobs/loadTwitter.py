@@ -3,7 +3,7 @@ from urllib import urlopen
 import time, datetime
 from threequarters.blog.models import Twitter
 
-url = 'http://twitter.com/statuses/user_timeline/rodbegbie.json?count=20'
+url = 'http://twitter.com/statuses/user_timeline/rodbegbie.json?count=10'
 json = urlopen(url).read()
 
 for entry in simplejson.loads(json):
@@ -12,7 +12,8 @@ for entry in simplejson.loads(json):
     desc = desc.replace("&amp;", '&')
     print desc
     (twitter, new) = Twitter.objects.get_or_create(twitter_id = entry["id"])
-    twitter.description = desc
-    twitter.created_on = datetime.datetime(*(time.strptime(entry["created_at"], "%a %b %d %H:%M:%S +0000 %Y")[0:6])) - datetime.timedelta(hours=8)
-    twitter.save()
+    if new or twitter.description != desc:
+    	twitter.description = desc
+        twitter.created_on = datetime.datetime(*(time.strptime(entry["created_at"], "%a %b %d %H:%M:%S +0000 %Y")[0:6])) - datetime.timedelta(hours=8)
+        twitter.save()
 
