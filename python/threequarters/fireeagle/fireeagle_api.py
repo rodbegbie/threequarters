@@ -1,20 +1,23 @@
 """
-Fire Eagle API Python module v0.6
+Fire Eagle API Python module v0.6.1
 by Steve Marshall <steve@nascentguruism.com>
                  <http://nascentguruism.com/>
+
+Source repo at <http://github.com/SteveMarshall/fire-eagle-python-binding/>
 
 Example usage:
 
 >>> from fireeagle_api import FireEagle
+>>> from pprint import pprint
 >>> fe = FireEagle( YOUR_CONSUMER_KEY, YOUR_CONSUMER_SECRET )
 >>> application_token = fe.request_token()
 >>> auth_url          = fe.authorize( application_token )
 >>> print auth_url
 >>> pause( 'Please authorize the app at that URL!' )
 >>> user_token        = fe.access_token( application_token )
->>> pprint fe.lookup( user_token, q='London, England' )
+>>> pprint( fe.lookup( user_token, q='London, England' ) )
 [{'name': 'London, England', 'place_id': '.2P4je.dBZgMyQ'}]
->>> pprint fe.user( user_token )
+>>> pprint( fe.user( user_token ) )
 [   {   'best_guess': True,
         'georss:box': [   u'51.2613182068',
                           u'-0.5090100169',
@@ -74,7 +77,7 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-import datetime, httplib, re, string
+import datetime, httplib, os.path, re, string
 from xml.dom import minidom
 
 import oauth
@@ -83,15 +86,18 @@ import oauth
 API_PROTOCOL = 'https'
 API_SERVER   = 'fireeagle.yahooapis.com'
 API_VERSION  = '0.1'
-FE_PROTOCOL  = 'http'
-FE_SERVER    = 'fireeagle.com'
+FE_PROTOCOL  = 'https'
+FE_SERVER    = 'fireeagle.yahoo.net'
 
 # Calling templates
 API_URL_TEMPLATE   = string.Template(
-    API_PROTOCOL + '://' + API_SERVER + '/api/' + API_VERSION + '/${method}'
+    '${server}/api/' + API_VERSION + '/${method}'
 )
 OAUTH_URL_TEMPLATE = string.Template(
-    API_PROTOCOL + '://' + API_SERVER + '/oauth/${method}'
+    '${server}/oauth/${method}'
+)
+AUTHORIZE_URL_TEMPLATE = string.Template(
+    '${server}/oauth/${method}?oauth_token=${token}'
 )
 POST_HEADERS = {
     'Content-type': 'application/x-www-form-urlencoded',
@@ -99,7 +105,7 @@ POST_HEADERS = {
 }
 LOCATION_PARAMETERS = [
     'address', 'cid', 'city', 'country', 'geom', 'lac', 'lat',
-    'lon', 'mcc', 'mnc', 'place_id', 'postal', 'q', 'state'
+    'lon', 'mcc', 'mnc', 'place_id', 'postal', 'q', 'state', 'woeid'
 ]
 
 # Error templates
@@ -116,8 +122,13 @@ UNSPECIFIED_ERROR_EXCEPTION = string.Template(
 
 # Attribute conversion functions
 string  = lambda s: s.encode('utf8')
-# TODO: Would this be better served returning an array of floats?
-geo_str = lambda s: s.split(' ')
+boolean = lambda s: 'true' == s.lower()
+
+def geo_str(s):
+    if 0 == len(s):
+        return None
+    # TODO: Would this be better served returning an array of floats?
+    return [float(bit) for bit in s.split(' ')]
 
 def date(s):
     # 2008-02-08T10:49:03-08:00
@@ -142,26 +153,34 @@ def date(s):
 LOCATION = 'location', {
     'name'    : string,
     'place_id': string,
+    'woeid'   : string,
 }
 
 USER_LOCATION = 'location', {
-    'best_guess': bool,
+    'best_guess'   : boolean,
     # HACK: I'm not entirely happy using 'georss:box' as the key here
     'georss:box'   : geo_str,
-    'level'     : int,
-    'level_name': string,
-    'located_at': date,
-    'name'      : string,
-    'place_id'  : string
+    'georss:point' : geo_str,
+    'level'        : int,
+    'level_name'   : string,
+    'located_at'   : date,
+    'name'         : string,
+    'place_id'     : string,
+    'woeid'        : string,
+    'query'        : string,
 }
 
+USER = 'user', {
+    'token'   : string,
+    'location': USER_LOCATION,
+}
 FIREEAGLE_METHODS = {
     # OAuth methods
     'access_token': {
         'http_headers': None,
         'http_method' : 'GET',
         'optional'    : [],
-        'required'    : ['token'],
+        'required'    : ['oauth_verifier', 'token'],
         'returns'     : 'oauth_token',
         'url_template': OAUTH_URL_TEMPLATE,
     },
@@ -171,12 +190,12 @@ FIREEAGLE_METHODS = {
         'optional'    : [],
         'required'    : ['token'],
         'returns'     : 'request_url',
-        'url_template': OAUTH_URL_TEMPLATE,
+        'url_template': AUTHORIZE_URL_TEMPLATE,
     },
     'request_token': {
         'http_headers': None,
         'http_method' : 'GET',
-        'optional'    : [],
+        'optional'    : ['oauth_callback'],
         'required'    : [],
         'returns'     : 'oauth_token',
         'url_template': OAUTH_URL_TEMPLATE,
@@ -190,16 +209,14 @@ FIREEAGLE_METHODS = {
         'returns'     : LOCATION,
         'url_template': API_URL_TEMPLATE,
     },
-    # TODO: recent method
-    # 'recent': {
-    #     'http_headers': None,
-    #     'http_method' : 'GET',
-    #     'optional'    : ['count', 'time'],
-    #     'required'    : ['token'],
-    #     # TODO: Check recent's return type
-    #     'returns'     : ,
-    #     'url_template': API_URL_TEMPLATE,
-    # },
+    'recent': {
+        'http_headers': None,
+        'http_method' : 'GET',
+        'optional'    : ['per_page', 'page', 'time'],
+        'required'    : ['token'],
+        'returns'     : USER,
+        'url_template': API_URL_TEMPLATE,
+    },
     'update': {
         'http_headers': POST_HEADERS,
         'http_method' : 'POST',
@@ -214,19 +231,26 @@ FIREEAGLE_METHODS = {
         'http_method' : 'GET',
         'optional'    : [],
         'required'    : ['token'],
-        'returns'     : USER_LOCATION,
+        'returns'     : USER,
         'url_template': API_URL_TEMPLATE,
     },
-    # TODO: within method
-    # 'within': {
-    # }
+    'within': {
+        'http_headers': None,
+        'http_method' : 'GET',
+        # HACK: woe_id is ignored if place_id is present, so neither is
+        #       strictly 'required'. Unfortunately, calling with neither
+        #       returns an empty list
+        'optional'    : ['place_id', 'woe_id'],
+        'required'    : ['token'],
+        'returns'     : USER,
+        'url_template': API_URL_TEMPLATE,
+    }
 }
-
 
 class FireEagleException( Exception ):
     pass
 
-# Used as a proxy for method of the FireEagle class; when methods are called,
+# Used as a proxy for methods of the FireEagle class; when methods are called,
 # __call__ in FireEagleAccumulator is called, ultimately calling the
 # fireeagle_obj's callMethod()
 class FireEagleAccumulator:
@@ -242,21 +266,63 @@ class FireEagleAccumulator:
     
 
 class FireEagle:
-    def __init__( self, consumer_key, consumer_secret ):
+    def __init__( self, rc_or_consumer_key, consumer_secret=None ):
+        """
+        syntax: FireEagle( os.path.expanduser( "~/.fireeaglerc" ) )
+        or FireEagle( CONSUMER_KEY, CONSUMER_SECRET )
+        """
+
         # Prepare object lifetime variables
-        self.consumer_key     = consumer_key
-        self.consumer_secret  = consumer_secret
+        self.read_config( rc_or_consumer_key, consumer_secret )            
         self.oauth_consumer   = oauth.OAuthConsumer(
             self.consumer_key, 
             self.consumer_secret
         )
         self.signature_method = oauth.OAuthSignatureMethod_HMAC_SHA1()
-        self.http_connection  = httplib.HTTPSConnection( API_SERVER )
+        proto, host, port = re.search(r"^(https?)://([a-z\.0-9]+)(?:\:(\d+))?$", self.api_server).groups()
+        self.http_connection = (proto == 'https' and httplib.HTTPSConnection or httplib.HTTPConnection)( host, port )
         
         # Prepare the accumulators for each method
         for method, _ in FIREEAGLE_METHODS.items():
             if not hasattr( self, method ):
                 setattr( self, method, FireEagleAccumulator( self, method ))
+
+    def read_config( self, rc_or_consumer_key, consumer_secret ):
+        if consumer_secret is None:
+            info = {}
+            for line in open( rc_or_consumer_key ).readlines():
+                p = line.find( "#" )
+                if p != -1: line = line[:p]
+                line = line.strip()
+                if not line: continue
+                k, v = line.split("=", 1)
+                info[ k.strip() ] = v.strip()
+        else:
+            info = {
+                'consumer_key': rc_or_consumer_key,
+                'consumer_secret': consumer_secret,
+                }
+
+        info.setdefault("api_server", API_SERVER)
+        info.setdefault("api_protocol", API_PROTOCOL)
+        self.api_server = self._build_server_url(info, 'api')
+
+        info.setdefault("auth_server", FE_SERVER)
+        info.setdefault("auth_protocol", FE_PROTOCOL)
+        self.auth_server = self._build_server_url(info, 'auth')
+
+        self.consumer_key, self.consumer_secret = info['consumer_key'], info['consumer_secret']
+
+    def _build_server_url( self, info, role ):
+        proto = info['%s_protocol' % role]
+        default_port = (proto == 'https') and 443 or 80
+        port = int(info.get('%s_port' % role, default_port))
+        url = '%s://%s%s' % (
+            proto,
+            info['%s_server' % role],
+            (port != default_port) and (':%d' % port) or '',
+            )
+        return url
     
     def fetch_response( self, http_method, url, \
             body = None, headers = None ):
@@ -296,6 +362,49 @@ class FireEagle:
         # Return the body of the response
         return response_body
     
+    def build_return( self, dom_element, target_element_name, conversions):
+        results = []
+        for node in dom_element.getElementsByTagName( target_element_name ):
+            data = {}
+            
+            for key, conversion in conversions.items():
+                node_key      = key.replace( '_', '-' )
+                key           = key.replace( ':', '_' )
+                data_elements = node.getElementsByTagName( node_key )
+                
+                # If conversion is a tuple, call build_return again
+                if isinstance( conversion, tuple ):
+                    child_element, child_conversions = conversion
+                    data[key] = self.build_return( \
+                        node, child_element, child_conversions \
+                    )
+                else:
+                    # If we've got multiple elements, build a 
+                    # list of conversions
+                    if data_elements and ( len( data_elements ) > 1 ):
+                        data_item = []
+                        for data_element in data_elements:
+                            data_item.append( conversion(
+                                data_element.firstChild.data
+                            ) )
+                    # If we only have one element, assume text node
+                    elif data_elements:
+                        data_item = conversion( \
+                            data_elements[0].firstChild.data
+                        )
+                    # If no elements are matched, convert the attribute
+                    else:
+                        data_item = conversion( \
+                            node.getAttribute( node_key ) \
+                        )
+                    
+                    if data_item is not None:
+                        data[key] = data_item
+            
+            results.append( data )
+        
+        return results
+    
     def call_method( self, method, *args, **kw ):
         
         # Theoretically, we might want to do 'does this method exits?' checks
@@ -326,15 +435,24 @@ class FireEagle:
             del kw['token']
         else:
             token = None
-        
+
+        # If the return type is the request_url, simply build the URL
+        # (without a signature) and return it witout executing
+        # anything.
+        if 'request_url' == meta['returns']:
+            return meta['url_template'].substitute( method=method, server=self.auth_server, token=token.key )
+
+        if 'oauth_callback' in meta['optional'] and 'oauth_callback' not in kw:
+            kw['oauth_callback'] = "oob"
+
         # Build and sign the oauth_request
-        # NOTE: If ( token == None ), it's handled it silently
+        # NOTE: If ( token == None ), it's handled silently
         #       when building/signing
         oauth_request = oauth.OAuthRequest.from_consumer_and_token(
             self.oauth_consumer,
             token       = token,
             http_method = meta['http_method'],
-            http_url    = meta['url_template'].substitute( method=method ),
+            http_url    = meta['url_template'].substitute( method=method, server=self.api_server ),
             parameters  = kw
         )
         oauth_request.sign_request(
@@ -343,22 +461,14 @@ class FireEagle:
             token
         )
         
-        # If the return type is the request_url, simply build the URL and 
-        # return it witout executing anything    
-        if 'request_url' == meta['returns']:
-            # HACK: Don't actually want to point users to yahooapis.com, so 
-            #       point them to fireeagle.com
-            return oauth_request.to_url().replace( \
-                API_PROTOCOL + '://' + API_SERVER, \
-                FE_PROTOCOL  + '://' + FE_SERVER )
-        
         if 'POST' == meta['http_method']:
             response = self.fetch_response( oauth_request.http_method, \
-                oauth_request.to_url(), oauth_request.to_postdata(), \
+                meta['url_template'].substitute( method=method, server=""), \
+                oauth_request.to_postdata(), \
                 meta['http_headers'] )
         else:
             response = self.fetch_response( oauth_request.http_method, \
-                oauth_request.to_url() )
+                meta['url_template'].substitute( method=method, server="") + "?" + oauth_request.to_postdata() )
         
         # Method returns nothing, but finished fine
         if not meta['returns']:
@@ -367,33 +477,11 @@ class FireEagle:
         elif 'oauth_token' == meta['returns']:
             return oauth.OAuthToken.from_string( response )
         
-        results              = []
         element, conversions = meta['returns']
         response_dom         = minidom.parseString( response )
         
-        for node in response_dom.getElementsByTagName( element ):
-            data = {}
-            
-            for key, conversion in conversions.items():
-                node_key      = key.replace( '_', '-' )
-                data_elements = node.getElementsByTagName( node_key )
-                
-                # If we've got multiple elements, build a list of conversions
-                if data_elements and ( len( data_elements ) > 1 ):
-                    data_item = []
-                    for data_element in data_elements:
-                        data_item.append( conversion(
-                            data_element.firstChild.data
-                        ) )
-                # If we only have one element, assume text node
-                elif data_elements:
-                    data_item = conversion( data_elements[0].firstChild.data )
-                # If no elements are matched, convert the attribute
-                else:
-                    data_item = conversion( node.getAttribute( node_key ) )
-                data[key] = data_item
-            
-            results.append( data )
+        results              = self.build_return( \
+            response_dom, element, conversions )
         
         return results
     
