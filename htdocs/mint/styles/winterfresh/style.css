@@ -1,0 +1,994 @@
+/* @override http://rossisbrown.com/mint/styles/winterfresh/style.css */
+
+/* 
+----------------------------------------------------------------------------- 
+DEFAULT POSITIONING
+-----------------------------------------------------------------------------*/
+@import url("../../app/styles/base.css");
+
+/* 
+----------------------------------------------------------------------------- 
+BASIC
+-----------------------------------------------------------------------------*/
+body
+{	
+	color: #333;
+	background-image: url(images/page-bg.png);
+	/*background-color: #e5e067;*/
+}
+
+a
+{
+	color: #415c7b;
+}
+
+a:hover
+{
+	color: #303943;
+}
+
+/* 
+----------------------------------------------------------------------------- 
+HEADER
+-----------------------------------------------------------------------------*/
+#header
+{
+	border-top: 2px groove #8898a8;
+	background-color: #576777;
+	color: #CCC;
+	-webkit-border-top-left-radius: 0px;
+	-webkit-border-top-right-radius: 0px;
+	-webkit-border-bottom-right-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
+	-moz-border-radius-bottomright: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;	
+	-webkit-box-shadow:0 4px 6px rgba(0,0,0,.8);
+	-moz-box-shadow: 0px 4px 6px rgba(0,0,0,.8);
+	box-shadow: 0px 4px 6px rgba(0,0,0,.8);
+}
+
+.mini #header h1,
+.display #header h1 a,
+.preferences #header h1 a
+{
+	background: url(images/logo.gif) top left no-repeat;
+}
+
+#header a
+{
+	color: #e5e067;
+}
+
+#header a:hover
+{
+	color: #e5e067;
+}
+
+
+/*
+----------------------------------------------------------------------------- 
+UPDATES AVAILABLE BUTTON
+-----------------------------------------------------------------------------*/
+#header a.update-btn
+{
+	color: #FFF;
+	background: url(images/bg-update-right.gif) top right no-repeat;
+}
+
+#header a.update-btn span
+{
+	background: url(images/bg-update-left.gif) top left no-repeat;
+}
+
+/* 
+----------------------------------------------------------------------------- 
+PANES ROW
+-----------------------------------------------------------------------------*/
+#preferences {
+  width: 754px;
+}
+#header .panes, #preferences
+{
+	background: #657687;
+	color: #ccc;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+#header .panes {
+  padding: 0;
+}
+
+#header .panes div{
+  padding-left: 10px;
+}
+
+#header-container
+{
+
+}
+
+/* 
+----------------------------------------------------------------------------- 
+PAGE BUTTONS
+-----------------------------------------------------------------------------*/
+#header .pages
+{
+	-webkit-border-image: url(images/button_sprite.png) 5 3 5 3 stretch stretch;
+	-moz-border-image: url(images/button_sprite.png) 5 3 5 3 stretch stretch;
+	border-image: url(images/button_sprite.png) 5 3 5 3 stretch stretch;	
+	height: 18px;
+}
+
+
+#header .pages li a
+{
+	color: #576777;
+	height: 20px;
+	line-height: 190%;
+	font-weight: bold;
+}
+
+#header div.panes ul.pages li{
+  border-right: 2px groove #f4faff;
+}
+#header div.panes ul.pages li.last-child{
+  border-right: none;
+  padding-right: 6px;
+}
+#header .pages li a:hover {
+  color: #000;
+}
+#header #page-list li.first-child {
+  border-right: 1px solid #ccc;
+}
+#header #page-list li.last-child {
+  padding-right: 5px;
+}
+
+/* 
+----------------------------------------------------------------------------- 
+FORMS GENERAL
+-----------------------------------------------------------------------------*/
+.mini form {
+  color: #ccc;
+}
+
+form a
+{
+	color: #e5e067;
+}
+
+form a:hover
+{
+	color: #e5e067;
+}
+
+.pane h1,
+#preferences h1
+{
+	display: block;
+  	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7f90a1), color-stop(0.6, #576777), to(#576777)) padding-box;
+	color: #0d1216;
+	text-shadow: rgba(256,256,256, .3) 0 1px 1px;
+	border-top: 1px solid #a6b5c7;
+}
+
+.pane, #preferences
+{
+	background: #576777;
+	padding-bottom: 5px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+	color: #677482;
+	border-top: 1px solid #384653;
+	border-right: 1px solid #384653;		
+	border-bottom: 1px solid #0e1115;	
+	border-left: 1px solid #384653;
+}
+
+.content .content-container {
+	padding: 2px;
+}
+
+.mini .notice {
+	background: #fff;
+	padding: 10px;
+  	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;  	
+	background: #e4e7e9;
+	-webkit-box-shadow:0 0 3px rgba(0,0,0,.5);
+	-moz-box-shadow:0 0 3px rgba(0,0,0,.5);
+	box-shadow:0 0 3px rgba(0,0,0,.5);	
+}
+
+
+.display .pane .footer div
+{
+  display: none;
+}
+
+.display .pane .content
+{
+	background: #e4e7e9;
+	-webkit-box-shadow:0 0 3px rgba(0,0,0,.5);
+	-moz-box-shadow:0 0 3px rgba(0,0,0,.5);
+	box-shadow:0 0 3px rgba(0,0,0,.5);
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	padding: 2px;
+	margin: 0 5px 0 5px;
+}
+
+
+.display table th
+{
+	color: #707981;
+	background-color: #b7c5d2;
+	background-repeat: no-repeat;
+	border-bottom: 1px solid #c2d3d7;
+}
+
+.display table th.first-child
+{
+	-webkit-border-top-left-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	border-top-left-radius: 4px;
+}
+
+.display table th.last-child
+{
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-right-radius: 4px;
+}
+
+.display table th.focus
+{
+	color: #292F21;
+}
+
+.display table.striped tr.alt td,
+.display table.visits table.striped tr.alt td,
+.display table.two-columns table.striped tr.alt td
+{
+	background-color: #eaeced;
+}
+
+.display table tr:hover td,
+.display table.visits td tr:hover td,
+.display table.two-columns td tr:hover td,
+{
+		color: #0d1216;
+}
+
+.display table.striped tr:hover td,
+.display table.visits  table.striped tr:hover td,
+.display table.two-columns  table.striped tr:hover td,
+.display table.striped tr.alt:hover td,
+.display table.visits  table.striped tr.alt:hover td,
+.display table.two-columns  table.striped tr.alt:hover td
+{
+	background-color: #fff;
+}
+
+.display table td.focus span
+{
+	color: #999;
+}
+
+.display table td.focus:hover span
+{
+	color: #333;
+}
+
+.display table td.focus:hover a {
+	color: #000;
+}
+
+.display table td.focus span a
+{
+	color: #777;
+}
+
+.display table td.focus span a:hover
+{
+	color: #3A3417;
+}
+
+.display table tr.insig td,
+.display table tr td.insig
+{
+	color: #999;
+}
+
+
+/*
+----------------------------------------------------------------------------- 
+FEED BUTTON
+-----------------------------------------------------------------------------*/
+a.feed-btn
+{
+	color: #FFF;
+	background: url(images/bg-feed-right.gif) top right no-repeat;
+}
+
+a.feed-btn span
+{
+	background: url(images/bg-feed-left.gif) top left no-repeat;
+}
+
+/*
+----------------------------------------------------------------------------- 
+VISITS TABLE
+-----------------------------------------------------------------------------*/
+.display table.visits tr:hover td,
+.display table.two-columns tr:hover td
+{
+	background-color: transparent;
+}
+
+.display table.visits td.focus
+{
+	color: #78858d;
+}
+
+.display table a{
+	text-shadow: 0 1px 1px #fff ;
+	font-weight: bold;  
+}
+.display table span a{
+	text-shadow: none ;
+	font-weight: normal;  
+}
+/*
+----------------------------------------------------------------------------- 
+GRAPH TABLE
+-----------------------------------------------------------------------------*/
+
+.content div.graph table tr:hover td,
+.content div.graph table tr:hover td
+{
+	background-color: transparent;
+}
+
+.content div.graph table th
+{
+	background: transparent;
+	border: none;
+}
+
+.content div.graph table tr td.accent
+{
+	background: url(images/bg-graph-accent.gif) 2px 100% repeat;
+}
+
+.graph .label
+{
+	color: #999;
+	left: 2px;
+}
+
+.graph td:first-child .label
+{
+	left: 0;
+}
+
+.graph .accent .label
+{
+	background-color: #576777;
+	color: #FFF;
+}
+
+.content div.graph table tr td
+{
+	background: url(images/bg-graph.gif) 0 100% repeat;
+	border-right: 2px solid #e4e7e9;
+}
+
+.graph .bar {
+  	margin-left: 4px;
+}
+
+.graph .bar .total
+{
+	background: #9eab3e;
+	border-left: 1px solid #7a852b;
+	-webkit-box-shadow:0 0 2px #666;
+	-moz-box-shadow:0 0 2px #666;	
+	box-shadow:0 0 2px #666;	
+	overflow:visible;
+	opacity: .8;
+}
+
+.graph .bar .unique
+{
+	background: #e5e067;
+	border-top: 1px solid #a09c33;
+}
+
+.graph .key
+{
+	color: #FFF;
+	position: absolute;
+	z-index: 200;
+}
+
+.graph .key em
+{
+	color: #566E3D;
+}
+
+.graph .bar .total span
+{
+	border-top: 1px solid #c0d04b;
+}
+
+.graph .bar .unique span
+{
+	height: 2px;
+	border-top: 1px solid #f3f0a3;
+}
+
+.graph .bar .unique span.equal
+{
+	display: none;
+}
+
+.graph .accent .bar .unique
+{
+	background: #deda64;
+}
+
+
+
+.graph .accent  .bar .unique span
+{
+	display: none;
+}
+
+.graph li
+{
+	background-color: rgba(256,256,256,.7);
+	padding: 0 2px 0 2px;
+}
+
+
+
+.content div.graph table tr td:first-child,
+.graph td:first-child .bar .total,
+.graph td:first-child .bar .unique,
+.graph td:first-child .bar .unique span,
+.graph td:first-child .bar .unique span.equal
+{
+	background-position: -2px 100%;
+}
+
+/*
+----------------------------------------------------------------------------- 
+COMPARISON GRAPH
+-----------------------------------------------------------------------------*/
+.compare .increase
+{
+	background-image: url(images/bg-graph-total.gif);
+}
+
+.compare .increase span
+{
+	background-image: url(images/bg-graph-total-top.gif);
+}
+
+.compare .decrease
+{
+	background-image: url(images/bg-graph-unique.gif);
+}
+
+.accent .increase
+{
+	background-image: url(images/bg-graph-total-accent.gif);
+}
+
+.accent .decrease
+{
+	background-image: url(images/bg-graph-unique-accent.gif);
+}
+
+.accent .increase span
+{
+	background-image: url(images/bg-graph-total-accent-top.gif);
+}
+
+/*
+----------------------------------------------------------------------------- 
+FOLDER-RELATED
+-----------------------------------------------------------------------------*/
+.display table tr.folder td.focus,
+.display table tr.folder-open td.focus
+{
+	background-image: url(images/bg-arrow.gif);
+	background-position: 0 2px;
+	background-repeat: no-repeat;
+}
+
+.display table tr.insig.folder td.focus,
+.display table tr.insig.folder-open td.focus
+{
+	background-image: url(images/bg-arrow-insig.gif);
+}
+
+.display table tr.first-child.folder td.focus
+{
+	background-position: 0 4px;
+}
+
+.display table tr.folder-open td.focus
+{
+	background-position: 0 -78px;
+}
+
+.display table tr.first-child.folder-open td.focus
+{
+	background-position: 0 -76px;
+}
+
+.display table tr.loading td.focus,
+.display table tr.insig.loading td.focus
+{
+	background-image: url(images/spinner.gif);
+	background-position: 0 4px;
+	background-repeat: no-repeat;
+}
+
+.display table tr.first-child.loading td.focus
+{
+	background-position: 0 6px;
+}
+
+.folder-contents-open tr td
+{
+	background-color: #eff6c5;
+}
+
+.display table .folder-contents-open tr.first-child td,
+.display table .folder-contents-open tr.only-child td
+{
+	background: #eff6c5;
+}
+
+.display table .folder-contents-open tr.last-child td
+{
+	background: #eff6c5;
+}
+
+.display table .folder-contents-open tr.alt td
+{
+	background-color: #e2ebaf;
+}
+
+
+.display table .folder-contents-open tr:hover td,
+.display table .folder-contents-open tr.alt:hover td,
+.display table .folder-contents-open td.focus:hover
+{
+	background-color: #acb760;
+	color: #0d1216;
+}
+
+.display table .folder-contents-open tr.insig td
+{
+	color: #859077;
+}
+
+/*
+----------------------------------------------------------------------------- 
+ADDITIONAL INFO
+-----------------------------------------------------------------------------*/
+.display table .folder-contents-open tr.additional-info td,
+.display table .folder-contents-open tr.additional-info:hover td
+{
+	color: #405463;
+	background-color: #d0d9de;
+}
+
+.display table .folder-contents-open tr.additional-info td.additional-info-content th
+{
+	background: none;
+	border: none;
+	color: #778ba0;
+}
+
+/*
+----------------------------------------------------------------------------- 
+PREFERENCES
+-----------------------------------------------------------------------------*/
+
+#preferences form
+{
+  background-color: #39434d;
+  color: #9ea8b6;
+}
+
+#preferences .footer
+{
+
+}
+
+#preferences .footer div
+{
+  background-color: #2b333a;
+  border-top: 2px ridge #444f59;
+}
+
+#preferences .mint-column,
+#preferences .pane-column,
+#preferences .pepper-column
+{
+	background: url(images/bg-prefs-form-divider.gif) top left repeat-x;
+}
+
+#preferences .pane-column {
+	border-left: 2px ridge #485561;
+	border-right: 2px ridge #485561;	  
+
+	width: 200px;
+	height: 100%;
+	display: block;
+}
+
+#preferences form div.pane-column table dl {
+	margin: 0 20px 20px 20px;
+	display: block;
+	width: 155px;
+	margin: 0 auto;
+}
+
+.pane-column p
+{
+	color: #CCC;
+}
+
+#preferences h2
+{
+
+	border-bottom: 2px solid #292929;
+	color: #333;
+	background: #e4e7e9;
+	font-weight: bold;
+}
+
+#preferences .pepper-column h2
+{
+	background-image: none;
+}
+
+#preferences fieldset
+{
+	background-color: #4b5763;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;	
+	border-radius:4px;	
+	margin: auto;
+}
+
+code {
+  color: #aaa;
+}
+
+.pepper-prefs h5 {
+  font-weight: bold;
+}
+
+#preferences fieldset p.loading
+{
+	background: url(images/spinner.gif) 0 0 no-repeat;
+}
+
+.pepper-column h3
+{
+	text-shadow: #111 1px 1px 1px;
+}
+
+.pepper-prefs li
+{
+	background: url(images/bg-prefs-form-divider.gif) top left repeat-x;
+}
+
+.pepper-prefs li.first-child
+{
+	background-image: none;
+}
+
+.request-feedback
+{
+	color: #e5e067;
+}
+
+/* 
+----------------------------------------------------------------------------- 
+EULA
+-----------------------------------------------------------------------------*/
+#eula span
+{
+	border-color: #EEE;
+}
+
+/* 
+----------------------------------------------------------------------------- 
+MINI TABS
+-----------------------------------------------------------------------------*/
+.mini ul.tabs li a
+{
+	color: #a6b5c7;
+}
+
+.mini ul.tabs li a:hover
+{
+	color: #e5e067;
+}
+
+
+.mini ul.tabs li.active a,
+.mini ul.tabs li.active a:hover
+{
+	color: #FFF;
+	
+}
+
+.mini ul.tabs li.last-child.active a
+{
+	background: url(images/bg-form-tab-last.gif) top right no-repeat;
+}
+
+/* 
+----------------------------------------------------------------------------- 
+DISPLAY TABS
+-----------------------------------------------------------------------------*/
+.display ul.tabs
+{
+
+}
+
+
+.display ul.tabs li a.loading,
+.display ul.tabs li a.loading:hover
+{
+	background: url(images/spinner.gif) 0 4px no-repeat;
+	color: #eaeced;
+}
+
+.display ul.tabs li a:hover
+{
+	color: #e5e067;
+	background-color: rgba(228,231,233,0.12);
+	-webkit-transition-property:background-color, color;
+	-webkit-transition-duration: .3s;	
+}
+
+.display ul.tabs li {
+  	margin: 0 1px;
+}
+
+.display ul.tabs li a {
+	-webkit-transition:background-color .3s;
+  	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	color: #eaeced;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	padding: 4px 8px 14px;
+}
+
+.display ul.tabs li.active a
+{
+	-webkit-box-shadow:0 -2px 3px rgba(0,0,0,.3);
+	-moz-box-shadow:0 -2px 3px rgba(0,0,0,.3);
+	box-shadow:0 -2px 3px rgba(0,0,0,.3);
+	background: #e4e7e9;
+	-webkit-transition:background-color .3s;
+}
+
+.display ul.tabs li.active a,
+.display ul.tabs li.active a:hover
+{
+	color: #61696b;
+	padding: 5px 6px 14px;
+	text-shadow: 0 1px 1px #fff;
+	-webkit-transition:background-color .3s;	
+}
+
+
+/* 
+----------------------------------------------------------------------------- 
+PEPPER PREFERENCE TABS
+-----------------------------------------------------------------------------*/
+#preferences .pepper-column h2
+{
+	border-bottom: 1px solid #363E2B;
+}
+
+.pepper-column ul.tabs
+{
+	border-top: 3px solid #0b0c0e;
+	background-color: #2b333a;
+}
+
+.pepper-prefs
+{
+	background: url(images/bg-prefs-pepper-top.gif) top left repeat-x;
+}
+
+.pepper-column ul.tabs li a
+{
+	color: #FFF;
+}
+
+.pepper-column ul.tabs li a:hover
+{
+	background: rgba(256,256,256,.1);
+}
+
+
+.pepper-column ul.tabs li.active a,
+.pepper-column ul.tabs li.active a:hover
+{
+	color: #FFF;
+}
+
+#preferences h3 a
+{
+	color: #CCC;
+}
+
+.explanation
+{
+	color: #e5e067;
+}
+
+/* 
+----------------------------------------------------------------------------- 
+PEPPER FILTERS
+-----------------------------------------------------------------------------*/
+ul.filters li a, .pepper-column ul.tabs li a{
+  	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+ul.filters li a
+{
+	color: #666;
+	padding: 4px 8px;	
+}
+
+ul.filters li a:hover
+{
+	color: #0d1216;
+	background: rgba(256,256,256,.3);
+}
+
+ul.filters li.active a, .pepper-column ul.tabs li.active a
+{
+	background: #576777;
+}
+
+ul.filters li.active a,
+ul.filters li.active a:hover
+{
+	color: #FFF;
+}
+
+ul.filters li a.loading
+{
+	background: url(images/spinner-w.gif) 6px 0 no-repeat;
+	color: #666;
+}
+
+.scroll-filters ul.filters
+{
+	background-color: #FFF;
+}
+
+a.image-search
+{
+	background: url(images/icon-image-search.png) 100% 3px no-repeat;
+}
+
+span a.image-search
+{
+	background-position: 100% 1px;
+}
+
+a.clicked
+{
+	background: url(images/icon-clicked.png) 100% 0 no-repeat;
+}
+
+/* 
+----------------------------------------------------------------------------- 
+SORTABLE LIST STYLES
+-----------------------------------------------------------------------------*/
+dl.sortable dt
+{
+	color: #FFF;
+}
+
+dl.sortable dt span
+{
+	color: #C9C9C9;
+}
+
+dl.sortable dd
+{
+	-webkit-border-image: url(images/button_sprite.png) 5 3 5 3 stretch stretch;
+	-moz-border-image: url(images/button_sprite.png) 5 3 5 3 stretch stretch;
+	border-image: url(images/button_sprite.png) 5 3 5 3 stretch stretch;		
+}
+
+dl.sortable dd:hover,
+dl.sortable .drag
+{
+	background-position: 0 -24px;
+}
+
+dl.sortable dd span
+{
+	color: #333;
+	background-color: transparent;
+}
+
+dl.sortable dd.disabled span
+{
+	color: #666;
+}
+
+/* 
+----------------------------------------------------------------------------- 
+SEARCH FORM
+-----------------------------------------------------------------------------*/
+form.search-form span
+{
+	border-color: #EEE;
+}
+
+/* 
+----------------------------------------------------------------------------- 
+PROGRESS BAR
+-----------------------------------------------------------------------------*/
+.progress
+{
+	background: url(images/bg-progress.gif) left top no-repeat;
+}
+.progress .bar
+{
+	background: url(images/bg-progress-bar.gif) right top no-repeat;
+}
+
+/* 
+----------------------------------------------------------------------------- 
+FOOTER
+-----------------------------------------------------------------------------*/
+#donotremove
+{
+	color: #525252;
+}
