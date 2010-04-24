@@ -13,7 +13,7 @@ $installPepper = "SI_UserAgent";
 
 class SI_UserAgent extends Pepper
 {
-	var $version	= 207; 
+	var $version	= 208; 
 	var $info		= array
 	(
 		'pepperName'	=> 'User Agent 007',
@@ -874,6 +874,10 @@ HERE;
 			else if (strpos($user_agent, 'iPhone') !== false)
 			{
 				$ua['build'] = 'iPhone';
+			}
+			else if (strpos($user_agent, 'iPad') !== false)
+			{
+				$ua['build'] = 'iPad';
 			}
 		}
 		else if (preg_match('/linux/i', $user_agent))
