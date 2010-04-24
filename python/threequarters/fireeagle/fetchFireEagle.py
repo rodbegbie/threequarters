@@ -12,7 +12,7 @@ import datetime
 fe = FireEagle(CONSUMER_KEY, CONSUMER_SECRET)
 token = OAuthToken.from_string(USER_TOKEN_STRING)
 
-locations = fe.user(token)
+locations = fe.user(token)[0]["location"]
 #from pprint import pprint
 #pprint(locations)
 
