@@ -2,7 +2,7 @@
 /******************************************************************************
  Mint
  
- Copyright 2004-2008 Shaun Inman. This code cannot be redistributed without
+ Copyright 2004-2010 Shaun Inman. This code cannot be redistributed without
  permission from http://www.shauninman.com/
  
  More info at: http://www.haveamint.com/
@@ -17,7 +17,7 @@ function Minted($page)
 	
 	if 
 	(
-		strpos($page,'frameset') !== false || 
+		(strpos($page,'<frameset') !== false && strpos($page,'<body') === false) || 
 		(!empty($pages) && in_array((isset($_SERVER['PHP_SELF']) && !empty($_SERVER['PHP_SELF']))?$_SERVER['PHP_SELF']:$_SERVER['SCRIPT_NAME'], $pages))
 	)
 	{

@@ -2,7 +2,7 @@
 /******************************************************************************
  Mint
   
- Copyright 2004-2008 Shaun Inman. This code cannot be redistributed without
+ Copyright 2004-2010 Shaun Inman. This code cannot be redistributed without
  permission from http://www.shauninman.com/
  
  More info at: http://www.haveamint.com/
@@ -14,7 +14,7 @@
 
 class Mint
 {
-	var $version		= 217;
+	var $version		= 218;
 	var $db				= array
 	(
 		'server'	=> 'localhost',
@@ -357,7 +357,8 @@ class Mint
 		$this->logBenchmark('_save() {');
 		if (!$this->errors['fatal']) // don't save if we've encountered a fatal error
 		{
-			if (!empty($this->data))
+			$default  = get_class_vars('Mint'); 
+			if (!empty($this->data) && $this->cfg != $default['cfg'])
 			{
 				$this->query("UPDATE `{$this->db['tblPrefix']}_config` SET `cfg` = '".addslashes(serialize($this->cfg))."', `data` = '".addslashes(serialize($this->data))."' WHERE `id`=1"); 
 			}

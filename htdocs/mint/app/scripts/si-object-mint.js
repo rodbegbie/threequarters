@@ -830,8 +830,11 @@ SI.Mint = {
 		folder.className	= SI.CSS.replaceClassName(folder.className, 'folder', 'folder-open');
 		content.className	= SI.CSS.replaceClassName(content.className, 'folder-contents', 'folder-contents-open');
 	},
+	iPadPanesSized : false,
 	sizePanes		: function()
 	{
+		if (this.iPadPanesSized) return;
+		
 		var c = document.getElementById('container');
 		
 		if (this.singleCol)
@@ -871,14 +874,14 @@ SI.Mint = {
 				for (var j = 0; j < this.panes.length; j++)
 				{
 					var e = document.getElementById('pane-' + this.panes[j]);
-					e.parentNode.removeChild(e);
+					e.parentNode.removeChild(e); // iPad null
 					paneContainer.appendChild(e);
 				};
 				// remove existing columns
 				for (var k = 0; k < this.collapseCols; k++)
 				{
 					var e = document.getElementById('column-' + k);
-					e.parentNode.removeChild(e);
+					e.parentNode.removeChild(e); // iPad null
 				};
 			};
 			this.collapseCols = columns;
@@ -927,7 +930,7 @@ SI.Mint = {
 				if (theColumns[column_id])
 				{
 					// pane order is preserved reading left-right, top-down
-					e.parentNode.removeChild(e);
+					e.parentNode.removeChild(e); // iPad null
 					theColumns[column_id].appendChild(e);
 					theColumnHeights[column_id] = theColumns[column_id].offsetHeight;
 				};
@@ -958,6 +961,8 @@ SI.Mint = {
 		};
 		
 		this.sizePaneNav();
+		// a stopgap until I can determine why lines 877, 884 & 933 don't work on the iPad
+		if (navigator.userAgent.match(/iPad/)) this.iPadPanesSized = true;
 	},
 	paneList		: '',
 	paneMenu		: '',
