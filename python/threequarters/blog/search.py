@@ -11,7 +11,7 @@ import time
 
 class BlogSearch(object):
     schema = Schema(title=TEXT(stored=True), body=TEXT, url=TEXT, via=TEXT, artist=TEXT,
-                    id=ID(stored=True, unique=True), tags=KEYWORD(scorable=True), date=ID(stored=True))
+                    id=ID(stored=True, unique=True), tags=KEYWORD(scorable=True, lowercase=True, commas=True), date=ID(stored=True))
     index = None
     
     def create_index(self):
@@ -79,7 +79,7 @@ class BlogSearch(object):
         fields["id"] = unicode(item.id)
         fields["date"] = unicode(time.mktime(item.content_object.created_on.timetuple()))
 
-        self.writer.update_document(**fields)
+        self.writer.add_document(**fields)
 
     def commit(self):
         self.writer.commit() #mergetype=whoosh.writing.OPTIMIZE)
