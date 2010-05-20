@@ -260,7 +260,7 @@ class AmazonCD(models.Model):
     def save(self, *args, **kwargs):
         if not self.title:
             from threequarters import amazon
-            amazon.setLicenseKey("1AGTVVHBTYPBQKT7G482")
+            amazon.setLicenseKey("1S0D2DDDPVCZJE26HCG2")
             amazon.setSecretKey("RSDWQPUbS4wsvMBU33BkElMsCvrEpjje2iChPj6r")
             amazon.setLocale(AMAZON_COUNTRIES[int(self.store)])
             res = amazon.ItemLookup(ItemId=self.asin, ResponseGroup="Medium")[0]
