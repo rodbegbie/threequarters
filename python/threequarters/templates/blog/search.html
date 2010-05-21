@@ -13,11 +13,11 @@
 {% endif %}
 {% endblock %}
 
-{% block sidebar %}
+{% block sidebar_m %}
 {% if is_paginated %}
 <div class="sidebartitle">Navigation</div>
 <div class="sidebarcontent">
-    <p>Page {{page}} of {{pages}}</p>
+    <p><strong>Page {{page}} of {{pages}}</strong></p>
     <p>
     {% if has_previous %}<a href="./?q={{q}}&amp;page={{previous}}">Previous page</a>{% endif %}
     {% if has_next %}{% if has_previous %}|{% endif %}{% endif %}
@@ -27,6 +27,5 @@
 {% endif %}
 
 {% include "blog/sidebar/searchbox.html" %}
-{% include "blog/sidebar/poweredby.html" %}
 
 {% endblock %}

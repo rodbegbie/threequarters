@@ -4,6 +4,7 @@
 
 {% block title %}{{object.content_object.title}}{% endblock %}
 {% block title2 %}{{object.content_object.title}}{% endblock %}
+{% block pagetype %}a post from{% endblock %}
 
 {% block content %}
 {% include "blog/blogitem.html" %}
@@ -34,12 +35,8 @@
 {% endif %}
 {% endblock %}
 
-{% block sidebar %}
-{% include "blog/sidebar/about.html" %}
+{% block postcontent %}
 {% if object.age > 30 %}
-    {% include "blog/sidebar/adsense.html" %}
+    {% include "blog/sidebar/adsenseleaderboard.html" %}
 {% endif %}
-{% include "blog/sidebar/searchbox.html" %}
-{% include "blog/sidebar/poweredby.html" %}
 {% endblock %}
-
