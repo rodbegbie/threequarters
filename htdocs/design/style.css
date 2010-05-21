@@ -9,9 +9,10 @@ body {
     color: #0E8D94; /* blue fish */
     background-color: #959595; /* dying fish */
     margin: 0 auto;
-    padding-left: 2em;
-    padding-right: 2em;
-    padding-bottom: 0em;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 1em;
+    padding-top: 1em;
 }
 
 #blogname {
@@ -43,7 +44,6 @@ h1>a:link, h1>a:visited {
 
 #preamble {
     font-family: "click-clack-1", "click-clack-2", serif;
-    margin-top: 0;
     padding-left: 1.5em;
     font-variantx: small-caps;
     font-weight: 200;
@@ -100,7 +100,7 @@ h3>a:link, h3>a:visited {
     border-left: 5px solid #E9D558; /* yellow fish */
     padding-bottom: 5px;
     padding-right: 5px;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
     xmargin-left: 10px;
     padding-left: 5px;
 }
@@ -144,6 +144,7 @@ h4 {
     font-weight: normal;
     margin-bottom: 0.3em;
     margin-top: 0;
+    color: #FFAB07; /* orange fish */
 }
 
 .linkthumbnail, .flickrphoto {
@@ -214,13 +215,13 @@ a:active, a:hover {
 }
 
 .searchinput {
-    font-size: x-small;
+    font-size: small;
     width: 12em;
     padding-left: 0.5em;
     padding-right: 0.5em;
 }
 .searchbutton {
-    font-size: x-small;
+    font-size: small;
     width: 5em;
 }
 
