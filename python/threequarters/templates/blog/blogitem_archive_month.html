@@ -3,6 +3,7 @@
 
 {% block title %}Entries for {{ month|date:"F Y" }}{% endblock %}
 {% block title2 %}Entries for {{ month|date:"F Y" }}{% endblock %}
+{% block pagetype %}a month from{% endblock %}
 
 {% block precontent %}
 {% if object_list.0.age > 60 %}
@@ -17,10 +18,8 @@
 {% endfor %}
 {% endblock %}
 
-{% block sidebar %}
-{% include "blog/sidebar/about.html" %}
-{% include "blog/sidebar/adsense.html" %}
-{% include "blog/sidebar/searchbox.html" %}
-{% include "blog/sidebar/poweredby.html" %}
+{% block postcontent %}
+{% if object_list.0.age > 30 %}
+    {% include "blog/sidebar/adsenseleaderboard.html" %}
+{% endif %}
 {% endblock %}
-

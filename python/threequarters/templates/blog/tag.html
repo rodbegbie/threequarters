@@ -2,6 +2,7 @@
 
 {% block title %}Filed under '{{tag}}'{% endblock %}
 {% block title2 %}Filed under '{{tag}}'{% endblock %}
+{% block pagetype %}a tag from{% endblock %}
 
 {% block content %}
 {% for object in object_list %}
@@ -9,11 +10,15 @@
 {% endfor %}
 {% endblock %}
 
-{% block sidebar %}
+{% block postcontent %}
+    {% include "blog/sidebar/adsenseleaderboard.html" %}
+{% endblock %}
+
+{% block sidebar_m %}
 {% if is_paginated %}
 <div class="sidebartitle">Navigation</div>
 <div class="sidebarcontent">
-    <p>Page {{page}} of {{pages}}</p>
+    <p><strong>Page {{page}} of {{pages}}</strong></p>
     <p>
     {% if has_previous %}<a href="./?page={{previous}}">Previous page</a>{% endif %}
     {% if has_next %}{% if has_previous %}|{% endif %}{% endif %}
@@ -22,9 +27,6 @@
 </div>
 {% endif %}
 
-{% include "blog/sidebar/about.html" %}
 {% include "blog/sidebar/searchbox.html" %}
-{% include "blog/sidebar/adsense.html" %}
-{% include "blog/sidebar/poweredby.html" %}
 
 {% endblock %}

@@ -4,6 +4,7 @@
 
 {% block title %}Entries for week beginning {{ week|date:"F j, Y" }}{% endblock %}
 {% block title2 %}Entries for week beginning {{ week|date:"F j, Y" }}{% endblock %}
+{% block pagetype %}a week from{% endblock %}
 
 {% block precontent %}
 {% if object_list.0.age > 60 %}
@@ -17,12 +18,8 @@
 {% endfor %}
 {% endblock %}
 
-{% block sidebar %}
-{% include "blog/sidebar/about.html" %}
+{% block postcontent %}
 {% if object_list.0.age > 30 %}
-    {% include "blog/sidebar/adsense.html" %}
+    {% include "blog/sidebar/adsenseleaderboard.html" %}
 {% endif %}
-{% include "blog/sidebar/searchbox.html" %}
-{% include "blog/sidebar/poweredby.html" %}
 {% endblock %}
-

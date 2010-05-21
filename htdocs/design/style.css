@@ -1,47 +1,73 @@
 body {
-    background: white;
-    color: #460101; /* crude */
-    font-family: verdana, sans-serif;
-    font-size: small;
+    background: #434D53; /* dead fish */
+    font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2",serif;
+    font-size: 100%;
     margin: 0 0 0 0;
 }
 
 #heading {
-    color: #DBF0B6; /* etiquette poor */
-    background-color: #4E1100; /* ugmo */
+    color: #0E8D94; /* blue fish */
+    background-color: #959595; /* dying fish */
     margin: 0 auto;
-    width: 60em;
     padding-left: 2em;
     padding-right: 2em;
     padding-bottom: 0em;
 }
 
-h1 {
-    margin: 0px;
-    font-family: georgia, serif;
+#blogname {
+    position: relative;
+}
+
+h1, #xxxx {
+    font-family: "click-clack-1", "click-clack-2", serif;
     font-variant: small-caps;
-    font-size: 400%;
+    font-size: 500%;
+    font-weight: 200;
+}
+
+#xxxx {
+    font-weight: 400;
+}
+
+h1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0px;
 }
 
 h1>a:link, h1>a:visited {
-    color: #DBF0B6; /* etiquette poor */
+    color: #0E8D94; /* blue fish */
     border: 0px;
 }
 
-h2 {
-    font-family: georgia, serif;
+#preamble {
+    font-family: "click-clack-1", "click-clack-2", serif;
     margin-top: 0;
     padding-left: 1.5em;
-    color: #E7F4D7; /* uncouth */
+    font-variant: small-caps;
+    font-weight: 200;
+    font-size: 200%;
+    margin-bottom: 0;
+}
+
+h2 {
+    color: #FFAB07; /* orange fish */
+    border-bottom: dashed 1px #FFAB07; /* orange fish */
+    font-family: "etica-display-1","etica-display-2",sans-serif;
+    font-size: 200%;
 }
 
 h3.date {
-    color: #460101; /* crude */
-    border-bottom: dashed 1px #460101;
-    font-family: georgia, serif;
-    font-size: large;
+    color: #FFAB07; /* orange fish */
+    border-bottom: dashed 1px #FFAB07; /* orange fish */
+    font-family: "etica-display-1","etica-display-2",sans-serif;
+    font-size: x-large;
+    margin-left: 2em;
+    margin-right: 2em;
     margin-top: 0;
 }
+
 h3>a:link, h3>a:visited {
     border: 0px;
 }
@@ -49,14 +75,11 @@ h3>a:link, h3>a:visited {
 #mainbody {
     width: 60em;
     margin: 0 auto;
-    background: white;
+    xbackground: white;
 }
 
 #content {
-    width: 42em;
-    padding-right: 1em;
-    float: left;
-    border-right: 1px dashed;
+    color: #E9D558; /* yellow fish */
 }
 
 #precontent {
@@ -64,8 +87,7 @@ h3>a:link, h3>a:visited {
 }
 
 #sidebar {
-    float: right;
-    width: 16em;
+    width: 60em;
 }
 
 #footer {
@@ -73,28 +95,30 @@ h3>a:link, h3>a:visited {
 }
 
 .entry {
-    border-left: 5px solid #E7F4D7; /* uncouth */
+    margin-left: 5em;
+    width: 50em;
+    border-left: 5px solid #E9D558; /* yellow fish */
     padding-bottom: 5px;
     padding-right: 5px;
     margin-bottom: 1em;
-    margin-left: 10px;
+    xmargin-left: 10px;
     padding-left: 5px;
 }
 
 .postentry {
-    background: #E7F4D7; /* uncouth */
+    bxackground: #E7F4D7; /* uncouth */
 }
 
 .flickrentry {
-    background: #E7CBCA; /* weddingpink */
+    baxckground: #E7CBCA; /* weddingpink */
 }
 
 .linkentry {
-    background: #F2F8E8; /* frothy */
+    bxackground: #F2F8E8; /* frothy */
 }
 
 .amazonentry {
-    background: #E2DEB0; /* bacteria */
+    bxackground: #E2DEB0; /* bacteria */
 }
 
 .selectedentry {
@@ -103,32 +127,26 @@ h3>a:link, h3>a:visited {
 }
 
 .twitter {
-    font-size: smaller;
-    background: #F2F8F8; /* frothy */
+    xbackground: #F2F8F8; /* frothy */
+}
+
+.twitterdate {
+    font-style: italic;
 }
 
 .entry:hover {
-    border-left: 5px solid #DBF0B6; /* etiquette poor */
+    border-left: 5px solid #FFAB07; /* orange fish */
 }
 
 h4 {
-    font-family: georgia, serif;
-    font-size: larger;
-    font-weight: bold;
+    font-family: "etica-display-1","etica-display-2",sans-serif;
+    font-size: 150%;
+    font-weight: normal;
     margin-bottom: 0.3em;
     margin-top: 0;
 }
 
-.linkthumbnail {
-    float: right;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    border: 1px solid;
-    background: white;
-    padding: 3px;
-}
-
-.flickrphoto {
+.linkthumbnail, .flickrphoto {
     float: left;
     margin-right: 5px;
     margin-bottom: 5px;
@@ -141,12 +159,12 @@ h4 {
     clear:both;
     margin-top: 6px;
     font-style: italic;
-    font-family: georgia, serif;
+    font-family: "etica-display-1","etica-display-2",sans-serif;
     font-size: 90%;
 }
 
 a:link, a:visited {
-    color: #CC4F06; /* brash */
+    color: #72AD75; /* green fish */
     border-bottom: 1px solid;
     text-decoration: none;
 }
@@ -170,26 +188,29 @@ a:active, a:hover {
 
 /* Stuff for the sidebar */
 
+.sidebar_section {
+    width: 19em;
+    float: left;
+    padding: 0.5em;
+}
+
 .sidebartitle {
-    background-color: #DBF0B6; /* etiquette poor */
+    background-color: #FFAB07; /* orange fish */
     padding: 0.2em;
     font-variant: small-caps;
-    font-family: georgia, serif;
+    size: 140%;
+    font-family: "etica-display-1","etica-display-2",sans-serif;
 }
 
 .sidebarcontent {
-    border-left: 5px solid #E7F4D7; /* uncouth */
+    color: #E9D558; /* yellow fish */
+    border-left: 5px solid #FFAB07; /* orange fish */
     padding-left: 1em;
-    font-size: x-small;
     margin-bottom: 3em;
 }
 
 .sidebarcontent>ul>li {
     margin-left: -30px;
-}
-
-.twitterdate {
-    font-style: italic;
 }
 
 .searchinput {
@@ -217,7 +238,7 @@ a:active, a:hover {
     border-left: 5px solid #E7F4D7; /* uncouth */
 }
 .comment_even {
-    border-left: 5px solid #DBF0B6; /* etiquette poor */
+    border-left: 5px solid #E9D558; /* yellow fish */
 }
 .commentform {
     border-left: 5px solid #4E1100; /* ugmo */
@@ -225,14 +246,14 @@ a:active, a:hover {
 .commentinfo {
     clear:both;
     font-style: italic;
-    font-family: georgia, serif;
+    font-family: "etica-display-1","etica-display-2",sans-serif;
     font-size: 90%;
 }
 .commentform>form>p>label {
-    font-size: smaller;
+    vertical-align: top;;
 }
 .commentinput, .commenttextarea {
-    font-family: "Andale Mono", Monaco, 'Courier New', Courier, monospace;
+    font-family: "Andale Mono", "Menlo", Monaco, 'Courier New', Courier, monospace;
 }
 .commenttextarea {
     font-size: smaller;

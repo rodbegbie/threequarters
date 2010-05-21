@@ -11,10 +11,10 @@
         {% if object.legacy %}
         <a name="{{object.legacy.mt_id|stringformat:"06d"}}"></a>
         {% endif %}
+        <h4><a class="taggedlink linklink" href="{{ object.content_object.url}}">{{object.content_object.title}}</a></h4>
         {% if object.content_object.has_thumbnail %}
             <a href="{{object.content_object.url}}"><img class="linkthumbnail" alt="" src="http://static.groovymother.com/thumbnails/{{object.content_object.id}}.png" height="100" width="133" /></a>
         {% endif %}
-        <h4><a class="taggedlink linklink" href="{{ object.content_object.url}}">{{object.content_object.title}}</a></h4>
         <div class="description linkdescription">
             {{object.content_object.description|linebreaks|smartypants}}
         </div>
@@ -66,8 +66,8 @@
     </div>
 {% else %}{% ifequal object.content_type.model "flickrphoto" %}
     <div class="flickrentry entry">
-        <a href="{{object.content_object.get_absolute_url}}"><img class="flickrphoto" alt="{{object.content_object.title|smartypants}}" src="{{object.content_object.image_url}}" height="{{object.content_object.image_height}}" width="{{object.content_object.image_width}}" /></a>
         <h4>{{object.content_object.title|smartypants}}</h4>
+        <a href="{{object.content_object.get_absolute_url}}"><img class="flickrphoto" alt="{{object.content_object.title|smartypants}}" src="{{object.content_object.image_url}}" height="{{object.content_object.image_height}}" width="{{object.content_object.image_width}}" /></a>
         <div class="postbody">
             {{object.content_object.description|safe|linebreaks}}
         </div>

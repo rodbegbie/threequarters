@@ -9,6 +9,7 @@
 
 {% block title %}Entries for {{ day|date:"l, F j, Y" }}{% endblock %}
 {% block title2 %}Entries for {{ day|date:"l, F j, Y" }}{% endblock %}
+{% block pagetype %}a day from{% endblock %}
 
 {% block content %}
 {% for object in object_list %}
@@ -16,12 +17,9 @@
 {% endfor %}
 {% endblock %}
 
-{% block sidebar %}
-{% include "blog/sidebar/about.html" %}
+{% block postcontent %}
 {% if object_list.0.age > 30 %}
-    {% include "blog/sidebar/adsense.html" %}
+    {% include "blog/sidebar/adsenseleaderboard.html" %}
 {% endif %}
-{% include "blog/sidebar/searchbox.html" %}
-{% include "blog/sidebar/poweredby.html" %}
 {% endblock %}
 
