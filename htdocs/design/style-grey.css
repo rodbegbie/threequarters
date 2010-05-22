@@ -54,14 +54,16 @@ h1>a:link, h1>a:visited {
 h2 {
     color: #FFAB07; /* orange fish */
     border-bottom: dashed 1px #FFAB07; /* orange fish */
-    font-family: "etica-display-1","etica-display-2",sans-serif;
+    font-family: "fenwick-1","fenwick-2",sans-serif;
     font-size: 200%;
+    font-weight: bold;
 }
 
 h3.date {
     color: #FFAB07; /* orange fish */
     border-bottom: dashed 1px #FFAB07; /* orange fish */
-    font-family: "etica-display-1","etica-display-2",sans-serif;
+    font-family: "fenwick-1","fenwick-2",sans-serif;
+    font-weight: bold;
     font-size: x-large;
     margin-left: 2em;
     margin-right: 2em;
@@ -139,9 +141,9 @@ h3>a:link, h3>a:visited {
 }
 
 h4 {
-    font-family: "etica-display-1","etica-display-2",sans-serif;
+    font-family: "fenwick-1","fenwick-2",sans-serif;
     font-size: 150%;
-    font-weight: normal;
+    font-weight: 200;
     margin-bottom: 0.3em;
     margin-top: 0;
     color: #FFAB07; /* orange fish */
@@ -160,8 +162,9 @@ h4 {
     clear:both;
     margin-top: 6px;
     font-style: italic;
-    font-family: "etica-display-1","etica-display-2",sans-serif;
+    font-family: "fenwick-1","fenwick-2",sans-serif;
     font-size: 90%;
+    font-weight: 200;
 }
 
 a:link, a:visited {
@@ -200,7 +203,7 @@ a:active, a:hover {
     padding: 0.2em;
     font-variantx: small-caps;
     size: 140%;
-    font-family: "etica-display-1","etica-display-2",sans-serif;
+    font-family: "fenwick-1","fenwick-2",sans-serif;
 }
 
 .sidebarcontent {
@@ -247,7 +250,7 @@ a:active, a:hover {
 .commentinfo {
     clear:both;
     font-style: italic;
-    font-family: "etica-display-1","etica-display-2",sans-serif;
+    font-family: "fenwick-1","fenwick-2",sans-serif;
     font-size: 90%;
 }
 .commentform>form>p>label {
