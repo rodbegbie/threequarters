@@ -1,7 +1,8 @@
 CONSUMER_SECRET='gQYRSEgCsEZSCDM2Pa6qr9aTVCmT80Mx'
 CONSUMER_KEY='3q3VkoxUjwP9'
 
-USER_TOKEN_STRING='oauth_token_secret=8gMH42725VgaLB4b3iahYLdxozVawLlM&oauth_token=VhfSR2SzLkzM'
+USER_TOKEN ='VhfSR2SzLkzM'
+USER_TOKEN_SECRET = '8gMH42725VgaLB4b3iahYLdxozVawLlM'
 
 from fireeagle_api import FireEagle
 from oauth import OAuthToken
@@ -10,7 +11,7 @@ from threequarters.blog.models import Location
 import datetime
 
 fe = FireEagle(CONSUMER_KEY, CONSUMER_SECRET)
-token = OAuthToken.from_string(USER_TOKEN_STRING)
+token = OAuthToken(USER_TOKEN, USER_TOKEN_SECRET)
 
 locations = fe.user(token)[0]["location"]
 #from pprint import pprint
