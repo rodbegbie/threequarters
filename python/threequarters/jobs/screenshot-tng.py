@@ -23,7 +23,7 @@ class PyGtkMozExample:
         self.id = id
         # Initialize the widgets...
         self.widget = gtkmozembed.MozEmbed()
-        self.widget.set_size_request(816,600)
+        self.widget.set_size_request(1040,768)
         
         # Connect signals
         self.widget.connect("net_stop", self.on_net_stop)
