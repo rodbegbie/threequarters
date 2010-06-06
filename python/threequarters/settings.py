@@ -1,14 +1,12 @@
 # Django settings for threequarters project.
 
 INTERNAL_IPS=('69.17.48.8',)
-DEBUG = False
+DEBUG = False #True
 TEMPLATE_DEBUG = DEBUG
-EMAIL_HOST = "flaming.arsecandle.org"
-EMAIL_HOST_USER = "threequarters@arsecandle.org"
-EMAIL_HOST_PASSWORD = "threeoverfour"
-EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL = "threequarters@arsecandle.org"
+EMAIL_HOST = "flaming.arsecandle.org"
+EMAIL_USE_TLS = True
+SERVER_EMAIL = DEFAULT_FROM_EMAIL = "threequarters@arsecandle.org"
 
 ADMINS = (
     ('Rod Begbie', 'rod@arsecandle.org'),

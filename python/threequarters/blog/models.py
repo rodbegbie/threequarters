@@ -359,6 +359,7 @@ def on_comment_was_posted(sender, comment, request, *args, **kwargs):
 
     from django.contrib.sites.models import Site
     from django.conf import settings
+    from django.core.mail import mail_admins
 
     try:
         from akismet import Akismet
@@ -394,5 +395,7 @@ def on_comment_was_posted(sender, comment, request, *args, **kwargs):
             )
             comment.is_public = False
             comment.save()
+
+    mail_admins("comment on blogpost from " + comment.user_name, comment.comment, fail_silently=False)
 
 comment_was_posted.connect(on_comment_was_posted)
