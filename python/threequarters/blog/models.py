@@ -116,11 +116,11 @@ class Post(models.Model):
         ordering = ["-created_on"]
 
     def save(self, *args, **kwargs):
-        import textile 
+        from textile import Textile
         self.modified_on = default=datetime.now()
-        self.body_xhtml = textile.textile(self.body_textile.encode('utf-8'),
-                        encoding='utf-8',
-                        output='utf-8')
+	t = Textile()
+	t.get_sizes = True
+        self.body_xhtml = t.textile(self.body_textile.encode('utf-8'))
         super(Post, self).save(*args, **kwargs) # Call the "real" save() method.
 
         blogitem_save(self, self.slug, self.tags)
