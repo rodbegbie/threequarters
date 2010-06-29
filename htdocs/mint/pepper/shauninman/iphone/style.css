@@ -73,7 +73,8 @@ body[orientation='portrait'] td span a
 {
 	position: relative;
 	top: -1px;
-	width: 80px;
+	width: 64px;
+	margin-right: 21px;
 }
 #header .panes div
 {
@@ -113,6 +114,17 @@ body[orientation='landscape'].preferences #container
 {
 	width: 470px;
 }
+/* 
+doesn't make any sense but without the following the previous 
+widths are not applied in newer versions of MobileSafari.app
+*/
+body.preferences,
+body[orientation='portrait'].preferences,
+body[orientation='landscape'].preferences
+{
+	border-right: 1px solid white;
+}
+
 .preferences #header
 {
 	margin: 0 0 5px;
