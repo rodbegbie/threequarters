@@ -23,7 +23,7 @@ function SI_iPhone_obNoScroll($buffer)
 
 class SI_iPhone extends Pepper
 {
-	var $version	= 120;
+	var $version	= 121;
 	var $info		= array
 	(
 		'pepperName'	=> 'iPhone',
