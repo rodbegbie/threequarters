@@ -44,7 +44,7 @@ STEP 3: SET THE PERMISSIONS
 	permissions must be set correctly. On Unix/Linux systems you
 	can set the scripts' permissions with the following command:
 	
-	chmod 755 monkeytennis.php
+	chmod 644 monkeytennis.php
 	
 STEP 4: INSTALL PHP
 
