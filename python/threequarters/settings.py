@@ -64,9 +64,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.csrf.middleware.CsrfMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.cache.CacheMiddleware',
+    #'django.middleware.cache.CacheMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    'hoptoad.middleware.HoptoadNotifierMiddleware',
 )
 
 ROOT_URLCONF = 'threequarters.urls'
@@ -109,3 +110,5 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
 #USE_ETAGS = True
 
 WHOOSH_INDEX_DIR = "/var/www/threequarters/whooshindex"
+
+HOPTOAD_API_KEY = "557511cf628485173cb72c1f7be68166"
