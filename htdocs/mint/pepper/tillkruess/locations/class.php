@@ -35,7 +35,7 @@
 
 	class TK_Locations extends Pepper {
 
-		var $version = 250;
+		var $version = 251;
 
 		var $info = array(
 			'pepperName' => 'Locations',
@@ -191,10 +191,6 @@
 		}
 
 		function onDisplay($pane, $tab, $column = '', $sort = '') {
-
-			if (!$this->get_countrycode(TRUE)) {
-				$this->Mint->logError('The database of Locations is either corrupted, or not readable by Mint.', 1);
-			}
 
 			switch ($pane) {
 				case 'Locations': 
