@@ -2,7 +2,7 @@
 /******************************************************************************
  Mint
   
- Copyright 2004-2010 Shaun Inman. This code cannot be redistributed without
+ Copyright 2004-2011 Shaun Inman. This code cannot be redistributed without
  permission from http://www.shauninman.com/
  
  More info at: http://www.haveamint.com/
@@ -14,7 +14,7 @@
 
 class Mint
 {
-	var $version		= 218;
+	var $version		= 219;
 	var $db				= array
 	(
 		'server'	=> 'localhost',
@@ -190,6 +190,11 @@ class Mint
 		}
 		$this->logBenchmark('}');
 		return $connected;
+	}
+	
+	function dbEngine()
+	{
+		return (mysql_get_client_info() > 4) ? 'ENGINE' : 'TYPE';
 	}
 		
 	/**************************************************************************
@@ -1067,9 +1072,10 @@ HERE;
 		
 		$this->cfg['version']		= $this->version;
 		
-		$this->query("CREATE TABLE `{$this->db['tblPrefix']}_config` (`id` int(10) unsigned NOT NULL auto_increment, `cfg` MEDIUMTEXT NOT NULL, `data` MEDIUMTEXT NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM;");
+		$dbEngine = $this->dbEngine();
+		$this->query("CREATE TABLE `{$this->db['tblPrefix']}_config` (`id` int(10) unsigned NOT NULL auto_increment, `cfg` MEDIUMTEXT NOT NULL, `data` MEDIUMTEXT NOT NULL, PRIMARY KEY  (`id`)) {$dbEngine}=MyISAM;");
 		$this->query("INSERT INTO `{$this->db['tblPrefix']}_config` VALUES (1, '".addslashes(serialize($this->cfg))."', '')");
- 		$this->query("CREATE TABLE `{$this->db['tblPrefix']}visit` (`id` int(11) unsigned NOT NULL auto_increment, `dt` int(10) unsigned NOT NULL default '0', PRIMARY KEY  (`id`), KEY `dt` (`dt`)) TYPE=MyISAM;");
+ 		$this->query("CREATE TABLE `{$this->db['tblPrefix']}visit` (`id` int(11) unsigned NOT NULL auto_increment, `dt` int(10) unsigned NOT NULL default '0', PRIMARY KEY  (`id`), KEY `dt` (`dt`)) {$dbEngine}=MyISAM;");
 		
 		// Install the required Default Pepper first
 		$this->installPepper('pepper/shauninman/default/class.php');
@@ -1467,7 +1473,7 @@ HERE;
 							}
 						}
 						
-						$queryTail	.= ") TYPE=MyISAM;";
+						$queryTail	.= ') '.$this->dbEngine().'=MyISAM;';
 						$query .= implode(', ', $addColumns).$queryTail;
 						
 						// Add the table to the manifest
@@ -3559,7 +3565,7 @@ HERE;
 			}
 			else 
 			{
-				if (preg_match("/^(.{1,$len})(\s|\/|\?|&|_|-)./ms", $var, $match))
+				if (preg_match("/^((&[^;]+;|.){1,$len})(\s|\/|\?|&|_|-)./ms", $var, $match))
 				{
 					$abbr = "<abbr title=\"$var\">".str_replace('?', '<wbr />?', $match[1])."&#8230;</abbr>";
 				}

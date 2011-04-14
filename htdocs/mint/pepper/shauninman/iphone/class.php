@@ -23,7 +23,7 @@ function SI_iPhone_obNoScroll($buffer)
 
 class SI_iPhone extends Pepper
 {
-	var $version	= 121;
+	var $version	= 122;
 	var $info		= array
 	(
 		'pepperName'	=> 'iPhone',
@@ -95,7 +95,11 @@ class SI_iPhone extends Pepper
 	 **************************************************************************/
 	function onPepperLoad()
 	{
-		$this->isiPhone = (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') || strpos($_SERVER['HTTP_USER_AGENT'], 'iPod')) !== false);
+		$this->isiPhone = (isset($_SERVER['HTTP_USER_AGENT']) && (
+			strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') ||
+			strpos($_SERVER['HTTP_USER_AGENT'], 'iPod')   ||
+			strpos($_SERVER['HTTP_USER_AGENT'], 'Android')
+		) !== false);
 		
 		if ($this->isiPhone)
 		{
