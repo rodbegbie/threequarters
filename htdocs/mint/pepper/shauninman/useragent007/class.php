@@ -13,7 +13,7 @@ $installPepper = "SI_UserAgent";
 
 class SI_UserAgent extends Pepper
 {
-	var $version	= 208; 
+	var $version	= 209; 
 	var $info		= array
 	(
 		'pepperName'	=> 'User Agent 007',
@@ -961,6 +961,14 @@ HERE;
 			{
 				$ua['version'] = $v[1];
 			}
+		}
+		
+		// this seems to be an evolving standard for reporting the actual 
+		// application version rather than the rendering engine version
+		// current implemented by Safari and Opera
+		if (preg_match('/Version\/([.0-9]+)/i', $user_agent, $m))
+		{
+			$ua['version'] = $m[1];
 		}
 		return $ua;
 	}

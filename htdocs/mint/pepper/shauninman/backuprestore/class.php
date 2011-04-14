@@ -13,7 +13,7 @@ $installPepper = "SI_BackUpRestore";
 
 class SI_BackUpRestore extends Pepper
 {
-	var $version	= 201;
+	var $version	= 202;
 	var $info		= array
 	(
 		'pepperName'	=> 'Backup/Restore',
@@ -223,7 +223,7 @@ HERE;
 		{
 			// Create the _config_only table
 			$tableName = "{$prefix}{$this->Mint->db['tblPrefix']}_config_only";
-			$this->query("CREATE TABLE `$tableName` (`id` int(10) unsigned NOT NULL auto_increment, `cfg` text NOT NULL, PRIMARY KEY  (`id`)) TYPE=MyISAM;");
+			$this->query("CREATE TABLE `$tableName` (`id` int(10) unsigned NOT NULL auto_increment, `cfg` text NOT NULL, PRIMARY KEY  (`id`)) ".$this->Mint->dbEngine()."=MyISAM;");
 			$this->query("INSERT INTO `$tableName` VALUES (1, '".addslashes(serialize($this->Mint->cfg))."')");
 		}
 		else
