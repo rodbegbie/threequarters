@@ -32,7 +32,7 @@ class BlogSearch(object):
 
         parser = MultifieldParser(("body", "title", "tags"), schema = self.schema)
         query = parser.parse(term)
-        results = self.searcher.search(query)#, sortedby="date", reverse=True)
+        results = self.searcher.search(query, limit=100)#, sortedby="date", reverse=True)
         return results
         
     def add_blogitem(self, item):
