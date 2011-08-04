@@ -67,7 +67,6 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.cache.CacheMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
-    'hoptoad.middleware.HoptoadNotifierMiddleware',
 )
 
 ROOT_URLCONF = 'threequarters.urls'
