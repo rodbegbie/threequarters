@@ -60,13 +60,9 @@ urlpatterns += patterns('threequarters.blog.feeds',
 )
 
 from threequarters.blog.feeds import CommentsFeed
-feeds = {
-    'comments': CommentsFeed,
-}
 
 urlpatterns += patterns('',
-	(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed',
-	        {'feed_dict': feeds}),
+	(r'^feeds/comments/$', CommentsFeed()),
 )
 
 # Old MT redirects

@@ -1,6 +1,6 @@
 from threequarters.blog.models import *
 from django.contrib.comments.models import Comment
-from django.contrib.syndication.feeds import Feed
+from django.contrib.syndication.views import Feed
 from django.http import HttpResponse
 from django.utils.xmlutils import SimplerXMLGenerator
 from django.utils.feedgenerator import rfc3339_date, Atom1Feed
