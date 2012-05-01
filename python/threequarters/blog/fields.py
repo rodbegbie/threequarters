@@ -6,8 +6,8 @@ class BigIntegerField(IntegerField):
 	def get_internal_type(self):
 		return "BigIntegerField"
 	
-	def db_type(self):
-		if settings.DATABASE_ENGINE == "oracle":
+	def db_type(self, connection=None):
+		if connection.vendor == "oracle":
 			return 'NUMBER(19)'
 		else:
 			return 'bigint'

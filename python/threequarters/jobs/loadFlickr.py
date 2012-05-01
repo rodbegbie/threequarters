@@ -28,8 +28,9 @@ for photo in photos:
         tags = []
         for tag in photo.tags:
             if not machinetag.match(tag.raw):
-                tags.append(tag.raw.encode('utf-8'))
+	        print tag.raw, repr(tag.raw)
+                tags.append(tag.raw)
     
-        flickrphoto.tags = ", ".join(tags)
+        flickrphoto.tags = u", ".join(tags)
 
     flickrphoto.save()
