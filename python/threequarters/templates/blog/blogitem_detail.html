@@ -7,36 +7,31 @@
 {% block pagetype %}a post from{% endblock %}
 
 {% block content %}
-{% include "blog/blogitem.html" %}
+    {% include "blog/blogitem.html" %}
 
-{% get_comment_list for blog.blogitem object.id as comment_list %}
+    {% get_comment_list for blog.blogitem object.id as comment_list %}
 
-<h3 id="comments">Comments</h3>
-{% for comment in comment_list %}
-    <div class="comment_{% cycle odd,even %}" id="c{{ comment.id }}">
-        <p class="commentinfo">About {{ comment.submit_date|timesince }} ago, 
-            {% if comment.user_url%}<a href="{{comment.user_url|escape}}">{%endif%}
-            {{ comment.user_name|escape }}{% if comment.user_url%}</a>{%endif%}
-            commented:
-        </p>
-        {{ comment.comment|escape|urlizetrunc:40|linebreaks }}
-    </div>
-{% endfor %}
+    {% if comment_list %}
+        <hr>
+        <h3 id="comments">Comments</h3>
 
-<h3>Post a comment</h3>
-{% if object.age > 60 %}
-    <p>Due to spam, posting comments to old entries is disabled.</p>
-{% else %}
-<div class="commentform">
-<p>
-    {% render_comment_form for blog.blogitem object.id %}
-</p>
-</div>
-{% endif %}
+        {% for comment in comment_list %}
+            <div class="comment_{% cycle odd,even %}" id="c{{ comment.id }}">
+                <h4>On {{ comment.submit_date|date:"l, F j, Y" }},
+                    {% if comment.user_url%}<a href="{{comment.user_url|escape}}">{%endif%}
+                    {{ comment.user_name|escape }}{% if comment.user_url%}</a>{%endif%}
+                    commented:
+                </h4>
+                {{ comment.comment|escape|urlizetrunc:40|linebreaks }}
+            </div>
+        {% endfor %}
+
+    {% endif %}
+
 {% endblock %}
 
 {% block postcontent %}
-{% if object.age > 30 %}
-    {% include "blog/sidebar/adsenseleaderboard.html" %}
-{% endif %}
+    {% if object.age > 30 %}
+        {% include "blog/sidebar/adsenseleaderboard.html" %}
+    {% endif %}
 {% endblock %}

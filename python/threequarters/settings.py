@@ -18,8 +18,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'threequarters',
-        'USER': 'threequarters',
-        'PASSWORD': 'sretrauqeerht',
+        'USER': 'root',
+        'PASSWORD': 'vegetable',
     }
 }
 
@@ -34,9 +34,11 @@ LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
+WEB_ROOT = '/Users/rod/tq/htdocs/'
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-STATIC_ROOT = '/var/www/threequarters/htdocs/'
+STATIC_ROOT = '/Users/rod/tq/threequarters/htdocs/'
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
@@ -53,15 +55,16 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.http.ConditionalGetMiddleware',
+    # 'django.middleware.http.ConditionalGetMiddleware',
     #'threequarters.middleware.PsycoMiddleware',
-    'threequarters.middleware.SetRemoteAddrFromForwardedFor',
+    # 'threequarters.middleware.SetRemoteAddrFromForwardedFor',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.gzip.GZipMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.gzip.GZipMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     #'django.middleware.cache.CacheMiddleware',
+    'staticgenerator.middleware.StaticGeneratorMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -87,7 +90,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates".
     # Always use forward slashes, even on Windows.
     "./templates",
-    "/var/www/threequarters/python/threequarters/templates",
+    "/Users/rod/tq/threequarters/python/threequarters/templates",
 )
 
 AKISMET_API_KEY="d7b8758ca65f"
@@ -107,6 +110,10 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
 
 #USE_ETAGS = True
 
-WHOOSH_INDEX_DIR = "/var/www/threequarters/whooshindex"
+WHOOSH_INDEX_DIR = "/Users/rod/tq/threequarters/whooshindex"
 
 HOPTOAD_API_KEY = "557511cf628485173cb72c1f7be68166"
+
+STATIC_GENERATOR_URLS = (
+    r'.',
+)

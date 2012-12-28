@@ -5,40 +5,49 @@
 <h3 class="date"><a href="{{object.created_on|date:"/Y/b/d/"}}">&#x27a0;</a> {{ object.created_on|date:"F j, Y" }}</h3>
 {% endifchanged %}
 
+<div class="row">
+    <div class="span12">
+
 {% ifequal object.content_type.model "link" %}
     {% get_comment_count for blog.blogitem object.id as comment_count %}
-    <div class="linkentry xfolkentry entry" id="{{object.content_object.slug}}" >
+    <div class="well" id="{{object.content_object.slug}}" >
+
         {% if object.legacy %}
         <a name="{{object.legacy.mt_id|stringformat:"06d"}}"></a>
         {% endif %}
+
         <h4><a class="taggedlink linklink" href="{{ object.content_object.url}}">{{object.content_object.title}}</a></h4>
+
         {% if object.content_object.has_thumbnail %}
-            <a href="{{object.content_object.url}}"><img class="linkthumbnail" alt="" src="http://static.groovymother.com/thumbnails/{{object.content_object.id}}.png" height="100" width="133" /></a>
+            {# <a href="{{object.content_object.url}}"><img class="linkthumbnail" alt="" src="http://static.groovymother.com/thumbnails/{{object.content_object.id}}.png" height="100" width="133" /></a> #}
         {% endif %}
-        <div class="description linkdescription">
-            {{object.content_object.description|linebreaks|smartypants}}
-        </div>
-        <div class="permalink">
-            {% if object.content_object.via %}
-                <a rel="via" href="{{ object.content_object.via}}" title="I found this link at...">via</a> |
-            {% endif %}
-            {% if comment_count %}
-                <a href="{{object.content_object.get_comments_url}}">{{comment_count}} comment{{comment_count|pluralize}}</a> |
-            {% else %}
-                {% if object.age < 60 %}
-                    <a href="{{object.content_object.get_comments_url}}">{{comment_count}} comment{{comment_count|pluralize}}</a> |
+
+        {{object.content_object.description|linebreaks|smartypants}}
+
+        <div class="row-fluid">
+            <div class="span10">
+                {% if object.content_object.tags %}
+                    Filed under
+                    {% for tag in object.tags.all %}
+                        : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
+                    {% endfor %}
                 {% endif %}
-            {% endif %}
-            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
+            </div>
+            <div class="span2" style="text-align: right;">
+                {% if object.content_object.via %}
+                    <a rel="via" href="{{ object.content_object.via}}" title="I found this link at...">via</a> |
+                {% endif %}
+                {% if comment_count %}
+                    <a href="{{object.content_object.get_comments_url}}">{{comment_count}} comment{{comment_count|pluralize}}</a> |
+                {% else %}
+                    {% if object.age < 60 %}
+                        <a href="{{object.content_object.get_comments_url}}">{{comment_count}} comment{{comment_count|pluralize}}</a> |
+                    {% endif %}
+                {% endif %}
+                <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
+            </div>
         </div>
-        <div class="postinfo">
-            {% if object.content_object.tags %}
-                Filed under 
-                {% for tag in object.tags.all %}
-                    : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
-                {% endfor %}
-            {% endif %}
-        </div>
+
     </div>
 
 
@@ -50,38 +59,45 @@
         {% endif %}
         <h4>{{object.content_object.title|smartypants}}</h4>
         {{object.content_object.body_xhtml|safe}}
-        <div class="permalink">
-            <a href="{{object.content_object.get_absolute_url}}#comments">{{comment_count}} comment{{comment_count|pluralize}}</a> |
-            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
-        </div>
-        <div class="postinfo">
-            {% if object.content_object.tags %}
-                Filed under 
-                {% for tag in object.tags.all %}
-                    : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
-                {% endfor %}
-                <br/>
-            {% endif %}
+        <div class="row-fluid">
+            <div class="span10">
+                {% if object.content_object.tags %}
+                    Filed under
+                    {% for tag in object.tags.all %}
+                        : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="span2" style="text-align: right;">
+                <a href="{{object.content_object.get_absolute_url}}#comments">{{comment_count}} comment{{comment_count|pluralize}}</a> |
+                <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
+            </div>
         </div>
     </div>
 {% else %}{% ifequal object.content_type.model "flickrphoto" %}
     <div class="flickrentry entry">
         <h4>{{object.content_object.title|smartypants}}</h4>
+
         <a href="{{object.content_object.get_absolute_url}}"><img class="flickrphoto" alt="{{object.content_object.title|smartypants}}" src="{{object.content_object.image_url}}" height="{{object.content_object.image_height}}" width="{{object.content_object.image_width}}" /></a>
-        <div class="postbody">
+
+        <p>
             {{object.content_object.description|safe|linebreaks}}
+        </p>
+
+        <div class="row-fluid">
+            <div class="span10">
+                {% if object.content_object.tags %}
+                    Filed under
+                    {% for tag in object.tags.all %}
+                        : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="span2" style="text-align: right;">
+                <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
+            </div>
         </div>
-        <div class="permalink">
-            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
-        </div>
-        <div class="postinfo">
-            {% if object.content_object.tags %}
-                Filed under 
-                {% for tag in object.tags.all %}
-                    : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
-                {% endfor %}
-            {% endif %}
-        </div>
+
     </div>
 
 {% else %}{% ifequal object.content_type.model "vimeoclip" %}
@@ -91,16 +107,18 @@
             <div class="vimeoclip" id="vimeo-{{object.content_object.vimeo_id}}" style="height:{{object.content_object.relative_height}}px; width:{{object.content_object.relative_width}}px;"></div>
             {{object.content_object.caption|safe|linebreaks}}
         </div>
-        <div class="permalink">
-            <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
-        </div>
-        <div class="postinfo">
-            {% if object.content_object.tags %}
-                Filed under 
-                {% for tag in object.tags.all %}
-                    : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
-                {% endfor %}
-            {% endif %}
+        <div class="row-fluid">
+            <div class="span10">
+                {% if object.content_object.tags %}
+                    Filed under
+                    {% for tag in object.tags.all %}
+                        : <a rel="tag" class="tag" href="{{tag.get_absolute_url}}">{{tag.display}}</a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="span2" style="text-align: right;">
+                <a rel="bookmark" href="{{object.content_object.get_absolute_url}}" title="Permanent link to this entry">&#x2732;</a>
+            </div>
         </div>
     </div>
 
@@ -167,3 +185,6 @@
 {% endifequal %}
 {% endifequal %}
 {% endifequal %}
+
+</div>
+</div>

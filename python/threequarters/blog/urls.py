@@ -14,7 +14,7 @@ def tag_wrapper(request, queryset, tag=None, *args, **kwargs):
         from django.http import Http404
         raise Http404
     kwargs["extra_context"] = {'tag': tag, 'location': Location.objects.all()[:1] }
-    return object_list(request, queryset, *args, **kwargs) 
+    return object_list(request, queryset, *args, **kwargs)
 
 def search_wrapper(request, queryset, *args, **kwargs):
     q = request.GET.get("q", "")
@@ -25,7 +25,7 @@ def search_wrapper(request, queryset, *args, **kwargs):
     else:
         queryset = queryset.filter(id__in=[int(result["id"]) for result in results])
     kwargs["extra_context"] = {'q': q, 'location': Location.objects.all()[:1] }
-    return object_list(request, queryset, *args, **kwargs) 
+    return object_list(request, queryset, *args, **kwargs)
 
 blogitems_dict = {
 #'queryset': BlogItem.objects.all().exclude(content_type__model="lastfmtrack").exclude(content_type__model="twitter", content_object__description__startswith="@"),
@@ -38,14 +38,14 @@ urlpatterns += patterns('django.views.generic.date_based',
    (r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/(?P<slug>[-\w]+)/$', 'object_detail', dict(blogitems_dict, slug_field='slug')),
    (r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/$',                  'archive_day',   blogitems_dict),
    (r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/$',                                   'archive_month', blogitems_dict),
-   (r'^(?P<year>\d{4})/week/(?P<week>\d{1,2})/$',                                  'archive_week', blogitems_dict),
+   (r'^(?P<year>\d{4})/week/(?P<week>\d{1,2})/$',                                  'archive_week', dict(blogitems_dict, allow_empty=False)),
 #   (r'^(?P<year>\d{4})/$',                                                       'archive_year',  blogitems_dict),
    (r'^/?$',                                                                     'archive_index', dict(blogitems_dict, num_latest=50, template_name="blog/index.html")),
 )
 
 # Tags
 urlpatterns += patterns('threequarters.blog.urls',
-    (r'^tag/(?P<tag>[-\w]+)/$', 'tag_wrapper', dict(queryset=Tag.objects.all(), paginate_by=20, template_name="blog/tag.html", allow_empty=True)),
+    (r'^tag/(?P<tag>[-\w]+)/$', 'tag_wrapper', dict(queryset=Tag.objects.all(), paginate_by=500, template_name="blog/tag.html", allow_empty=False)),
 )
 
 # Search
